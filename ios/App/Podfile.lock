@@ -1,0 +1,40 @@
+PODS:
+  - AashuDubeyCapacitorStatusbarSafeArea (3.0.0):
+    - Capacitor
+  - Capacitor (6.2.0):
+    - CapacitorCordova
+  - CapacitorCordova (6.2.0)
+  - CapacitorDevice (6.0.2):
+    - Capacitor
+  - CapacitorVoiceRecorder (6.1.0):
+    - Capacitor
+
+DEPENDENCIES:
+  - "AashuDubeyCapacitorStatusbarSafeArea (from `../../node_modules/@aashu-dubey/capacitor-statusbar-safe-area`)"
+  - "Capacitor (from `../../node_modules/@capacitor/ios`)"
+  - "CapacitorCordova (from `../../node_modules/@capacitor/ios`)"
+  - "CapacitorDevice (from `../../node_modules/@capacitor/device`)"
+  - CapacitorVoiceRecorder (from `../../node_modules/capacitor-voice-recorder`)
+
+EXTERNAL SOURCES:
+  AashuDubeyCapacitorStatusbarSafeArea:
+    :path: "../../node_modules/@aashu-dubey/capacitor-statusbar-safe-area"
+  Capacitor:
+    :path: "../../node_modules/@capacitor/ios"
+  CapacitorCordova:
+    :path: "../../node_modules/@capacitor/ios"
+  CapacitorDevice:
+    :path: "../../node_modules/@capacitor/device"
+  CapacitorVoiceRecorder:
+    :path: "../../node_modules/capacitor-voice-recorder"
+
+SPEC CHECKSUMS:
+  AashuDubeyCapacitorStatusbarSafeArea: a33a5d9dd9f08c0aa68e7ee6c261767c67694a9a
+  Capacitor: 05d35014f4425b0740fc8776481f6a369ad071bf
+  CapacitorCordova: b33e7f4aa4ed105dd43283acdd940964374a87d9
+  CapacitorDevice: 9efd479d71d1baad74b75df531184c3f730eaa48
+  CapacitorVoiceRecorder: aa2a99f1688c09a66e6988e2df554ab3865d1ae3
+
+PODFILE CHECKSUM: e4f99b207f0f1f4f11b1cc7c35665a37dd82708f
+
+COCOAPODS: 1.16.2
