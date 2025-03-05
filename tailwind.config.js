@@ -16,6 +16,7 @@ module.exports = {
         'secondary': '#F7A072',
         'purple': '#8e44ad',
         'black': '#001524',
+        'nav_icon_color': '#4f46e5',
         // Màu dùng chung trong các kết quả
         'wrong': '#F29F58', // sai
         'correct': '#88C273' // đúng

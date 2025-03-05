@@ -46,5 +46,13 @@ export default defineNuxtConfig({
       },
     },
   },
-  elementPlus: {}
+  elementPlus: {},
+  router: {
+    options: {
+      strict: true,
+    }
+  },
+  imports: {
+    dirs: ['composables/**']
+  }
 })
