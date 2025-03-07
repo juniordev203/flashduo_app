@@ -9,9 +9,13 @@
           <div class="w-[40px] h-[40px] rounded-full border border-primary flex justify-center items-center">
             <img class="w-[32px] h-[32px] rounded-full" src="~/assets/images/avatar.jpg" alt="">
           </div>
-          <div class="">{{ $t('lang_core_dang_nhap') }}</div>
-          <div class="w-[1px] h-[30px] bg-gray-500"></div>
-          <div class="">{{ $t('lang_core_dang_ky') }}</div>
+          <NuxtLink to="/login">
+            <div class="text-sm font-medium">{{ $t('lang_core_dang_nhap') }}</div>
+          </NuxtLink>
+          <el-divider direction="vertical"/>
+          <NuxtLink to="/register">
+            <div class="text-sm font-medium">{{ $t('lang_core_dang_ky') }}</div>
+          </NuxtLink>
         </div>
         <!-- box 1 -->
         <div class="bg-white rounded shadow flex flex-col px-4">
