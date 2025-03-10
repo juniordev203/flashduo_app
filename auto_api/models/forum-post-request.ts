@@ -12,42 +12,35 @@
  * Do not edit the class manually.
  */
 
-import { Account } from './account';
  /**
  * 
  *
  * @export
- * @interface User
+ * @interface ForumPostRequest
  */
-export interface User {
-
-    /**
-     * @type {number}
-     * @memberof User
-     */
-    id?: number;
-
-    /**
-     * @type {number}
-     * @memberof User
-     */
-    accountId: number;
-
-    /**
-     * @type {Account}
-     * @memberof User
-     */
-    account?: Account;
+export interface ForumPostRequest {
 
     /**
      * @type {string}
-     * @memberof User
+     * @memberof ForumPostRequest
      */
-    fullName?: string | null;
+    title: string;
 
     /**
      * @type {string}
-     * @memberof User
+     * @memberof ForumPostRequest
      */
-    avatarUrl?: string | null;
+    content: string;
+
+    /**
+     * @type {number}
+     * @memberof ForumPostRequest
+     */
+    topicId?: number;
+
+    /**
+     * @type {number}
+     * @memberof ForumPostRequest
+     */
+    accountId?: number;
 }

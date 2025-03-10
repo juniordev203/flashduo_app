@@ -10,7 +10,8 @@
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "sync": "npx cap sync && sh update_xcconfig.sh",
-    "ios": "npx cap open ios"
+    "ios": "npx cap open ios",
+    "gen_api": "swagger-codegen generate -i http://localhost:5286/swagger/v1/swagger.json -l typescript-axios -o ./auto_api"
   },
   "dependencies": {
     "@aashu-dubey/capacitor-statusbar-safe-area": "^3.0.0",

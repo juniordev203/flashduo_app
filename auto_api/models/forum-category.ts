@@ -12,35 +12,36 @@
  * Do not edit the class manually.
  */
 
+import { ForumTopic } from './forum-topic';
  /**
  * 
  *
  * @export
- * @interface AuthRequestRegister
+ * @interface ForumCategory
  */
-export interface AuthRequestRegister {
+export interface ForumCategory {
+
+    /**
+     * @type {number}
+     * @memberof ForumCategory
+     */
+    id?: number;
 
     /**
      * @type {string}
-     * @memberof AuthRequestRegister
+     * @memberof ForumCategory
      */
-    username: string;
+    name: string;
 
     /**
      * @type {string}
-     * @memberof AuthRequestRegister
+     * @memberof ForumCategory
      */
-    email: string;
+    description?: string | null;
 
     /**
-     * @type {string}
-     * @memberof AuthRequestRegister
+     * @type {Array<ForumTopic>}
+     * @memberof ForumCategory
      */
-    password: string;
-
-    /**
-     * @type {string}
-     * @memberof AuthRequestRegister
-     */
-    firmPassword: string;
+    topics?: Array<ForumTopic> | null;
 }

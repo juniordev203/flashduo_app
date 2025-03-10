@@ -13,41 +13,42 @@
  */
 
 import { Account } from './account';
+import { ForumPost } from './forum-post';
  /**
  * 
  *
  * @export
- * @interface User
+ * @interface ForumEmotion
  */
-export interface User {
+export interface ForumEmotion {
 
     /**
      * @type {number}
-     * @memberof User
+     * @memberof ForumEmotion
      */
     id?: number;
 
     /**
      * @type {number}
-     * @memberof User
+     * @memberof ForumEmotion
+     */
+    postId: number;
+
+    /**
+     * @type {ForumPost}
+     * @memberof ForumEmotion
+     */
+    forumPost?: ForumPost;
+
+    /**
+     * @type {number}
+     * @memberof ForumEmotion
      */
     accountId: number;
 
     /**
      * @type {Account}
-     * @memberof User
+     * @memberof ForumEmotion
      */
     account?: Account;
-
-    /**
-     * @type {string}
-     * @memberof User
-     */
-    fullName?: string | null;
-
-    /**
-     * @type {string}
-     * @memberof User
-     */
-    avatarUrl?: string | null;
 }

@@ -12,42 +12,43 @@
  * Do not edit the class manually.
  */
 
-import { Account } from './account';
+import { ForumCategory } from './forum-category';
+import { ForumPost } from './forum-post';
  /**
  * 
  *
  * @export
- * @interface User
+ * @interface ForumTopic
  */
-export interface User {
+export interface ForumTopic {
 
     /**
      * @type {number}
-     * @memberof User
+     * @memberof ForumTopic
      */
     id?: number;
 
     /**
+     * @type {string}
+     * @memberof ForumTopic
+     */
+    title: string;
+
+    /**
      * @type {number}
-     * @memberof User
+     * @memberof ForumTopic
      */
-    accountId: number;
+    categoryId: number;
 
     /**
-     * @type {Account}
-     * @memberof User
+     * @type {ForumCategory}
+     * @memberof ForumTopic
      */
-    account?: Account;
+    forumCategory?: ForumCategory;
 
     /**
-     * @type {string}
-     * @memberof User
+     * @type {Array<ForumPost>}
+     * @memberof ForumTopic
      */
-    fullName?: string | null;
-
-    /**
-     * @type {string}
-     * @memberof User
-     */
-    avatarUrl?: string | null;
+    posts?: Array<ForumPost> | null;
 }

@@ -12,42 +12,35 @@
  * Do not edit the class manually.
  */
 
-import { Account } from './account';
  /**
  * 
  *
  * @export
- * @interface User
+ * @interface AuthRegisterRequest
  */
-export interface User {
-
-    /**
-     * @type {number}
-     * @memberof User
-     */
-    id?: number;
-
-    /**
-     * @type {number}
-     * @memberof User
-     */
-    accountId: number;
-
-    /**
-     * @type {Account}
-     * @memberof User
-     */
-    account?: Account;
+export interface AuthRegisterRequest {
 
     /**
      * @type {string}
-     * @memberof User
+     * @memberof AuthRegisterRequest
      */
-    fullName?: string | null;
+    username: string;
 
     /**
      * @type {string}
-     * @memberof User
+     * @memberof AuthRegisterRequest
      */
-    avatarUrl?: string | null;
+    email: string;
+
+    /**
+     * @type {string}
+     * @memberof AuthRegisterRequest
+     */
+    password: string;
+
+    /**
+     * @type {string}
+     * @memberof AuthRegisterRequest
+     */
+    firmPassword: string;
 }

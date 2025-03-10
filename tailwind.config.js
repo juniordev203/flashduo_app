@@ -11,10 +11,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'primary': '#17a2b8',
-        'lightBackground': '#DDEAF0',
-        'secondary': '#F7A072',
-        'purple': '#8e44ad',
+        'primary': '#6366F1',
         'black': '#001524',
         'nav_icon_color': '#4f46e5',
         // Màu dùng chung trong các kết quả
