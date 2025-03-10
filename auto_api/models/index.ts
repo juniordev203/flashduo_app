@@ -9,3 +9,4 @@ export * from './forum-post';
 export * from './forum-post-request';
 export * from './forum-topic';
 export * from './user';
+export * from './user-response';

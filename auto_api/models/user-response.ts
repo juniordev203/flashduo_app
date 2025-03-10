@@ -12,48 +12,35 @@
  * Do not edit the class manually.
  */
 
-import { Account } from './account';
  /**
  * 
  *
  * @export
- * @interface User
+ * @interface UserResponse
  */
-export interface User {
+export interface UserResponse {
 
     /**
      * @type {number}
-     * @memberof User
+     * @memberof UserResponse
      */
     id?: number;
 
     /**
-     * @type {number}
-     * @memberof User
+     * @type {string}
+     * @memberof UserResponse
      */
-    accountId: number;
-
-    /**
-     * @type {Account}
-     * @memberof User
-     */
-    account?: Account;
+    fullName: string;
 
     /**
      * @type {string}
-     * @memberof User
+     * @memberof UserResponse
      */
-    fullName?: string | null;
-
-    /**
-     * @type {string}
-     * @memberof User
-     */
-    avatarUrl?: string | null;
+    avatarUrl: string;
 
     /**
      * @type {Date}
-     * @memberof User
+     * @memberof UserResponse
      */
     createdAt?: Date;
 }

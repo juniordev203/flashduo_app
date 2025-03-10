@@ -17,95 +17,15 @@ import { Configuration } from '../configuration';
 // Some imports not used depending on template conditions
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from '../base';
-import { AuthLoginRequest } from '../models';
-import { AuthLoginResponse } from '../models';
-import { AuthRegisterRequest } from '../models';
 import { ForumCategory } from '../models';
 import { ForumPostRequest } from '../models';
 import { ForumTopic } from '../models';
-import { UserResponse } from '../models';
 /**
- * DefaultApi - axios parameter creator
+ * ForumApi - axios parameter creator
  * @export
  */
-export const DefaultApiAxiosParamCreator = function (configuration?: Configuration) {
+export const ForumApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
-        /**
-         * 
-         * @param {AuthLoginRequest} [body] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiAuthLoginPost: async (body?: AuthLoginRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/Auth/login`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, 'https://example.com');
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions :AxiosRequestConfig = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            const query = new URLSearchParams(localVarUrlObj.search);
-            for (const key in localVarQueryParameter) {
-                query.set(key, localVarQueryParameter[key]);
-            }
-            for (const key in options.params) {
-                query.set(key, options.params[key]);
-            }
-            localVarUrlObj.search = (new URLSearchParams(query)).toString();
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            const needsSerialization = (typeof body !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(body !== undefined ? body : {}) : (body || "");
-
-            return {
-                url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {AuthRegisterRequest} [body] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiAuthRegisterPost: async (body?: AuthRegisterRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/Auth/register`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, 'https://example.com');
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions :AxiosRequestConfig = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            const query = new URLSearchParams(localVarUrlObj.search);
-            for (const key in localVarQueryParameter) {
-                query.set(key, localVarQueryParameter[key]);
-            }
-            for (const key in options.params) {
-                query.set(key, options.params[key]);
-            }
-            localVarUrlObj.search = (new URLSearchParams(query)).toString();
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            const needsSerialization = (typeof body !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(body !== undefined ? body : {}) : (body || "");
-
-            return {
-                url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
-                options: localVarRequestOptions,
-            };
-        },
         /**
          * 
          * @param {*} [options] Override http request option.
@@ -397,86 +317,22 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
                 options: localVarRequestOptions,
             };
         },
-        /**
-         * 
-         * @param {number} [accountId] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiUserInfoUserGet: async (accountId?: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/User/info-user`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, 'https://example.com');
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions :AxiosRequestConfig = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (accountId !== undefined) {
-                localVarQueryParameter['accountId'] = accountId;
-            }
-
-            const query = new URLSearchParams(localVarUrlObj.search);
-            for (const key in localVarQueryParameter) {
-                query.set(key, localVarQueryParameter[key]);
-            }
-            for (const key in options.params) {
-                query.set(key, options.params[key]);
-            }
-            localVarUrlObj.search = (new URLSearchParams(query)).toString();
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
-                options: localVarRequestOptions,
-            };
-        },
     }
 };
 
 /**
- * DefaultApi - functional programming interface
+ * ForumApi - functional programming interface
  * @export
  */
-export const DefaultApiFp = function(configuration?: Configuration) {
+export const ForumApiFp = function(configuration?: Configuration) {
     return {
-        /**
-         * 
-         * @param {AuthLoginRequest} [body] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async apiAuthLoginPost(body?: AuthLoginRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => Promise<AxiosResponse<AuthLoginResponse>>> {
-            const localVarAxiosArgs = await DefaultApiAxiosParamCreator(configuration).apiAuthLoginPost(body, options);
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs :AxiosRequestConfig = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
-         * 
-         * @param {AuthRegisterRequest} [body] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async apiAuthRegisterPost(body?: AuthRegisterRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => Promise<AxiosResponse<void>>> {
-            const localVarAxiosArgs = await DefaultApiAxiosParamCreator(configuration).apiAuthRegisterPost(body, options);
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs :AxiosRequestConfig = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
-                return axios.request(axiosRequestArgs);
-            };
-        },
         /**
          * 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         async apiForumCategoriesGet(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => Promise<AxiosResponse<void>>> {
-            const localVarAxiosArgs = await DefaultApiAxiosParamCreator(configuration).apiForumCategoriesGet(options);
+            const localVarAxiosArgs = await ForumApiAxiosParamCreator(configuration).apiForumCategoriesGet(options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs :AxiosRequestConfig = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -489,7 +345,7 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @throws {RequiredError}
          */
         async apiForumCategoriesPost(body?: ForumCategory, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => Promise<AxiosResponse<void>>> {
-            const localVarAxiosArgs = await DefaultApiAxiosParamCreator(configuration).apiForumCategoriesPost(body, options);
+            const localVarAxiosArgs = await ForumApiAxiosParamCreator(configuration).apiForumCategoriesPost(body, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs :AxiosRequestConfig = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -501,7 +357,7 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @throws {RequiredError}
          */
         async apiForumPostsGet(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => Promise<AxiosResponse<void>>> {
-            const localVarAxiosArgs = await DefaultApiAxiosParamCreator(configuration).apiForumPostsGet(options);
+            const localVarAxiosArgs = await ForumApiAxiosParamCreator(configuration).apiForumPostsGet(options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs :AxiosRequestConfig = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -514,7 +370,7 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @throws {RequiredError}
          */
         async apiForumPostsIdDelete(id: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => Promise<AxiosResponse<void>>> {
-            const localVarAxiosArgs = await DefaultApiAxiosParamCreator(configuration).apiForumPostsIdDelete(id, options);
+            const localVarAxiosArgs = await ForumApiAxiosParamCreator(configuration).apiForumPostsIdDelete(id, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs :AxiosRequestConfig = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -527,7 +383,7 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @throws {RequiredError}
          */
         async apiForumPostsIdGet(id: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => Promise<AxiosResponse<void>>> {
-            const localVarAxiosArgs = await DefaultApiAxiosParamCreator(configuration).apiForumPostsIdGet(id, options);
+            const localVarAxiosArgs = await ForumApiAxiosParamCreator(configuration).apiForumPostsIdGet(id, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs :AxiosRequestConfig = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -540,7 +396,7 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @throws {RequiredError}
          */
         async apiForumPostsPost(body?: ForumPostRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => Promise<AxiosResponse<void>>> {
-            const localVarAxiosArgs = await DefaultApiAxiosParamCreator(configuration).apiForumPostsPost(body, options);
+            const localVarAxiosArgs = await ForumApiAxiosParamCreator(configuration).apiForumPostsPost(body, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs :AxiosRequestConfig = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -552,7 +408,7 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @throws {RequiredError}
          */
         async apiForumTopicGet(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => Promise<AxiosResponse<void>>> {
-            const localVarAxiosArgs = await DefaultApiAxiosParamCreator(configuration).apiForumTopicGet(options);
+            const localVarAxiosArgs = await ForumApiAxiosParamCreator(configuration).apiForumTopicGet(options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs :AxiosRequestConfig = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -565,20 +421,7 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @throws {RequiredError}
          */
         async apiForumTopicPost(body?: ForumTopic, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => Promise<AxiosResponse<void>>> {
-            const localVarAxiosArgs = await DefaultApiAxiosParamCreator(configuration).apiForumTopicPost(body, options);
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs :AxiosRequestConfig = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
-         * 
-         * @param {number} [accountId] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async apiUserInfoUserGet(accountId?: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => Promise<AxiosResponse<UserResponse>>> {
-            const localVarAxiosArgs = await DefaultApiAxiosParamCreator(configuration).apiUserInfoUserGet(accountId, options);
+            const localVarAxiosArgs = await ForumApiAxiosParamCreator(configuration).apiForumTopicPost(body, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs :AxiosRequestConfig = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -588,36 +431,18 @@ export const DefaultApiFp = function(configuration?: Configuration) {
 };
 
 /**
- * DefaultApi - factory interface
+ * ForumApi - factory interface
  * @export
  */
-export const DefaultApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+export const ForumApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     return {
-        /**
-         * 
-         * @param {AuthLoginRequest} [body] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async apiAuthLoginPost(body?: AuthLoginRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<AuthLoginResponse>> {
-            return DefaultApiFp(configuration).apiAuthLoginPost(body, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {AuthRegisterRequest} [body] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async apiAuthRegisterPost(body?: AuthRegisterRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void>> {
-            return DefaultApiFp(configuration).apiAuthRegisterPost(body, options).then((request) => request(axios, basePath));
-        },
         /**
          * 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         async apiForumCategoriesGet(options?: AxiosRequestConfig): Promise<AxiosResponse<void>> {
-            return DefaultApiFp(configuration).apiForumCategoriesGet(options).then((request) => request(axios, basePath));
+            return ForumApiFp(configuration).apiForumCategoriesGet(options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -626,7 +451,7 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
          * @throws {RequiredError}
          */
         async apiForumCategoriesPost(body?: ForumCategory, options?: AxiosRequestConfig): Promise<AxiosResponse<void>> {
-            return DefaultApiFp(configuration).apiForumCategoriesPost(body, options).then((request) => request(axios, basePath));
+            return ForumApiFp(configuration).apiForumCategoriesPost(body, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -634,7 +459,7 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
          * @throws {RequiredError}
          */
         async apiForumPostsGet(options?: AxiosRequestConfig): Promise<AxiosResponse<void>> {
-            return DefaultApiFp(configuration).apiForumPostsGet(options).then((request) => request(axios, basePath));
+            return ForumApiFp(configuration).apiForumPostsGet(options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -643,7 +468,7 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
          * @throws {RequiredError}
          */
         async apiForumPostsIdDelete(id: number, options?: AxiosRequestConfig): Promise<AxiosResponse<void>> {
-            return DefaultApiFp(configuration).apiForumPostsIdDelete(id, options).then((request) => request(axios, basePath));
+            return ForumApiFp(configuration).apiForumPostsIdDelete(id, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -652,7 +477,7 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
          * @throws {RequiredError}
          */
         async apiForumPostsIdGet(id: number, options?: AxiosRequestConfig): Promise<AxiosResponse<void>> {
-            return DefaultApiFp(configuration).apiForumPostsIdGet(id, options).then((request) => request(axios, basePath));
+            return ForumApiFp(configuration).apiForumPostsIdGet(id, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -661,7 +486,7 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
          * @throws {RequiredError}
          */
         async apiForumPostsPost(body?: ForumPostRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void>> {
-            return DefaultApiFp(configuration).apiForumPostsPost(body, options).then((request) => request(axios, basePath));
+            return ForumApiFp(configuration).apiForumPostsPost(body, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -669,7 +494,7 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
          * @throws {RequiredError}
          */
         async apiForumTopicGet(options?: AxiosRequestConfig): Promise<AxiosResponse<void>> {
-            return DefaultApiFp(configuration).apiForumTopicGet(options).then((request) => request(axios, basePath));
+            return ForumApiFp(configuration).apiForumTopicGet(options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -678,132 +503,93 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
          * @throws {RequiredError}
          */
         async apiForumTopicPost(body?: ForumTopic, options?: AxiosRequestConfig): Promise<AxiosResponse<void>> {
-            return DefaultApiFp(configuration).apiForumTopicPost(body, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {number} [accountId] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async apiUserInfoUserGet(accountId?: number, options?: AxiosRequestConfig): Promise<AxiosResponse<UserResponse>> {
-            return DefaultApiFp(configuration).apiUserInfoUserGet(accountId, options).then((request) => request(axios, basePath));
+            return ForumApiFp(configuration).apiForumTopicPost(body, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * DefaultApi - object-oriented interface
+ * ForumApi - object-oriented interface
  * @export
- * @class DefaultApi
+ * @class ForumApi
  * @extends {BaseAPI}
  */
-export class DefaultApi extends BaseAPI {
-    /**
-     * 
-     * @param {AuthLoginRequest} [body] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public async apiAuthLoginPost(body?: AuthLoginRequest, options?: AxiosRequestConfig) : Promise<AxiosResponse<AuthLoginResponse>> {
-        return DefaultApiFp(this.configuration).apiAuthLoginPost(body, options).then((request) => request(this.axios, this.basePath));
-    }
-    /**
-     * 
-     * @param {AuthRegisterRequest} [body] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public async apiAuthRegisterPost(body?: AuthRegisterRequest, options?: AxiosRequestConfig) : Promise<AxiosResponse<void>> {
-        return DefaultApiFp(this.configuration).apiAuthRegisterPost(body, options).then((request) => request(this.axios, this.basePath));
-    }
+export class ForumApi extends BaseAPI {
     /**
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof DefaultApi
+     * @memberof ForumApi
      */
     public async apiForumCategoriesGet(options?: AxiosRequestConfig) : Promise<AxiosResponse<void>> {
-        return DefaultApiFp(this.configuration).apiForumCategoriesGet(options).then((request) => request(this.axios, this.basePath));
+        return ForumApiFp(this.configuration).apiForumCategoriesGet(options).then((request) => request(this.axios, this.basePath));
     }
     /**
      * 
      * @param {ForumCategory} [body] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof DefaultApi
+     * @memberof ForumApi
      */
     public async apiForumCategoriesPost(body?: ForumCategory, options?: AxiosRequestConfig) : Promise<AxiosResponse<void>> {
-        return DefaultApiFp(this.configuration).apiForumCategoriesPost(body, options).then((request) => request(this.axios, this.basePath));
+        return ForumApiFp(this.configuration).apiForumCategoriesPost(body, options).then((request) => request(this.axios, this.basePath));
     }
     /**
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof DefaultApi
+     * @memberof ForumApi
      */
     public async apiForumPostsGet(options?: AxiosRequestConfig) : Promise<AxiosResponse<void>> {
-        return DefaultApiFp(this.configuration).apiForumPostsGet(options).then((request) => request(this.axios, this.basePath));
+        return ForumApiFp(this.configuration).apiForumPostsGet(options).then((request) => request(this.axios, this.basePath));
     }
     /**
      * 
      * @param {number} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof DefaultApi
+     * @memberof ForumApi
      */
     public async apiForumPostsIdDelete(id: number, options?: AxiosRequestConfig) : Promise<AxiosResponse<void>> {
-        return DefaultApiFp(this.configuration).apiForumPostsIdDelete(id, options).then((request) => request(this.axios, this.basePath));
+        return ForumApiFp(this.configuration).apiForumPostsIdDelete(id, options).then((request) => request(this.axios, this.basePath));
     }
     /**
      * 
      * @param {number} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof DefaultApi
+     * @memberof ForumApi
      */
     public async apiForumPostsIdGet(id: number, options?: AxiosRequestConfig) : Promise<AxiosResponse<void>> {
-        return DefaultApiFp(this.configuration).apiForumPostsIdGet(id, options).then((request) => request(this.axios, this.basePath));
+        return ForumApiFp(this.configuration).apiForumPostsIdGet(id, options).then((request) => request(this.axios, this.basePath));
     }
     /**
      * 
      * @param {ForumPostRequest} [body] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof DefaultApi
+     * @memberof ForumApi
      */
     public async apiForumPostsPost(body?: ForumPostRequest, options?: AxiosRequestConfig) : Promise<AxiosResponse<void>> {
-        return DefaultApiFp(this.configuration).apiForumPostsPost(body, options).then((request) => request(this.axios, this.basePath));
+        return ForumApiFp(this.configuration).apiForumPostsPost(body, options).then((request) => request(this.axios, this.basePath));
     }
     /**
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof DefaultApi
+     * @memberof ForumApi
      */
     public async apiForumTopicGet(options?: AxiosRequestConfig) : Promise<AxiosResponse<void>> {
-        return DefaultApiFp(this.configuration).apiForumTopicGet(options).then((request) => request(this.axios, this.basePath));
+        return ForumApiFp(this.configuration).apiForumTopicGet(options).then((request) => request(this.axios, this.basePath));
     }
     /**
      * 
      * @param {ForumTopic} [body] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof DefaultApi
+     * @memberof ForumApi
      */
     public async apiForumTopicPost(body?: ForumTopic, options?: AxiosRequestConfig) : Promise<AxiosResponse<void>> {
-        return DefaultApiFp(this.configuration).apiForumTopicPost(body, options).then((request) => request(this.axios, this.basePath));
-    }
-    /**
-     * 
-     * @param {number} [accountId] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public async apiUserInfoUserGet(accountId?: number, options?: AxiosRequestConfig) : Promise<AxiosResponse<UserResponse>> {
-        return DefaultApiFp(this.configuration).apiUserInfoUserGet(accountId, options).then((request) => request(this.axios, this.basePath));
+        return ForumApiFp(this.configuration).apiForumTopicPost(body, options).then((request) => request(this.axios, this.basePath));
     }
 }
