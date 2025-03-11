@@ -40,6 +40,7 @@
 import { useRouter } from "vue-router";
 import { ref } from "vue";
 
+const baseStore = useMyBaseStore();
 const router = useRouter();
 const email = ref("");
 const password = ref("");
@@ -49,11 +50,16 @@ const errorMessage = ref("");
 const handleLogin = async () => {
     try {
         isLoading.value = true;
-        await loginUser({
+        const response = await loginUser({
             email: email.value,
             password: password.value
         });
-        router.push("/");
+        if(response?.id) {
+            baseStore.setAuthUser(response);
+            await baseStore.loadUserInfo();
+            router.push("/");
+        }
+        
     } catch (error) {
         errorMessage.value = error.message || "Đăng nhập thất bại!";
     } finally {

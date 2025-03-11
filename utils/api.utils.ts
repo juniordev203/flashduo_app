@@ -1,4 +1,4 @@
-import { Configuration, DefaultApi } from "~/auto_api";
+import { Configuration, AuthApi, ForumApi, UserApi } from "~/auto_api";
 const config = new Configuration ({
     basePath: "http://localhost:5286",
     apiKey: () => {
@@ -7,4 +7,6 @@ const config = new Configuration ({
         return authUser.token ? "Bearer" + authUser.token : "";
     }
 });
-export const authApiUtil = new DefaultApi(config);
+export const authApiUtil = new AuthApi(config);
+export const forumApiUtil = new ForumApi(config);
+export const userApiUtil = new UserApi(config);
