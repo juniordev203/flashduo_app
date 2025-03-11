@@ -1,27 +1,28 @@
 <template>
-  <div class="h-full w-full flex flex-col">
+  <div class="h-full w-full flex flex-col bg-slate-100">
     <AtomHeaderSafe class="shadow-md">
       <template v-slot:left>
       </template>
       <template v-slot:default>
-        <h1 class="text-2xl font-bold">Diễn đàn Flashduo</h1>
+        <h1 class="text-xl text-black font-bold">Diễn đàn Flashduo</h1>
       </template>
       <template v-slot:right>
       </template>
     </AtomHeaderSafe>
 
-    <div class="p-4 flex flex-col gap-6 items-center justify-between">
-      <div class="bg-slate-200 w-full flex gap-4 items-center">
+    <div class="h-full w-full overflow-auto p-4 flex flex-col gap-6">
+      <div class="p-2 w-full flex gap-4 items-center rounded">
         <div class="w-[40px] h-[40px] rounded-full border border-primary flex justify-center items-center">
           <img class="w-[32px] h-[32px] rounded-full" src="~/assets/images/avatar.jpg" alt="">
         </div>
         <div class="flex-1">
-          <button class="w-full h-12 px-4 py-2 text-left text-gray-500 bg-gray-100 rounded hover:bg-gray-200"
+          <button class="w-full h-12 px-4 py-2 text-left text-gray-500 rounded hover:bg-gray-200"
             @click="$router.push('/post/new')">
             Bạn đang nghĩ gì?
           </button>
         </div>
       </div>
+      <el-divider class="m-0!"></el-divider>
       <div class="">
         <!-- Feed -->
         <div class="feed px-4">
@@ -139,17 +140,17 @@ const threads = [
   {
     username: 'markzuckerberg',
     verified: true,
-    avatar: '/avatar-zuck.jpg',
+    avatar: '',
     time: '3h',
     content: 'Exciting news! We\'re rolling out new features for Threads. Stay tuned for updates on audio messages, polls, and more customization options.',
-    image: '/threads-update.jpg',
+    image: '',
     replies: 487,
     likes: '23.4K'
   },
   {
     username: 'techinsider',
     verified: true,
-    avatar: '/avatar-tech.jpg',
+    avatar: '',
     time: '5h',
     content: 'AI is transforming how we interact with technology. What features would you like to see powered by AI in your daily apps?',
     image: null,
@@ -159,20 +160,20 @@ const threads = [
   {
     username: 'travelmoments',
     verified: false,
-    avatar: '/avatar-travel.jpg',
+    avatar: '',
     time: '7h',
     content: 'Sunrise at Bali. Sometimes the best moments are unplanned. ✨',
-    image: '/bali-travel.jpg',
+    image: '',
     replies: 43,
     likes: '1.8K'
   },
   {
     username: 'foodielife',
     verified: false,
-    avatar: '/avatar-food.jpg',
+    avatar: '',
     time: '1d',
     content: 'Made this homemade pasta from scratch today! The secret is in the sauce. Recipe in comments.',
-    image: '/pasta-dish.jpg',
+    image: '',
     replies: 76,
     likes: '952'
   }

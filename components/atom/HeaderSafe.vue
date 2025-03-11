@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-indigo-600 shadow" :style="{
+  <div class="shadow" :style="{
     paddingTop: safeArea.top + 'px',
     paddingLeft: safeArea.left + 'px',
     paddingRight: safeArea.right + 'px',

@@ -1,11 +1,11 @@
 <template>
-  <div class="h-full w-full flex flex-col">
+  <div class="h-full w-full flex flex-col bg-slate-50">
     <AtomHeaderSafe class="shadow-md">
       <template v-slot:left>
         <NuxtLink to="/profile">
           <div class="flex gap-1">
             <img src="../assets/images/avatar.jpg" class="w-10 h-10 rounded-full mr-2" alt="Profile avatar" />
-            <div>
+            <div class="text-black">
               <p class="text-sm font-light">Hi, Guy!</p>
               <p class="text-xl font-bold">Junior203</p>
             </div>
@@ -109,7 +109,7 @@
 
       </div>
       <!-- Chat Support -->
-      <div class="fixed left-4 right-4 bottom-20 bg-white p-4 rounded-full flex items-center shadow-lg cursor-pointer">
+      <div class="fixed left-4 right-4 bottom-28 bg-white p-4 rounded-full flex items-center shadow-lg cursor-pointer">
         <img src="../assets/images/avatar.jpg" class="w-10 h-10 rounded-full mr-2" alt="Help desk" />
         <div class="flex-1">
           <p class="text-lg font-semibold">Hỏi với AI</p>

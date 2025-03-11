@@ -1,10 +1,10 @@
 <template>
-  <div class="h-full w-full flex flex-col bg-slate-100">
+  <div class="h-full w-full flex flex-col bg-slate-50">
     <AtomHeaderSafe class="shadow-md">
       <template v-slot:left>
       </template>
       <template v-slot:default>
-        <span class="text-base font-medium">
+        <span class="text-xl text-black font-medium">
           Cá nhân
         </span>
       </template>

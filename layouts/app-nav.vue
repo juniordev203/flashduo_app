@@ -1,6 +1,6 @@
 <template>
   <div class="w-full h-screen flex flex-col overflow-hidden">
-    <div class="w-full h-full overflow-auto bg-slate-50" :style="{
+    <div class="w-full h-full overflow-auto " :style="{
       paddingLeft: safeArea.left + 'px',
       paddingRight: safeArea.right + 'px'
     }">

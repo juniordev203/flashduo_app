@@ -1,5 +1,5 @@
 <template>
-    <div class="h-full w-full flex flex-col bg-slate-100 justify-center">
+    <div class="h-full w-full flex flex-col bg-slate-50 justify-center">
         <div class="w-full max-w-md p-4 flex flex-col gap-6">
             <div class="flex flex-col gap-2">
                 <h1 class="text-2xl font-bold text-center">Đăng nhập</h1>
