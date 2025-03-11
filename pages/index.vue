@@ -17,7 +17,7 @@
         </span>
       </template>
       <template v-slot:right>
-        <Bell :size="20" fill="white" />
+        <Bell :size="20" class="text-black" fill="bg-black" />
       </template>
     </AtomHeaderSafe>
     <div class="p-4 max-w-screen-lg mx-auto">

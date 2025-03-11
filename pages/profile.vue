@@ -22,9 +22,6 @@
             <p class="text-xs">Ngày tạo: </p>
           </div>
         </div>
-        <button @click="handleLogout" class="flex gap-2 items-center">
-          <LogOut class="text-red-500"/>
-        </button>
       </div>
       <!-- box 1 -->
       <div class="bg-white rounded shadow flex flex-col px-4">
@@ -34,7 +31,7 @@
               <BellRing :width="20" :stroke-width="2" />
             </div>
             <div class="">
-              <p>{{ $t('lang_core_bat_chuong_thong_bao') }}</p>
+              <p>Bật chuông thông báo</p>
             </div>
           </div>
           <div class="flex items-center">
@@ -55,13 +52,13 @@
               <Globe :width="20" :stroke-width="2" />
             </div>
             <div class="">
-              <p>{{ $t('lang_core_ngon-ngu') }}</p>
+              <p>Ngôn ngữ</p>
             </div>
           </div>
           <div class="text-xs">
             <div class="flex gap-2 items-center">
-              <span>{{ $t('lang_core_' + $i18n.locale) }}</span>
-              <img :src="'/flag/' + $i18n.locale + '.png'" class="w-[30px] rounded" alt="flag">
+              <span>Tiếng việt</span>
+              <img src="~/public/flag/vi.png" class="w-[30px] rounded" alt="flag">
             </div>
           </div>
         </div>
@@ -73,7 +70,7 @@
               <SunMoon :width="20" :stroke-width="2" />
             </div>
             <div class="">
-              <p>{{ $t('lang-core_giao_dien_web') }}</p>
+              <p>Giao diện tối</p>
             </div>
           </div>
           <div class="flex items-center">
@@ -94,7 +91,7 @@
               <Share2 :width="20" :stroke-width="2" />
             </div>
             <div class="">
-              <p>{{ $t('lang_core_chia_se_ung_dung') }}</p>
+              <p>Chia sẻ ứng dụng</p>
             </div>
           </div>
         </div>
@@ -120,7 +117,7 @@
               <ShieldQuestion :width="20" :stroke-width="2" />
             </div>
             <div class="">
-              <p>{{ $t('lang_core_phan_hoi_ho_tro') }}</p>
+              <p>Trung tâm hỗ trợ</p>
             </div>
           </div>
         </div>
@@ -132,7 +129,7 @@
               <Star :width="20" :stroke-width="2" />
             </div>
             <div class="">
-              <p>{{ $t('lang_core_danh_gia_5_sao') }}</p>
+              <p>Đánh giá 5 sao</p>
             </div>
           </div>
           <div class="">
@@ -173,7 +170,7 @@
               <UserRoundPen :width="20" :stroke-width="2" />
             </div>
             <div class="">
-              <p>{{ $t('lang_core_dieu_khoan_su_dung') }}</p>
+              <p>Điều khoản ứng dụng</p>
             </div>
           </div>
         </div>
@@ -185,7 +182,7 @@
               <Share2 :width="20" :stroke-width="2" />
             </div>
             <div class="">
-              <p>{{ $t('lang_core_phien_ban') }}</p>
+              <p>Phiên bản</p>
             </div>
           </div>
           <div class="text-xs text-primary">
@@ -200,18 +197,21 @@
               <BookOpenText :width="20" :stroke-width="2" />
             </div>
             <div class="">
-              <p>{{ $t('lang_core_huong_dan_su_dung') }}</p>
+              <p>Hướng dẫn sử dụng</p>
             </div>
           </div>
         </div>
       </div>
+      <button @click="handleLogout" class="w-full p-3 flex bg-red-500 text-white gap-2 justify-center items-center text-center rounded">
+      Đăng xuất
+      </button>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
 import { BellRing, Globe, AlarmClock, Share2, SunMoon, ShieldQuestion, Star, UserRoundPen, BookOpenText, LogOut } from 'lucide-vue-next';
-import type { UserResponse } from '~/auto_api'; // Adjust the import path as necessary
+import type { UserResponse } from '~/auto_api';
 
 
 const { drawerChangeLocale } = storeToRefs(useMyBaseStore());
