@@ -20,71 +20,60 @@
         <Bell :size="20" class="text-black" fill="bg-black" />
       </template>
     </AtomHeaderSafe>
-    <div class="p-4 max-w-screen-lg mx-auto">
-      <div class="flex flex-col gap-4">
+    <div class="h-full w-full overflow-auto p-4 flex flex-col gap-6">
+      <div class="flex flex-col gap-4 mb-28">
         <!-- Search -->
         <div class="flex items-center border border-gray-200 rounded-lg px-3 py-3 mb-4">
           <Search color="black" :size="22" />
-          <input class="flex-1 ml-2 text-base outline-none bg-slate-50" placeholder="Tìm kiếm khóa học của bạn..."
+          <input class=" ml-2 text-base outline-none bg-slate-50" placeholder="Tìm kiếm khóa học của bạn..."
             type="text" />
         </div>
         <!-- Horizontal Scrollable Cards -->
-        <div class="relative overflow-x-auto">
-          <p class="text-lg font-semibold mb-2">
+        <div class="w-full h-full flex flex-col gap-5 justify-center items-center">
+          <p class="text-lg font-semibold">
             Học cùng <span class="text-indigo-500 font-extrabold">Flashduo</span>
           </p>
-          <div class="flex gap-5 w-full overflow-visible">
-            <swiper :modules="modules" :slides-per-view="'auto'" :space-between="12" :free-mode="true"
-              :touchEventsTarget="'container'" :resistance="false" :resistanceRatio="0" class="mySwiper">
-              <swiper-slide>
-                <NuxtLink to="" class="block">
-                  <div class="flex-1 bg-green-200 p-2 rounded-lg w-40 h-40 shadow">
-                    <div class="flex flex-col gap-1 p-2 rounded-lg">
-                      <p class="text-2xl font-bold">Flashcard</p>
-                      <p class="text-sm text-gray-500">28 Lessons</p>
-                      <Globe :size="20" />
-                    </div>
+          <div class="flex flex-wrap gap-5 justify-center w-full overflow-visible">
+            <NuxtLink to="" class="block">
+              <div class="bg-blue-200 px-2 pt-2 pb-5 rounded-lg w-40 h-40 shadow">
+                <div class="p-3 relative w-full h-full flex flex-col gap-1 bg-blue-100 rounded-lg">
+                  <p class="text-2xl font-bold">Flashcard</p>
+                  <p class="text-sm text-gray-500">28 Lessons</p>
+                  <Globe class="absolute bottom-3 left-3" :size="20" />
+                </div>
+              </div>
+            </NuxtLink>
+            <NuxtLink to="" class="block">
+              <div class="bg-red-200 px-2 pt-2 pb-5 rounded-lg w-40 h-40 shadow">
+                <div class="p-3 relative w-full h-full flex flex-col gap-1 bg-red-100 rounded-lg">
+                  <p class="text-2xl font-bold">Ngữ pháp</p>
+                  <p class="text-sm text-gray-500">28 Lessons</p>
+                  <Mic class="absolute bottom-3 left-3" :size="20" />
+                </div>
+              </div>
+            </NuxtLink>
+            <NuxtLink to="" class="block">
+              <div class="bg-violet-200 px-2 pt-2 pb-5 rounded-lg w-40 h-40 shadow">
+                <div class="p-3 relative w-full h-full flex flex-col gap-1 bg-violet-100 rounded-lg">
+                  <p class="text-2xl font-bold">READING</p>
+                  <p class="text-sm text-gray-500">28 Lessons</p>
+                  <Book class="absolute bottom-3 left-3" :size="20" />
+                </div>
+              </div>
+              </NuxtLink>
+              <NuxtLink to="" class="block">
+                <div class="bg-indigo-200 px-2 pt-2 pb-5 rounded-lg w-40 h-40 shadow">
+                  <div class="p-3 relative w-full h-full flex flex-col gap-1 bg-indigo-100 rounded-lg">
+                    <p class="text-2xl font-bold">LISTENING</p>
+                    <p class="text-sm text-gray-500">28 Lessons</p>
+                    <Headphones class="absolute bottom-3 left-3" :size="20" />
                   </div>
-                </NuxtLink>
-              </swiper-slide>
-              <swiper-slide>
-                <NuxtLink to="" class="block">
-                  <div class="flex-1 bg-yellow-200 p-2 rounded-lg w-40 h-40 shadow">
-                    <div class="flex flex-col gap-1 p-2 rounded-lg">
-                      <p class="text-2xl font-bold">Luyện đọc cùng AI</p>
-                      <p class="text-sm text-gray-500">28 Lessons</p>
-                      <Mic :size="20" />
-                    </div>
-                  </div>
-                </NuxtLink>
-              </swiper-slide>
-              <swiper-slide>
-                <NuxtLink to="" class="block">
-                  <div class="flex-1 bg-violet-200 p-2 rounded-lg w-40 h-40 shadow">
-                    <div class="flex flex-col gap-1 bg-blue-100 p-2 rounded-lg">
-                      <p class="text-2xl font-bold">TOEIC READING</p>
-                      <p class="text-sm text-gray-500">28 Lessons</p>
-                      <Book :size="20" />
-                    </div>
-                  </div>
-                </NuxtLink>
-              </swiper-slide>
-              <swiper-slide>
-                <NuxtLink to="" class="block">
-                  <div class="flex-1 bg-indigo-300 p-2 rounded-lg w-40 h-40 shadow">
-                    <div class="flex flex-col gap-1 bg-blue-100 p-2 rounded-lg">
-                      <p class="text-2xl font-bold">TOEIC LISTENING</p>
-                      <p class="text-sm text-gray-500">28 Lessons</p>
-                      <Headphones :size="20" />
-                    </div>
-                  </div>
-                </NuxtLink>
-              </swiper-slide>
-            </swiper>
+                </div>
+              </NuxtLink>
           </div>
         </div>
         <!-- All Courses -->
-        <div class="">
+        <!-- <div class="">
           <div class="flex justify-between items-center mb-2">
             <p class="text-lg font-semibold">Tất cả khóa học</p>
             <p class="text-xs text-blue-500 underline decoration-gray-500 cursor-pointer">Xem thêm</p>
@@ -103,33 +92,12 @@
               <p class="text-sm text-yellow-500">IELTS</p>
             </button>
           </div>
-        </div>
-        <div class="">
-          <div class="flex justify-between items-center mb-2">
-            <p class="text-lg font-semibold">Tất cả khóa học</p>
-            <p class="text-xs text-blue-500 underline decoration-gray-500 cursor-pointer">Xem thêm</p>
-          </div>
-          <div class="flex flex-wrap gap-2">
-            <button class="bg-white border border-gray-200 rounded-full px-4 py-2">
-              <p class="text-sm">Luyện nói TOEIC</p>
-            </button>
-            <button class="bg-green-100 border border-green-500 rounded-full px-4 py-2">
-              <p class="text-sm text-green-500">Luyện nghe TOEIC</p>
-            </button>
-            <button class="bg-white border border-gray-200 rounded-full px-4 py-2">
-              <p class="text-sm">TOEIC 800+</p>
-            </button>
-            <button class="bg-yellow-100 border border-yellow-500 rounded-full px-4 py-2">
-              <p class="text-sm text-yellow-500">IELTS</p>
-            </button>
-          </div>
-        </div>
-
+        </div> -->
       </div>
       <!-- Chat Support -->
       <div class="fixed left-4 right-4 bottom-28 bg-white p-4 rounded-full flex items-center shadow-lg cursor-pointer">
         <img src="../assets/images/avatar.jpg" class="w-10 h-10 rounded-full mr-2" alt="Help desk" />
-        <div class="flex-1">
+        <div class="">
           <p class="text-lg font-semibold">Hỏi với AI</p>
           <p class="text-sm text-gray-500">Bắt đầu cuộc trò chuyện ngay !</p>
         </div>
@@ -141,12 +109,7 @@
 
 <script lang="ts" setup>
 import { Bell, Book, ChevronRight, Globe, Headphones, Mic, Search } from 'lucide-vue-next';
-import { Swiper, SwiperSlide } from 'swiper/vue';
-import { FreeMode } from 'swiper/modules'
 
-import 'swiper/css';
-import 'swiper/css/free-mode';
-const modules = [FreeMode];
 </script>
 
 <style scoped>
@@ -161,41 +124,5 @@ const modules = [FreeMode];
 .overflow-x-auto::-webkit-scrollbar {
   display: none;
   /* Chrome, Safari, Opera */
-}
-
-
-/* Style cho các slide */
-.slide-card {
-  width: 140px;
-  height: 140px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  transition: all 0.3s ease;
-}
-
-/* Tùy chỉnh Swiper cho mobile */
-:deep(.swiper) {
-  padding: 8px 4px;
-  margin-left: -4px;
-  margin-right: -4px;
-}
-
-:deep(.swiper-slide) {
-  width: auto;
-  height: auto;
-}
-
-/* Thêm hiệu ứng khi chạm vào trên mobile */
-@media (hover: hover) {
-  .slide-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  }
-}
-
-/* Active slide style */
-:deep(.swiper-slide-active) .slide-card {
-  border: 1px solid rgba(0, 0, 0, 0.1);
 }
 </style>
