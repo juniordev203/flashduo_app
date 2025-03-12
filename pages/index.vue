@@ -33,43 +33,54 @@
           <p class="text-lg font-semibold mb-2">
             Học cùng <span class="text-indigo-500 font-extrabold">Flashduo</span>
           </p>
-          <div class="flex gap-5">
-            <NuxtLink to="" class="block">
-              <div class="flex-1 bg-green-200 p-2 rounded-lg w-40 h-40 shadow">
-                <div class="flex flex-col gap-1 p-2 rounded-lg">
-                  <p class="text-2xl font-bold">Flashcard</p>
-                  <p class="text-sm text-gray-500">28 Lessons</p>
-                  <Globe :size="20" />
-                </div>
-              </div>
-            </NuxtLink>
-            <NuxtLink to="" class="block">
-              <div class="flex-1 bg-yellow-200 p-2 rounded-lg w-40 h-40 shadow">
-                <div class="flex flex-col gap-1 p-2 rounded-lg">
-                  <p class="text-2xl font-bold">Luyện đọc cùng AI</p>
-                  <p class="text-sm text-gray-500">28 Lessons</p>
-                  <Mic :size="20" />
-                </div>
-              </div>
-            </NuxtLink>
-            <NuxtLink to="" class="block">
-              <div class="flex-1 bg-violet-200 p-2 rounded-lg w-40 h-40 shadow">
-                <div class="flex flex-col gap-1 bg-blue-100 p-2 rounded-lg">
-                  <p class="text-2xl font-bold">TOEIC READING</p>
-                  <p class="text-sm text-gray-500">28 Lessons</p>
-                  <Book :size="20" />
-                </div>
-              </div>
-            </NuxtLink>
-            <NuxtLink to="" class="block">
-              <div class="flex-1 bg-indigo-300 p-2 rounded-lg w-40 h-40 shadow">
-                <div class="flex flex-col gap-1 bg-blue-100 p-2 rounded-lg">
-                  <p class="text-2xl font-bold">TOEIC LISTENING</p>
-                  <p class="text-sm text-gray-500">28 Lessons</p>
-                  <Headphones :size="20" />
-                </div>
-              </div>
-            </NuxtLink>
+          <div class="flex gap-5 w-full overflow-visible">
+            <swiper :modules="modules" :slides-per-view="'auto'" :space-between="12" :free-mode="true"
+              :touchEventsTarget="'container'" :resistance="false" :resistanceRatio="0" class="mySwiper">
+              <swiper-slide>
+                <NuxtLink to="" class="block">
+                  <div class="flex-1 bg-green-200 p-2 rounded-lg w-40 h-40 shadow">
+                    <div class="flex flex-col gap-1 p-2 rounded-lg">
+                      <p class="text-2xl font-bold">Flashcard</p>
+                      <p class="text-sm text-gray-500">28 Lessons</p>
+                      <Globe :size="20" />
+                    </div>
+                  </div>
+                </NuxtLink>
+              </swiper-slide>
+              <swiper-slide>
+                <NuxtLink to="" class="block">
+                  <div class="flex-1 bg-yellow-200 p-2 rounded-lg w-40 h-40 shadow">
+                    <div class="flex flex-col gap-1 p-2 rounded-lg">
+                      <p class="text-2xl font-bold">Luyện đọc cùng AI</p>
+                      <p class="text-sm text-gray-500">28 Lessons</p>
+                      <Mic :size="20" />
+                    </div>
+                  </div>
+                </NuxtLink>
+              </swiper-slide>
+              <swiper-slide>
+                <NuxtLink to="" class="block">
+                  <div class="flex-1 bg-violet-200 p-2 rounded-lg w-40 h-40 shadow">
+                    <div class="flex flex-col gap-1 bg-blue-100 p-2 rounded-lg">
+                      <p class="text-2xl font-bold">TOEIC READING</p>
+                      <p class="text-sm text-gray-500">28 Lessons</p>
+                      <Book :size="20" />
+                    </div>
+                  </div>
+                </NuxtLink>
+              </swiper-slide>
+              <swiper-slide>
+                <NuxtLink to="" class="block">
+                  <div class="flex-1 bg-indigo-300 p-2 rounded-lg w-40 h-40 shadow">
+                    <div class="flex flex-col gap-1 bg-blue-100 p-2 rounded-lg">
+                      <p class="text-2xl font-bold">TOEIC LISTENING</p>
+                      <p class="text-sm text-gray-500">28 Lessons</p>
+                      <Headphones :size="20" />
+                    </div>
+                  </div>
+                </NuxtLink>
+              </swiper-slide>
+            </swiper>
           </div>
         </div>
         <!-- All Courses -->
@@ -130,6 +141,12 @@
 
 <script lang="ts" setup>
 import { Bell, Book, ChevronRight, Globe, Headphones, Mic, Search } from 'lucide-vue-next';
+import { Swiper, SwiperSlide } from 'swiper/vue';
+import { FreeMode } from 'swiper/modules'
+
+import 'swiper/css';
+import 'swiper/css/free-mode';
+const modules = [FreeMode];
 </script>
 
 <style scoped>
@@ -144,5 +161,41 @@ import { Bell, Book, ChevronRight, Globe, Headphones, Mic, Search } from 'lucide
 .overflow-x-auto::-webkit-scrollbar {
   display: none;
   /* Chrome, Safari, Opera */
+}
+
+
+/* Style cho các slide */
+.slide-card {
+  width: 140px;
+  height: 140px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: all 0.3s ease;
+}
+
+/* Tùy chỉnh Swiper cho mobile */
+:deep(.swiper) {
+  padding: 8px 4px;
+  margin-left: -4px;
+  margin-right: -4px;
+}
+
+:deep(.swiper-slide) {
+  width: auto;
+  height: auto;
+}
+
+/* Thêm hiệu ứng khi chạm vào trên mobile */
+@media (hover: hover) {
+  .slide-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  }
+}
+
+/* Active slide style */
+:deep(.swiper-slide-active) .slide-card {
+  border: 1px solid rgba(0, 0, 0, 0.1);
 }
 </style>

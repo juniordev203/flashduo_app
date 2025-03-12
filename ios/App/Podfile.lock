@@ -6,6 +6,8 @@ PODS:
   - CapacitorCordova (6.2.0)
   - CapacitorDevice (6.0.2):
     - Capacitor
+  - CapacitorKeyboard (7.0.0):
+    - Capacitor
   - CapacitorVoiceRecorder (6.1.0):
     - Capacitor
 
@@ -14,6 +16,7 @@ DEPENDENCIES:
   - "Capacitor (from `../../node_modules/@capacitor/ios`)"
   - "CapacitorCordova (from `../../node_modules/@capacitor/ios`)"
   - "CapacitorDevice (from `../../node_modules/@capacitor/device`)"
+  - "CapacitorKeyboard (from `../../node_modules/@capacitor/keyboard`)"
   - CapacitorVoiceRecorder (from `../../node_modules/capacitor-voice-recorder`)
 
 EXTERNAL SOURCES:
@@ -25,6 +28,8 @@ EXTERNAL SOURCES:
     :path: "../../node_modules/@capacitor/ios"
   CapacitorDevice:
     :path: "../../node_modules/@capacitor/device"
+  CapacitorKeyboard:
+    :path: "../../node_modules/@capacitor/keyboard"
   CapacitorVoiceRecorder:
     :path: "../../node_modules/capacitor-voice-recorder"
 
@@ -33,8 +38,9 @@ SPEC CHECKSUMS:
   Capacitor: 05d35014f4425b0740fc8776481f6a369ad071bf
   CapacitorCordova: b33e7f4aa4ed105dd43283acdd940964374a87d9
   CapacitorDevice: 9efd479d71d1baad74b75df531184c3f730eaa48
-  CapacitorVoiceRecorder: e3d5639a6161e749cd165e1450d9601cf7bfb076
+  CapacitorKeyboard: 4db71e694e7afb5d7c0be09b05495c19f7d6c914
+  CapacitorVoiceRecorder: aa2a99f1688c09a66e6988e2df554ab3865d1ae3
 
-PODFILE CHECKSUM: e4f99b207f0f1f4f11b1cc7c35665a37dd82708f
+PODFILE CHECKSUM: 4d32c532b862f96dd69cb898575191562d9ce049
 
 COCOAPODS: 1.16.2

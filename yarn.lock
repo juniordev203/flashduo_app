@@ -328,6 +328,11 @@
   resolved "https://registry.yarnpkg.com/@capacitor/ios/-/ios-6.2.0.tgz#7cd4db0471d1cc270962061b64b28f79f3f89103"
   integrity sha512-gisvZBIrKT1siiumgpLPY63HmJe69Ed/dOmfQQ+U1MIJmOR5gWGWvfO7QSj/FMatVZS4Xt/8jCoUgzDD1U6kSw==
 
+"@capacitor/keyboard@^7.0.0":
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/@capacitor/keyboard/-/keyboard-7.0.0.tgz#c31dcda3faa4158dc63da07e17e8c1ec31382e6d"
+  integrity sha512-Tqwy8wG+sx4UqiFCX4Q+bFw6uKgG7BiHKAPpeefoIgoEB8H8Jf3xZNZoVPnJIMuPsCdSvuyHXZbJXH9IEEirGA==
+
 "@cloudflare/kv-asset-handler@^0.3.4":
   version "0.3.4"
   resolved "https://registry.yarnpkg.com/@cloudflare/kv-asset-handler/-/kv-asset-handler-0.3.4.tgz#5cc152847c8ae4d280ec5d7f4f6ba8c976b585c3"
