@@ -36,8 +36,8 @@
           </div>
           <div class="flex items-center">
             <button
-              class="toggle-btn relative w-11 h-7 flex items-center bg-indigo-600 rounded-full transition-colors duration-300"
-              :class="{ 'bg-gray-300': !actionBtnNotice }" @click="toggleBtnNotice">
+              class="toggle-btn relative w-11 h-7 flex items-center rounded-full transition-colors duration-300"
+              :class="actionBtnNotice ? 'bg-indigo-600' : 'bg-gray-300'" @click="toggleBtnNotice">
               <span
                 class="absolute top-0.5 left-0.5 w-6 h-6 bg-white rounded-full shadow-md transform transition-transform duration-300"
                 :class="{ 'translate-x-4 absolute top-0.5 right-0.5': actionBtnNotice }"></span>
@@ -75,8 +75,8 @@
           </div>
           <div class="flex items-center">
             <button
-              class="toggle-btn relative w-11 h-7 flex items-center bg-indigo-600 rounded-full transition-colors duration-300"
-              :class="{ 'bg-gray-300': !actionBtnTheme }" @click="toggleBtnTheme">
+              class="toggle-btn relative w-11 h-7 flex items-center rounded-full transition-colors duration-300"
+              :class="actionBtnTheme ? 'bg-indigo-600' : 'bg-gray-300'" @click="toggleBtnTheme">
               <span
                 class="absolute top-0.5 left-0.5 w-6 h-6 bg-white rounded-full shadow-md transform transition-transform duration-300"
                 :class="{ 'translate-x-4 absolute top-0.5 right-0.5': actionBtnTheme }"></span>

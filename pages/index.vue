@@ -25,7 +25,8 @@
         <!-- Search -->
         <div class="flex items-center border border-gray-200 rounded-lg px-3 py-3 mb-4">
           <Search color="black" :size="22" />
-          <input class="flex-1 ml-2 text-base outline-none bg-slate-50" placeholder="Tìm kiếm khóa học của bạn..." type="text" />
+          <input class="flex-1 ml-2 text-base outline-none bg-slate-50" placeholder="Tìm kiếm khóa học của bạn..."
+            type="text" />
         </div>
         <!-- Horizontal Scrollable Cards -->
         <div class="relative overflow-x-auto">
@@ -42,27 +43,33 @@
                 </div>
               </div>
             </NuxtLink>
-            <!-- <div class="flex-1 bg-yellow-200 p-2 rounded-lg w-56 h-52 shadow cursor-pointer">
+            <NuxtLink to="" class="block">
+              <div class="flex-1 bg-yellow-200 p-2 rounded-lg w-40 h-40 shadow">
                 <div class="flex flex-col gap-1 p-2 rounded-lg">
                   <p class="text-2xl font-bold">Luyện đọc cùng AI</p>
                   <p class="text-sm text-gray-500">28 Lessons</p>
                   <Mic :size="20" />
                 </div>
               </div>
-              <div class="flex-1 bg-violet-200 p-2 rounded-lg w-56 h-52 shadow cursor-pointer">
+            </NuxtLink>
+            <NuxtLink to="" class="block">
+              <div class="flex-1 bg-violet-200 p-2 rounded-lg w-40 h-40 shadow">
                 <div class="flex flex-col gap-1 bg-blue-100 p-2 rounded-lg">
                   <p class="text-2xl font-bold">TOEIC READING</p>
                   <p class="text-sm text-gray-500">28 Lessons</p>
                   <Book :size="20" />
                 </div>
               </div>
-              <div class="flex-1 bg-indigo-300 p-2 rounded-lg w-56 h-52 shadow cursor-pointer">
+            </NuxtLink>
+            <NuxtLink to="" class="block">
+              <div class="flex-1 bg-indigo-300 p-2 rounded-lg w-40 h-40 shadow">
                 <div class="flex flex-col gap-1 bg-blue-100 p-2 rounded-lg">
                   <p class="text-2xl font-bold">TOEIC LISTENING</p>
                   <p class="text-sm text-gray-500">28 Lessons</p>
                   <Headphones :size="20" />
                 </div>
-              </div> -->
+              </div>
+            </NuxtLink>
           </div>
         </div>
         <!-- All Courses -->
