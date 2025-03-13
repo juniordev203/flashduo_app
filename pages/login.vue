@@ -43,7 +43,7 @@ import { useRouter } from "vue-router";
 import { ref } from "vue";
 
 definePageMeta({
-    'layout': 'default',
+    'layout': 'app-none',
 });
 
 const baseStore = useMyBaseStore();

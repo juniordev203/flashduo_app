@@ -26,7 +26,7 @@
         <div class="flex items-center border border-gray-200 rounded-lg px-3 py-3 mb-4">
           <Search color="black" :size="22" />
           <input class=" ml-2 text-base outline-none bg-slate-50" placeholder="Tìm kiếm khóa học của bạn..."
-            type="text" />
+            type="text" mode="text"/>
         </div>
         <!-- Horizontal Scrollable Cards -->
         <div class="w-full h-full flex flex-col gap-5 justify-center items-center">
@@ -34,7 +34,7 @@
             Học cùng <span class="text-indigo-500 font-extrabold">Flashduo</span>
           </p>
           <div class="flex flex-wrap gap-5 justify-center w-full overflow-visible">
-            <NuxtLink to="" class="block">
+            <NuxtLink to="/functions/flashcard" class="block transition-transform duration-150 active:scale-95 touch-manipulation">
               <div class="bg-blue-200 px-2 pt-2 pb-5 rounded-lg w-40 h-40 shadow">
                 <div class="p-3 relative w-full h-full flex flex-col gap-1 bg-blue-100 rounded-lg">
                   <p class="text-2xl font-bold">Flashcard</p>
@@ -43,7 +43,7 @@
                 </div>
               </div>
             </NuxtLink>
-            <NuxtLink to="" class="block">
+            <NuxtLink to="" class="block transition-transform duration-150 active:scale-95 touch-manipulation">
               <div class="bg-red-200 px-2 pt-2 pb-5 rounded-lg w-40 h-40 shadow">
                 <div class="p-3 relative w-full h-full flex flex-col gap-1 bg-red-100 rounded-lg">
                   <p class="text-2xl font-bold">Ngữ pháp</p>
@@ -52,7 +52,7 @@
                 </div>
               </div>
             </NuxtLink>
-            <NuxtLink to="" class="block">
+            <NuxtLink to="" class="block transition-transform duration-150 active:scale-95 touch-manipulation">
               <div class="bg-violet-200 px-2 pt-2 pb-5 rounded-lg w-40 h-40 shadow">
                 <div class="p-3 relative w-full h-full flex flex-col gap-1 bg-violet-100 rounded-lg">
                   <p class="text-2xl font-bold">READING</p>
@@ -61,7 +61,7 @@
                 </div>
               </div>
               </NuxtLink>
-              <NuxtLink to="" class="block">
+              <NuxtLink to="" class="block transition-transform duration-150 active:scale-95 touch-manipulation">
                 <div class="bg-indigo-200 px-2 pt-2 pb-5 rounded-lg w-40 h-40 shadow">
                   <div class="p-3 relative w-full h-full flex flex-col gap-1 bg-indigo-100 rounded-lg">
                     <p class="text-2xl font-bold">LISTENING</p>

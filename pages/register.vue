@@ -56,7 +56,7 @@ import { ref } from "vue";
 import { useRouter } from "vue-router";
 
 definePageMeta({
-    'layout': 'default',
+    'layout': 'app-none',
 });
 
 const router = useRouter();

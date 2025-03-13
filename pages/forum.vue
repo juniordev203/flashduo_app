@@ -4,7 +4,7 @@
       <template v-slot:left>
       </template>
       <template v-slot:default>
-        <h1 class="text-xl text-black font-bold">Diễn đàn Flashduo</h1>
+        <h1 class="text-xl text-black font-medium">Diễn đàn Flashduo</h1>
       </template>
       <template v-slot:right>
       </template>

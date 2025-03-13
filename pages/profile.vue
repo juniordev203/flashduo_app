@@ -11,7 +11,7 @@
       <template v-slot:right>
       </template>
     </AtomHeaderSafe>
-    <div class="h-full w-full overflow-auto p-4 flex flex-col gap-6">
+    <div class="p-4 h-full w-full overflow-auto flex flex-col gap-6">
       <div class="flex justify-between items-center">
         <div class="flex gap-4 items-center">
           <div class="w-[40px] h-[40px] rounded-full border border-primary flex justify-center items-center">
