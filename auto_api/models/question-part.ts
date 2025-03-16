@@ -11,8 +11,19 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-export * from './apis/auth-api';
-export * from './apis/exam-api';
-export * from './apis/forum-api';
-export * from './apis/user-api';
+
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+export enum QuestionPart {
+    NUMBER_1 = 1,
+    NUMBER_2 = 2,
+    NUMBER_3 = 3,
+    NUMBER_4 = 4,
+    NUMBER_5 = 5,
+    NUMBER_6 = 6,
+    NUMBER_7 = 7
+}
 

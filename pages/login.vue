@@ -9,24 +9,25 @@
                 </p>
             </div>
             <!-- login form -->
-            <form @submit.prevent="handleSubmit" class="px-6 py-4 w-full max-w-md mx-auto">
+            <form @submit.prevent="handleLogin" class="px-6 py-4 w-full max-w-md mx-auto">
                 <div class="mb-6">
                     <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
-                    <input id="email" v-model="email" type="email" inputmode="email" autocomplete="email"
+                    <input id="email" v-model="email" type="email" inputmode="email" autocomplete="email" required
                         class="mt-2 block w-full rounded-lg border border-gray-300 shadow-sm p-4 focus:border-indigo-500 focus:ring-indigo-500 text-base"
                         placeholder="Email của bạn" />
                 </div>
                 <div class="mb-6">
                     <label for="password" class="block text-sm font-medium text-gray-700">Mật khẩu</label>
-                    <input id="password" v-model="password" type="password" autocomplete="current-password"
+                    <input id="password" v-model="password" type="password" autocomplete="current-password" required
                         class="mt-2 block w-full rounded-lg border border-gray-300 shadow-sm p-4 focus:border-indigo-500 focus:ring-indigo-500 text-base"
                         placeholder="••••••••" />
                 </div>
-                <button type="submit" @click="handleLogin"
+                <button type="submit"
                     class="w-full flex justify-center py-4 mb-4 text-lg font-medium border border-transparent rounded-lg shadow-md text-white bg-indigo-500 hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-all">
-                    Đăng nhập
+                    <span v-if="isLoading">Loading...</span>
+                    <span v-else>Đăng nhập</span>
                 </button>
-                <p v-if="errorMessage" class="error text-center text-xs text-red-600">{{ errorMessage }}</p>
+                <p v-if="errorMessage" class="error text-center text-xs text-red-500">{{ errorMessage }}</p>
             </form>
             <div class="flex gap-2 justify-center text-sm text-center">
                 <p class="">Bạn chưa có tài khoản?</p>
@@ -38,12 +39,14 @@
     </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { useRouter } from "vue-router";
 import { ref } from "vue";
+import { useMyBaseStore } from "@/stores/base.store";
+import { loginUser } from "@/composables/Auth"; 
 
 definePageMeta({
-    'layout': 'app-none',
+    layout: "app-none",
 });
 
 const baseStore = useMyBaseStore();
@@ -56,6 +59,7 @@ const errorMessage = ref("");
 const handleLogin = async () => {
     try {
         isLoading.value = true;
+        errorMessage.value = "";
         const response = await loginUser({
             email: email.value,
             password: password.value
@@ -64,15 +68,18 @@ const handleLogin = async () => {
             baseStore.setAuthUser(response);
             await baseStore.loadUserInfo();
             router.push("/");
+        } else {
+            errorMessage.value = "Đăng nhập thất bại, vui lòng thử lại.";
         }
-
     } catch (error) {
-    if (error.response?.status === 401) {
-      errorMessage.value = "Email hoặc mật khẩu không đúng";
-    } else {
-      errorMessage.value = "Lỗi máy chủ, vui lòng thử lại sau.";
+        if ((error as any).response?.status === 401) {
+            errorMessage.value = "Email hoặc mật khẩu không đúng.";
+        } else {
+            errorMessage.value = "Lỗi máy chủ, vui lòng thử lại sau.";
+        }
+    } finally {
+        isLoading.value = false;
     }
-  }
 };
-
 </script>
+

@@ -12,55 +12,49 @@
  * Do not edit the class manually.
  */
 
-import { Account } from './account';
+import { ExamQuestion } from './exam-question';
 import { UserExam } from './user-exam';
  /**
  * 
  *
  * @export
- * @interface User
+ * @interface UserAnswer
  */
-export interface User {
+export interface UserAnswer {
 
     /**
      * @type {number}
-     * @memberof User
+     * @memberof UserAnswer
      */
     id?: number;
 
     /**
      * @type {number}
-     * @memberof User
+     * @memberof UserAnswer
      */
-    accountId: number;
+    userExamId: number;
 
     /**
-     * @type {Account}
-     * @memberof User
+     * @type {number}
+     * @memberof UserAnswer
      */
-    account?: Account;
-
-    /**
-     * @type {string}
-     * @memberof User
-     */
-    fullName?: string | null;
+    examQuestionId: number;
 
     /**
      * @type {string}
-     * @memberof User
+     * @memberof UserAnswer
      */
-    avatarUrl?: string | null;
+    userAnswerChoice: string;
 
     /**
-     * @type {Date}
-     * @memberof User
+     * @type {UserExam}
+     * @memberof UserAnswer
      */
-    createdAt?: Date;
+    userExam?: UserExam;
 
     /**
-     * @type {Array<UserExam>}
-     * @memberof User
+     * @type {ExamQuestion}
+     * @memberof UserAnswer
      */
-    userExam?: Array<UserExam> | null;
+    examQuestion?: ExamQuestion;
 }

@@ -49,9 +49,9 @@
                                     <p class="">120</p>
                                 </div>
                             </div>
-                            <p class="">7 phần thi | 200 câu</p>
+                            <p class="mb-2">7 phần thi | 200 câu</p>
                             <NuxtLink to="/exam-detail" class="w-full">
-                                <button class="w-full px-4 py-2 bg-indigo-200 rounded transition-transform duration-150 active:scale-95 touch-manipulation">Chi tiết</button>
+                                <button class="text-white w-full px-4 py-2 bg-indigo-500 rounded transition-transform duration-150 active:scale-95 touch-manipulation">Chi tiết</button>
                             </NuxtLink>
                         </div>
                     </NuxtLink>

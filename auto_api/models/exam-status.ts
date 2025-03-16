@@ -11,8 +11,15 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-export * from './apis/auth-api';
-export * from './apis/exam-api';
-export * from './apis/forum-api';
-export * from './apis/user-api';
+
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+export enum ExamStatus {
+    NUMBER_0 = 0,
+    NUMBER_1 = 1,
+    NUMBER_2 = 2
+}
 
