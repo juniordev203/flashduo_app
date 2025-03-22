@@ -22,7 +22,8 @@
                 <div class="flex justify-between items-center">
                     <p class="text-xl font-medium">Danh sách đề thi</p>
                     <el-dropdown>
-                        <el-button type="primary" class="!bg-blue-200 !border-none !text-black transition-transform duration-150 active:scale-95 touch-manipulation">
+                        <el-button type="primary"
+                            class="!bg-blue-200 !border-none !text-black transition-transform duration-150 active:scale-95 touch-manipulation">
                             Lọc đề thi<el-icon class="el-icon--right"><arrow-down /></el-icon>
                         </el-button>
                         <template #dropdown>
@@ -35,26 +36,27 @@
                     </el-dropdown>
                 </div>
                 <div class="flex flex-col gap-4">
-                    <NuxtLink to="">
-                        <div class="p-4 w-full h-full flex flex-col gap-1 bg-white rounded shadow">
-                            <p class="text-lg font-bold">New Economy TOEIC</p>
-                            <p class="">Test 1</p>
-                            <div class="flex gap-4">
-                                <div class="flex gap-2">
-                                    <Clock class="w-5 h-5" />
-                                    <p class="">120 phút</p>
-                                </div>
-                                <div class="flex gap-2">
-                                    <UserPen class="w-5 h-5" />
-                                    <p class="">120</p>
-                                </div>
+                    <div v-for="(data) in examInfo" :key="data.id"
+                        class="p-4 w-full h-full flex flex-col gap-1 bg-white rounded shadow">
+                        <p class="text-lg font-bold">{{ data.examName }}</p>
+                        <p class="">{{ data.description }}</p>
+                        <div class="flex gap-4">
+                            <div class="flex gap-2">
+                                <Clock class="w-5 h-5" />
+                                <p class="">120 phút</p>
                             </div>
-                            <p class="mb-2">7 phần thi | 200 câu</p>
-                            <NuxtLink to="/exam-detail" class="w-full">
-                                <button class="text-white w-full px-4 py-2 bg-indigo-500 rounded transition-transform duration-150 active:scale-95 touch-manipulation">Chi tiết</button>
-                            </NuxtLink>
+                            <div class="flex gap-2">
+                                <UserPen class="w-5 h-5" />
+                                <p class="">120</p>
+                            </div>
                         </div>
-                    </NuxtLink>
+                        <p class="mb-2">7 phần thi | {{ data.totalQuestions }} câu</p>
+                        <NuxtLink :to="`/exam/${data.id}`" class="w-full">
+                            <button
+                                class="text-white w-full px-4 py-2 bg-indigo-500 rounded transition-transform duration-150 active:scale-95 touch-manipulation">Chi
+                                tiết</button>
+                        </NuxtLink>
+                    </div>
                 </div>
             </div>
         </div>
@@ -62,11 +64,22 @@
 </template>
 
 <script setup lang="ts">
-import { defineComponent } from 'vue'
 import { Search, Clock, UserPen } from 'lucide-vue-next'
 import { ArrowDown } from '@element-plus/icons-vue'
+import type { ExamResponse } from '~/auto_api/models'
 
-
+const examInfo = ref<ExamResponse[]>([]);
+const makeExams = async () => {
+    try {
+        const response = await examApiUtil.apiExamExamGet();
+        examInfo.value = response.data;
+    } catch (error) {
+        console.error("Lỗi khi lấy danh sách đề thi:", error);
+    }
+};
+onMounted(() => {
+    makeExams();
+})
 </script>
 
 <style scoped></style>

@@ -50,7 +50,7 @@ export interface ExamQuestion {
      * @type {Question}
      * @memberof ExamQuestion
      */
-    question?: Question;
+    question: Question;
 
     /**
      * @type {number}

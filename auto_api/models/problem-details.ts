@@ -12,42 +12,47 @@
  * Do not edit the class manually.
  */
 
-import { ExamQuestion } from './exam-question';
  /**
  * 
  *
  * @export
- * @interface Exam
+ * @interface ProblemDetails
  */
-export interface Exam {
-
-    /**
-     * @type {number}
-     * @memberof Exam
-     */
-    id?: number;
+export interface ProblemDetails {
 
     /**
      * @type {string}
-     * @memberof Exam
+     * @memberof ProblemDetails
      */
-    examName: string;
+    detail?: string | null;
 
     /**
      * @type {string}
-     * @memberof Exam
+     * @memberof ProblemDetails
      */
-    description?: string | null;
+    instance?: string | null;
+
+    /**
+     * @type {any}
+     * @memberof ProblemDetails
+     */
+    additionalProperties?: any;
+
+    /**
+     * @type {string}
+     * @memberof ProblemDetails
+     */
+    type?: string | null;
+
+    /**
+     * @type {string}
+     * @memberof ProblemDetails
+     */
+    title?: string | null;
 
     /**
      * @type {number}
-     * @memberof Exam
+     * @memberof ProblemDetails
      */
-    totalQuestions: number;
-
-    /**
-     * @type {Array<ExamQuestion>}
-     * @memberof Exam
-     */
-    examQuestion: Array<ExamQuestion>;
+    status?: number | null;
 }

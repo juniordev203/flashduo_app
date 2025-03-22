@@ -12,42 +12,36 @@
  * Do not edit the class manually.
  */
 
-import { ExamQuestion } from './exam-question';
+import { QuestionResponse } from './question-response';
  /**
  * 
  *
  * @export
- * @interface Exam
+ * @interface ExamQuestionResponse
  */
-export interface Exam {
+export interface ExamQuestionResponse {
 
     /**
      * @type {number}
-     * @memberof Exam
+     * @memberof ExamQuestionResponse
      */
     id?: number;
 
     /**
-     * @type {string}
-     * @memberof Exam
+     * @type {number}
+     * @memberof ExamQuestionResponse
      */
-    examName: string;
-
-    /**
-     * @type {string}
-     * @memberof Exam
-     */
-    description?: string | null;
+    examId?: number;
 
     /**
      * @type {number}
-     * @memberof Exam
+     * @memberof ExamQuestionResponse
      */
-    totalQuestions: number;
+    questionId?: number;
 
     /**
-     * @type {Array<ExamQuestion>}
-     * @memberof Exam
+     * @type {QuestionResponse}
+     * @memberof ExamQuestionResponse
      */
-    examQuestion: Array<ExamQuestion>;
+    question?: QuestionResponse;
 }
