@@ -30,6 +30,7 @@ import type { ExamResponse } from '~/auto_api';
 import { useExamStore } from '~/stores/exam'
 import type { Exam } from '~/types/exam.types'
 import { ArrowRightLeft } from 'lucide-vue-next'
+import { QuestionSectionEnum } from '~/constants/enum';
 const route = useRoute();
 const examStore = useExamStore()
 
@@ -43,9 +44,8 @@ const emit = defineEmits<{
   (e: 'toggle-section'): void
 }>()
 
-
 const currentSectionLabel = computed(() => {
-  return examStore.currentSection === 'listening' ? 'Listening' : 'Reading'
+  return examStore.currentSection === QuestionSectionEnum.Listening ? 'Listening' : 'Reading'
 })
 
 const timeWarning = computed(() => {

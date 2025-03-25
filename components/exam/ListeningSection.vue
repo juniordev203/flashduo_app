@@ -37,7 +37,7 @@
         </div>
       </div>
       <div v-else class="py-10 text-center">
-        <p class="text-lg text-gray-500">Khong co cau hoi nao!</p>
+        <p class="text-lg text-gray-500">listening!</p>
       </div>
     </div>
   </div>

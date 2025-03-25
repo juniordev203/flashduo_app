@@ -19,6 +19,7 @@ export * from './question-answer';
 export * from './question-answer-response';
 export * from './question-part';
 export * from './question-response';
+export * from './question-section';
 export * from './user';
 export * from './user-answer';
 export * from './user-exam';

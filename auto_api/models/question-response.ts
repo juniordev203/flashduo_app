@@ -14,6 +14,7 @@
 
 import { QuestionAnswerResponse } from './question-answer-response';
 import { QuestionPart } from './question-part';
+import { QuestionSection } from './question-section';
  /**
  * 
  *
@@ -27,6 +28,12 @@ export interface QuestionResponse {
      * @memberof QuestionResponse
      */
     id?: number;
+
+    /**
+     * @type {QuestionSection}
+     * @memberof QuestionResponse
+     */
+    section?: QuestionSection;
 
     /**
      * @type {QuestionPart}
