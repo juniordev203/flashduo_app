@@ -1,4 +1,5 @@
 export * from './account';
+export * from './answer-choice-request';
 export * from './auth-login-request';
 export * from './auth-login-response';
 export * from './auth-register-request';
@@ -22,5 +23,8 @@ export * from './question-response';
 export * from './question-section';
 export * from './user';
 export * from './user-answer';
+export * from './user-answer-request';
 export * from './user-exam';
+export * from './user-exam-base-request';
+export * from './user-exam-score-response';
 export * from './user-response';

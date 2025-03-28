@@ -5,7 +5,7 @@
             </template>
             <template v-slot:default>
                 <span class="text-xl text-black font-medium">
-                    Thi thử
+                    Thi thử <span class="text-blue-500 font-bold">TOEIC</span>
                 </span>
             </template>
             <template v-slot:right>
@@ -37,20 +37,22 @@
                 </div>
                 <div class="flex flex-col gap-4">
                     <div v-for="(data) in examInfo" :key="data.id"
-                        class="p-4 w-full h-full flex flex-col gap-1 bg-white rounded shadow">
+                        class="p-4 w-full h-full flex flex-col gap-2 bg-white rounded shadow">
                         <p class="text-lg font-bold">{{ data.examName }}</p>
                         <p class="">{{ data.description }}</p>
-                        <div class="flex gap-4">
-                            <div class="flex gap-2">
-                                <Clock class="w-5 h-5" />
-                                <p class="">120 phút</p>
+                        <div class="flex justify-between items-center text-xs mb-1">
+                            <div class="flex gap-4">
+                                <div class="flex gap-2 items-center">
+                                    <Clock class="w-4 h-4" />
+                                    <p class="">120 phút</p>
+                                </div>
+                                <div class="flex gap-2 items-center">
+                                    <UserPen class="w-4 h-4" />
+                                    <p class="">120</p>
+                                </div>
                             </div>
-                            <div class="flex gap-2">
-                                <UserPen class="w-5 h-5" />
-                                <p class="">120</p>
-                            </div>
+                            <p class="">7 phần thi | {{ data.totalQuestions }} câu</p>
                         </div>
-                        <p class="mb-2">7 phần thi | {{ data.totalQuestions }} câu</p>
                         <NuxtLink :to="`/exam/${data.id}`" class="w-full">
                             <button
                                 class="text-white w-full px-4 py-2 bg-indigo-500 rounded transition-transform duration-150 active:scale-95 touch-manipulation">Chi

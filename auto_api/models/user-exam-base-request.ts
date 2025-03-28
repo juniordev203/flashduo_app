@@ -12,42 +12,30 @@
  * Do not edit the class manually.
  */
 
-import { ExamQuestion } from './exam-question';
+import { ExamStatus } from './exam-status';
  /**
  * 
  *
  * @export
- * @interface Exam
+ * @interface UserExamBaseRequest
  */
-export interface Exam {
+export interface UserExamBaseRequest {
 
     /**
      * @type {number}
-     * @memberof Exam
+     * @memberof UserExamBaseRequest
      */
-    id?: number;
-
-    /**
-     * @type {string}
-     * @memberof Exam
-     */
-    examName: string;
-
-    /**
-     * @type {string}
-     * @memberof Exam
-     */
-    description?: string | null;
+    userId?: number;
 
     /**
      * @type {number}
-     * @memberof Exam
+     * @memberof UserExamBaseRequest
      */
-    totalQuestions: number;
+    examId?: number;
 
     /**
-     * @type {Array<ExamQuestion>}
-     * @memberof Exam
+     * @type {ExamStatus}
+     * @memberof UserExamBaseRequest
      */
-    examQuestions: Array<ExamQuestion>;
+    status?: ExamStatus;
 }

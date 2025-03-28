@@ -13,6 +13,7 @@
  */
 
 import { ExamQuestion } from './exam-question';
+import { QuestionSection } from './question-section';
 import { UserExam } from './user-exam';
  /**
  * 
@@ -38,7 +39,13 @@ export interface UserAnswer {
      * @type {number}
      * @memberof UserAnswer
      */
-    examQuestionId: number;
+    questionId: number;
+
+    /**
+     * @type {QuestionSection}
+     * @memberof UserAnswer
+     */
+    section: QuestionSection;
 
     /**
      * @type {string}

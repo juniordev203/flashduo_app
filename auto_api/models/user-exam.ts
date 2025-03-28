@@ -106,5 +106,5 @@ export interface UserExam {
      * @type {Array<UserAnswer>}
      * @memberof UserExam
      */
-    userAnswer?: Array<UserAnswer> | null;
+    userAnswers?: Array<UserAnswer> | null;
 }

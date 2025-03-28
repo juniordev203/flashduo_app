@@ -75,5 +75,5 @@ export interface Question {
      * @type {Array<QuestionAnswer>}
      * @memberof Question
      */
-    questionAnswer?: Array<QuestionAnswer> | null;
+    questionAnswers?: Array<QuestionAnswer> | null;
 }

@@ -217,17 +217,6 @@ const toggleSection = () => {
   }
 };
 
-const saveAnswer = ({
-  questionId,
-  answer,
-}: {
-  questionId: number;
-  answer: string;
-}) => {
-  examStore.answers[questionId] = answer;
-  console.log(examStore.answers);
-};
-
 const getQuestionButtonClass = (index: number) => {
   if (index === examStore.currentQuestionIndex) {
     return "bg-blue-300 text-white";
@@ -246,10 +235,21 @@ const getQuestionButtonClass = (index: number) => {
   return "bg-gray-100 text-gray-700";
 };
 
-const confirmSubmit = () => {
+const saveAnswer = ({
+  questionId,
+  answer,
+}: {
+  questionId: number;
+  answer: string;
+}) => {
+  examStore.answers[questionId] = answer;
+  console.log(examStore.answers);
+};
+
+const confirmSubmit = async () => {
   if (confirm("Bạn có chắc chắn muốn nộp bài không?")) {
     const result = examStore.submitExam();
-    router.push(`/result/${examStore.currentExam?.id}`);
+    router.push(`/exam/${examStore.currentExam?.id}/result`);
   }
 };
 </script>

@@ -12,42 +12,30 @@
  * Do not edit the class manually.
  */
 
-import { ExamQuestion } from './exam-question';
+import { AnswerChoiceRequest } from './answer-choice-request';
  /**
  * 
  *
  * @export
- * @interface Exam
+ * @interface UserAnswerRequest
  */
-export interface Exam {
+export interface UserAnswerRequest {
 
     /**
      * @type {number}
-     * @memberof Exam
+     * @memberof UserAnswerRequest
      */
-    id?: number;
-
-    /**
-     * @type {string}
-     * @memberof Exam
-     */
-    examName: string;
-
-    /**
-     * @type {string}
-     * @memberof Exam
-     */
-    description?: string | null;
+    userId?: number;
 
     /**
      * @type {number}
-     * @memberof Exam
+     * @memberof UserAnswerRequest
      */
-    totalQuestions: number;
+    examId?: number;
 
     /**
-     * @type {Array<ExamQuestion>}
-     * @memberof Exam
+     * @type {Array<AnswerChoiceRequest>}
+     * @memberof UserAnswerRequest
      */
-    examQuestions: Array<ExamQuestion>;
+    answerChoice?: Array<AnswerChoiceRequest> | null;
 }

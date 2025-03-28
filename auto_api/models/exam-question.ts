@@ -14,6 +14,7 @@
 
 import { Exam } from './exam';
 import { Question } from './question';
+import { UserAnswer } from './user-answer';
  /**
  * 
  *
@@ -50,11 +51,17 @@ export interface ExamQuestion {
      * @type {Question}
      * @memberof ExamQuestion
      */
-    question: Question;
+    question?: Question;
 
     /**
      * @type {number}
      * @memberof ExamQuestion
      */
     questionOrder: number;
+
+    /**
+     * @type {Array<UserAnswer>}
+     * @memberof ExamQuestion
+     */
+    userAnswers?: Array<UserAnswer> | null;
 }

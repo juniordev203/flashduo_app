@@ -44,7 +44,7 @@ export interface User {
      * @type {string}
      * @memberof User
      */
-    fullName?: string | null;
+    fullName: string;
 
     /**
      * @type {string}
@@ -62,5 +62,5 @@ export interface User {
      * @type {Array<UserExam>}
      * @memberof User
      */
-    userExam?: Array<UserExam> | null;
+    userExams?: Array<UserExam> | null;
 }
