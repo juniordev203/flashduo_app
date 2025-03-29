@@ -1,21 +1,14 @@
 import { defineStore } from "pinia";
-import type {
-  AuthLoginRequest,
-  AuthLoginResponse,
-  UserResponse,
-} from "~/auto_api";
-
+import type { AuthLoginRequest, AuthLoginResponse, UserResponse } from "~/auto_api";
+import { fetchUserInfo } from "~/composables/User"
 export const useMyBaseStore = defineStore({
   id: "myBaseStore",
   state: () => ({
-    // status app
     appReady: false,
     loadingApp: false,
-    // drawer state app
     drawerChangeLocale: false,
-    // locale state app
-    locales: ["vi", "en"],
-    locale: "vi",
+    locales: ["vi", "en"] as const,
+    locale: "vi" as "vi" | "en",
     authUser: undefined as AuthLoginResponse | undefined,
     userInfo: undefined as UserResponse | undefined,
   }),
@@ -23,20 +16,31 @@ export const useMyBaseStore = defineStore({
     setAuthUser(user: AuthLoginResponse) {
       this.authUser = user;
       localStorage.setItem("authUser", JSON.stringify(user));
+      this.loadUserInfo();
     },
     async loadUserInfo() {
       if (this.authUser?.id) {
-        const userInfo = await fetchUserInfo(this.authUser.id);
-        if (userInfo) {
-          this.userInfo = userInfo;
-          localStorage.setItem("userInfo", JSON.stringify(userInfo));
+        try {
+          const userInfo = await fetchUserInfo(this.authUser.id);
+          if (userInfo) {
+            this.userInfo = userInfo;
+            localStorage.setItem("userInfo", JSON.stringify(userInfo));
+          }
+        } catch (error) {
+          console.error("Lỗi khi tải thông tin người dùng!", error);
         }
       }
     },
     loadAuthUser() {
       const user = localStorage.getItem("authUser");
       if (user) {
-        this.authUser = JSON.parse(user);
+        try {
+          this.authUser = JSON.parse(user);
+          this.loadUserInfo();
+        } catch (error) {
+          console.error("Invalid authUser data in localStorage:", error);
+          this.clearAuthUser();
+        }
       }
     },
     clearAuthUser() {

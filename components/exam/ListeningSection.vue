@@ -16,7 +16,7 @@
           <p class="text-gray-600">{{ currentQuestion.content }}</p>
         </div>
         <div class="flex flex-col gap-2">
-          <div v-for="(option, idx) in currentQuestion.questionAnswer" :key="idx" class="flex gap-2">
+          <div v-for="(option, idx) in currentQuestion.questionAnswers" :key="idx" class="flex gap-2">
             <div class="flex items-center">
               <input 
                 :id="`question-${currentQuestion?.id || currentIndex}-option-${idx}`" 
@@ -48,11 +48,12 @@ import type { Question } from '~/auto_api/models';
 import { computed } from 'vue'
 const props = defineProps<{
   questions: Question[]
+  section: number
   currentIndex: number
   answers: Record<number, string>
 }>();
 const emit = defineEmits<{
-  (e: 'save-answer', payload: { questionId: number, answer: string }): void
+  (e: 'save-answer', payload: { questionId: number, section: number, answer: string }): void
   (e: 'change-question', index: number ): void
 }>()
 const currentQuestion = computed(() => {
@@ -60,7 +61,7 @@ const currentQuestion = computed(() => {
 })
 function saveQuestionAnswer(answer: string) {
   if (currentQuestion.value?.id != null) {
-    emit('save-answer', { questionId: currentQuestion.value.id, answer})
+    emit('save-answer', { questionId: currentQuestion.value.id, section: props.section , answer})
   }
 }
 

@@ -14,13 +14,21 @@
     </div>
 </template>
 <script lang="ts" setup>
+import { useMyBaseStore } from '~/stores/base.store';
+const myBaseStore = useMyBaseStore();
 const updateVh = () => {
   const vh = window.innerHeight * 0.01;
   document.documentElement.style.setProperty('--vh', `${vh}px`);
 }
+
+const makeAuth = async () => {
+  myBaseStore.loadAuthUser();
+}
+
 onMounted(() => {
   updateVh();
   window.addEventListener('resize', updateVh);
+  makeAuth();
 })
 
 </script>

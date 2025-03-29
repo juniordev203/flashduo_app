@@ -28,12 +28,6 @@ export interface UserAnswerRequest {
     userId?: number;
 
     /**
-     * @type {number}
-     * @memberof UserAnswerRequest
-     */
-    examId?: number;
-
-    /**
      * @type {Array<AnswerChoiceRequest>}
      * @memberof UserAnswerRequest
      */

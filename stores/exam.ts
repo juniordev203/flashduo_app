@@ -1,19 +1,40 @@
 import { defineStore } from "pinia";
 import { ref, computed } from "vue";
-import { type ExamResponse, type Question } from "~/auto_api/models";
+import { ExamStatus, type AnswerChoiceRequest, type ExamResponse, type Question, type UserExamBaseRequest } from "~/auto_api/models";
 import { QuestionSectionEnum } from "~/constants/enum";
-import type { Exam, ExamState } from "~/types/exam.types";
+import { Storage } from '@capacitor/storage';
 
 export const useExamStore = defineStore("exam", () => {
+  const userInfo = useMyBaseStore();
+  const userId = computed(() => userInfo.$state.userInfo?.id);
   const currentExam = ref<ExamResponse | null>(null);
   const currentSection = ref<QuestionSectionEnum>(
     QuestionSectionEnum.Listening
   );
   const currentPart = ref<number>(1);
   const timeRemaining = ref(7200);
-  const answers = ref<Record<number, string>>({});
   const currentQuestionIndex = ref(0);
   const examSubmitted = ref(false);
+  const answers = ref<Record<number, string>>({});
+  const userExamId = ref<number | null>(null);
+
+  const saveAnswer = async (questionId: number, section: number, optionLabel: string) => {
+    answers.value[questionId] = optionLabel;
+    const answerData = JSON.stringify({ section, optionLabel });
+    await Storage.set({
+      key: `answer_${questionId}`,
+      value: answerData,
+    })
+  }
+  const getAnswer = async (questionId: number) => {
+    if (answers.value[questionId]) return answers.value[questionId]
+    const result = await Storage.get({ key: `answer_${questionId}` })
+    if (result.value) {
+      const { optionLabel } = JSON.parse(result.value);
+      return optionLabel;
+    }
+    return "";
+  }
 
   const listeningQuestion = computed<Question[]>(() => {
     return (
@@ -53,33 +74,72 @@ export const useExamStore = defineStore("exam", () => {
       console.error("❌ Lỗi API:", error);
     }
   };
+  // const postUserExam = async () => {
+  //   try {
+  //     if (!userId.value || !currentExam.value?.id) {
+  //       console.warn("Thiếu userId hoặc examId, không thể tạo bài thi!");
+  //       return;
+  //     }
+  //     const request: UserExamBaseRequest = {
+  //       userId: userId.value,
+  //       examId: currentExam.value?.id,
+  //       status: ExamStatus.NUMBER_1,
+  //     }
+  //     const response = await examApiUtil.apiExamUserExamStartPost(request);
+  //     if (typeof response === "number") {
+  //       console.log("Bài thi được tạo thành công", response);
+  //       userExamId.value = response;
+  //       return response;
+  //     } else {
+  //       console.warn("Lỗi khi tạo bài thi cho người dùng");
+  //     } 
+  //   } catch (error) {
+  //     console.error("Lỗi khi tạo bài thi cho người dùng", error);
+  //   }
+  // }
 
-  const setSection = (Reading?: QuestionSectionEnum) => {
+  const setSection = (section: QuestionSectionEnum) => {
+    currentSection.value = section;
+  };
+  const toggleSection = () => {
     currentSection.value =
       currentSection.value === QuestionSectionEnum.Listening
         ? QuestionSectionEnum.Reading
         : QuestionSectionEnum.Listening;
   };
-
   const updateTime = () => {
     timeRemaining.value -= 1;
-  };
-
-  const saveAnswer = (questionId: number, answer: string) => {
-    answers.value[questionId] = answer;
   };
 
   const setQuestionIndex = (index: number) => {
     currentQuestionIndex.value = index;
   };
 
-  const submitExam = () => {
+  const submitExam = async (examId: number, userId: number) => {
     examSubmitted.value = true;
-    return {
-      answers: answers.value,
-      examId: currentExam.value?.id,
-      timeUsed: 7200 - timeRemaining.value,
-    };
+    const answerChoice: AnswerChoiceRequest[] = [];
+
+    for (const question of [...listeningQuestion.value, ...readingQuestion.value]) {
+      const result = await Storage.get({ key: `answer_${question.id}` });
+      if (result.value) {
+        const { section, optionLabel } = JSON.parse(result.value);
+        answerChoice.push({
+          questionId: question.id,
+          section,
+          optionLabel,
+        });
+      }
+    }
+    try {
+      if (userExamId.value != null) {
+        await examApiUtil.apiExamUserAnswerUserExamIdPost(userExamId.value, {
+          userId,
+          answerChoice,
+        });
+      }
+    } catch (error) {
+      console.log("Lỗi khi nộp bài: ", error);
+    }
   };
 
   const resetExamState = () => {
@@ -95,16 +155,19 @@ export const useExamStore = defineStore("exam", () => {
     currentExam,
     currentSection,
     timeRemaining,
-    answers,
     currentQuestionIndex,
     examSubmitted,
     readingQuestion,
     listeningQuestion,
-    fetchExam,
+    answers,
     setSection,
+    fetchExam,
+    toggleSection,
     updateTime,
-    saveAnswer,
     setQuestionIndex,
+    saveAnswer,
+    getAnswer,
     submitExam,
+    // postUserExam,
   };
 });

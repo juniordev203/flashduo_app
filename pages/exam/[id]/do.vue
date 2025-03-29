@@ -35,6 +35,7 @@
             <ListeningSection
               v-if="examStore.currentSection === QuestionSectionEnum.Listening"
               :questions="examStore.listeningQuestion"
+              :section="1"
               :currentIndex="getListeningIndex()"
               :answers="examStore.answers"
               @save-answer="saveAnswer"
@@ -44,6 +45,7 @@
             <ReadingSection
               v-if="examStore.currentSection === QuestionSectionEnum.Reading"
               :questions="examStore.readingQuestion"
+              :section="2"
               :currentIndex="getReadingIndex()"
               :answers="examStore.answers"
               @save-answer="saveAnswer"
@@ -108,22 +110,26 @@
 
 <script lang="ts" setup>
 import { useExamStore } from "~/stores/exam";
+import { useMyBaseStore } from "~/stores/base.store"
 import { ref, onMounted, onBeforeUnmount } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { ChevronLeft, ChevronRight, X } from "lucide-vue-next";
 import ListeningSection from "~/components/exam/ListeningSection.vue";
 import ReadingSection from "~/components/exam/ReadingSection.vue";
 import { QuestionSectionEnum } from "~/constants/enum";
+import { Storage } from '@capacitor/storage';
 
 definePageMeta({
   layout: "app-none",
 });
 
 const examStore = useExamStore();
+const userInfo = useMyBaseStore();
 const route = useRoute();
-const router = useRouter();
 const timerInterval = ref<number | null>(null);
 const examId = Number(route.params.id);
+const userId = computed(() => userInfo.$state.userInfo?.id ?? 0);
+console.log("id user",userId)
 const totalQuestion = computed(
   () => examStore.currentExam?.totalQuestions ?? 0
 );
@@ -135,12 +141,21 @@ watchEffect(() => {
 }) 
 
 onMounted(async () => {
-  if (!isNaN(examId) && examId) {
+  try {
+    if (!examId || Number.isNaN(Number(examId))) {
+      console.error("Không gọi fetchExam vì examId không hợp lệ:", examId);
+      return;
+    }
+    if (!userId || Number.isNaN(Number(examId)) || !examId || Number.isNaN(Number(examId))) {
+      console.error("Không gọi postUserExam vì userId hoặc examId không hợp lệ");
+      return;
+    }
+    // await examStore.postUserExam();
     await examStore.fetchExam(examId);
-  } else {
-    console.error("Không gọi fetchExam vì examId không hợp lệ:", examId);
+    startTimer();
+  } catch (error) {
+    console.error("Lỗi khi khởi tạo bài thi:", error);
   }
-  startTimer();
 });
 
 onBeforeUnmount(() => {
@@ -154,7 +169,7 @@ const startTimer = () => {
     if (examStore.timeRemaining > 0) {
       examStore.updateTime();
     } else {
-      examStore.submitExam();
+      confirmSubmit();
       if (timerInterval.value) {
         clearInterval(timerInterval.value);
       }
@@ -229,27 +244,34 @@ const getQuestionButtonClass = (index: number) => {
     const readingIndex = index - halfTotal;
     questionId = examStore.readingQuestion[readingIndex]?.id;
   }
-  if (questionId !== undefined && examStore.answers[questionId] !== undefined) {
-    return "bg-green-300 text-white";
-  }
-  return "bg-gray-100 text-gray-700";
+  return questionId !== undefined && examStore.answers[questionId] !== undefined
+    ? "bg-green-300 text-white"
+    : "bg-gray-100 text-gray-700";
 };
 
-const saveAnswer = ({
+const saveAnswer = async ({
   questionId,
+  section,
   answer,
 }: {
   questionId: number;
+  section: number,
   answer: string;
 }) => {
   examStore.answers[questionId] = answer;
-  console.log(examStore.answers);
+  await Storage.set({ 
+    key: `answer_${questionId}`,
+    value: JSON.stringify({ section, answer }),
+   });
+   console.log("Câu trả lời đã lưu: ", questionId, section, answer);
 };
-
 const confirmSubmit = async () => {
   if (confirm("Bạn có chắc chắn muốn nộp bài không?")) {
-    const result = examStore.submitExam();
-    router.push(`/exam/${examStore.currentExam?.id}/result`);
+    if (!userId.value) {
+      console.error("Không tìm thấy userId");
+      return
+    }
+    await examStore.submitExam(examId, userId.value);
   }
 };
 </script>
