@@ -30,7 +30,7 @@ export interface QuestionAnswerResponse {
      * @type {string}
      * @memberof QuestionAnswerResponse
      */
-    optionLabel?: string;
+    optionLabel?: string | null;
 
     /**
      * @type {string}

@@ -30,7 +30,7 @@
             </div>
             <div class="text-sm">
               <label :for="`question-${currentIndex}-option-${idx}`" class="font-medium text-gray-600">
-                {{ option.optionLabel }}.
+                {{ option.optionLabel }}. {{ option.optionText }}
               </label>
             </div>
           </div>

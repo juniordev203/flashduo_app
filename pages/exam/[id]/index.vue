@@ -45,7 +45,6 @@
           :to="`/exam/${examDetail.id}/do`"
         >
           <button
-            @click="postUserExam"
             class="w-full py-2 text-lg font-semibold text-white bg-indigo-500 rounded transition-transform duration-150 active:scale-95 touch-manipulation"
           >
             Làm bài
@@ -87,31 +86,9 @@ const fetchExamDetail = async () => {
     console.log("Khong lay duoc chi tiet de thi", error);
   }
 };
-const postUserExam = async () => {
-  try {
-    if (!userId.value || !examId) {
-      console.warn("Thiếu userId hoặc examId, không thể tạo bài thi!");
-      return;
-    }
-    const request: UserExamBaseRequest = {
-      userId: userId.value,
-      examId: examId,
-      status: ExamStatus.NUMBER_1,
-    };
-    const response = await examApiUtil.apiExamUserExamStartPost(request);
-    if (typeof response === "number") {
-      console.log("Bài thi được tạo thành công", response);
-      userExamId.value = response;
-      return response;
-    } else {
-      console.warn("Lỗi khi tạo bài thi cho người dùng");
-    }
-  } catch (error) {
-    console.error("Lỗi khi tạo bài thi cho người dùng", error);
-  }
-};
+
 onMounted(() => {
-    fetchExamDetail();
+  fetchExamDetail();
 });
 </script>
 

@@ -37,5 +37,5 @@ export interface AnswerChoiceRequest {
      * @type {string}
      * @memberof AnswerChoiceRequest
      */
-    optionLabel?: string;
+    optionLabel?: string | null;
 }

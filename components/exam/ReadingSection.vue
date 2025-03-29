@@ -19,7 +19,7 @@
             </div>
             <div class="text-sm">
               <label :for="`question-${currentIndex}-option-${idx}`" class="font-medium text-gray-600">
-                {{ option.optionLabel }}.
+                {{ option.optionLabel }}. {{ option.optionText }}
               </label>
             </div>
           </div>
@@ -52,8 +52,6 @@ const emit = defineEmits<{
 }>();
 
 const currentQuestion = computed(() => {
-  console.log("ques array: ", props.questions)
-  console.log("current index: ", props.currentIndex)
   return props.questions.length > 0 ? props.questions[props.currentIndex] || null : null;
 })
 

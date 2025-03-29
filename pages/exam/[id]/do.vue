@@ -126,10 +126,11 @@ definePageMeta({
 const examStore = useExamStore();
 const userInfo = useMyBaseStore();
 const route = useRoute();
+const router = useRouter();
 const timerInterval = ref<number | null>(null);
 const examId = Number(route.params.id);
 const userId = computed(() => userInfo.$state.userInfo?.id ?? 0);
-console.log("id user",userId)
+const userExamId = computed(() => examStore.userExamId);
 const totalQuestion = computed(
   () => examStore.currentExam?.totalQuestions ?? 0
 );
@@ -146,11 +147,11 @@ onMounted(async () => {
       console.error("Không gọi fetchExam vì examId không hợp lệ:", examId);
       return;
     }
-    if (!userId || Number.isNaN(Number(examId)) || !examId || Number.isNaN(Number(examId))) {
-      console.error("Không gọi postUserExam vì userId hoặc examId không hợp lệ");
+    if (!userId.value || Number.isNaN(Number(userId.value)) || !examId || Number.isNaN(Number(examId))) {
+      console.error("Không gọi postUserExam vì examId không hợp lệ:",userId, examId);
       return;
     }
-    // await examStore.postUserExam();
+    await examStore.postUserExam(userId.value, examId);
     await examStore.fetchExam(examId);
     startTimer();
   } catch (error) {
@@ -266,12 +267,15 @@ const saveAnswer = async ({
    console.log("Câu trả lời đã lưu: ", questionId, section, answer);
 };
 const confirmSubmit = async () => {
+  console.log("userExamId trong component: ", userExamId.value)
   if (confirm("Bạn có chắc chắn muốn nộp bài không?")) {
-    if (!userId.value) {
+    if (!userExamId.value) {
       console.error("Không tìm thấy userId");
       return
     }
-    await examStore.submitExam(examId, userId.value);
+    console.log("✅ Gọi submitExam với userExamId:", userExamId.value, "và userId:", userId.value);
+    await examStore.submitExam(userExamId.value, userId.value);
+    router.push(`/exam/${examId}/result`);
   }
 };
 </script>
