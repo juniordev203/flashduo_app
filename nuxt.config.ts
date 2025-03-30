@@ -55,5 +55,7 @@ export default defineNuxtConfig({
   imports: {
     dirs: ['composables/**']
   },
-
+  runtimeConfig: {
+    geminiApiKey: process.env.GEMINI_API_KEY
+  },
 })

@@ -95,14 +95,18 @@
         </div> -->
       </div>
       <!-- Chat Support -->
-      <div class="fixed left-4 right-4 bottom-28 bg-white p-4 rounded-full flex items-center shadow-lg cursor-pointer">
-        <img src="../assets/images/avatar.jpg" class="w-10 h-10 rounded-full mr-2" alt="Help desk" />
-        <div class="">
-          <p class="text-lg font-semibold">Hỏi với AI</p>
-          <p class="text-sm text-gray-500">Bắt đầu cuộc trò chuyện ngay !</p>
+      <NuxtLink to="/chat">
+        <div class="fixed left-4 right-4 bottom-28 bg-white p-4 rounded-full flex items-center justify-between shadow-lg cursor-pointer">
+          <div class="flex gap-2 items-center">
+            <img src="../assets/images/avatar.jpg" class="w-10 h-10 rounded-full mr-2" alt="Help desk" />
+            <div class="">
+              <p class="text-lg font-semibold">Hỏi với AI</p>
+              <p class="text-sm text-gray-500">Bắt đầu cuộc trò chuyện ngay !</p>
+            </div>
+          </div>
+          <ChevronRight class="text-gray-500 w-5 h-5" />
         </div>
-        <ChevronRight :size="16" class="text-gray-500" />
-      </div>
+      </NuxtLink>
     </div>
   </div>
 </template>
