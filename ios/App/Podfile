@@ -14,6 +14,7 @@ def capacitor_pods
   pod 'AashuDubeyCapacitorStatusbarSafeArea', :path => '../../node_modules/@aashu-dubey/capacitor-statusbar-safe-area'
   pod 'CapacitorDevice', :path => '../../node_modules/@capacitor/device'
   pod 'CapacitorKeyboard', :path => '../../node_modules/@capacitor/keyboard'
+  pod 'CapacitorStorage', :path => '../../node_modules/@capacitor/storage'
   pod 'CapacitorVoiceRecorder', :path => '../../node_modules/capacitor-voice-recorder'
 end
 
