@@ -10,7 +10,7 @@
       </template>
       <template v-slot:default>
         <span class="text-base font-medium text-black">
-          Hỏi đáp cùng FlashDuo AI
+          {{ $t('lang_core_chat_hoi_dap') }}
         </span>
       </template>
       <template v-slot:right>
@@ -165,6 +165,7 @@
 import { X } from "lucide-vue-next";
 import { ArrowDown, More } from "@element-plus/icons-vue";
 import { useChatStore } from "~/stores/chat";
+import { useI18n } from "vue-i18n";
 
 definePageMeta({
   layout: "app-none",

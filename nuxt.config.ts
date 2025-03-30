@@ -23,7 +23,8 @@ export default defineNuxtConfig({
     },
   },
   plugins: [
-
+    { src: '~/plugins/i18n.all.ts', mode: 'all' },
+    { src: '~/plugins/safe-area.client.ts', mode: 'client' }
   ],
   css: ['~/assets/css/main.css'],
   modules: ['@nuxtjs/tailwindcss', '@pinia/nuxt', "@element-plus/nuxt"],

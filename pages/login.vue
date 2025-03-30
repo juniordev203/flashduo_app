@@ -2,37 +2,37 @@
     <div class="h-full w-full flex flex-col bg-slate-50 justify-center">
         <div class="w-full max-w-md p-4 flex flex-col gap-6">
             <div class="flex flex-col gap-2 px-6">
-                <h1 class="text-2xl font-bold text-center">Đăng nhập</h1>
+                <h1 class="text-2xl font-bold text-center">{{ $t('lang_core_login_title') }}</h1>
                 <p class="text-sm text-center text-gray-600">
-                    Đăng nhập để tiếp tục sử dụng
-                    <a href="#" class="text-indigo-500">Dữ liệu & Quá trình học</a>
+                    {{ $t('lang_core_login_subtitle') }}
+                    <a href="#" class="text-indigo-500">{{ $t('lang_core_login_data_process') }}</a>
                 </p>
             </div>
             <!-- login form -->
             <form @submit.prevent="handleLogin" class="px-6 py-4 w-full max-w-md mx-auto">
                 <div class="mb-6">
-                    <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+                    <label for="email" class="block text-sm font-medium text-gray-700">{{ $t('lang_core_login_email_label') }}</label>
                     <input id="email" v-model="email" type="email" inputmode="email" autocomplete="email" required
                         class="mt-2 block w-full rounded-lg border border-gray-300 shadow-sm p-4 focus:border-indigo-500 focus:ring-indigo-500 text-base"
-                        placeholder="Email của bạn" />
+                        :placeholder="$t('lang_core_login_email_placeholder')" />
                 </div>
                 <div class="mb-6">
-                    <label for="password" class="block text-sm font-medium text-gray-700">Mật khẩu</label>
+                    <label for="password" class="block text-sm font-medium text-gray-700">{{ $t('lang_core_login_password_label') }}</label>
                     <input id="password" v-model="password" type="password" autocomplete="current-password" required
                         class="mt-2 block w-full rounded-lg border border-gray-300 shadow-sm p-4 focus:border-indigo-500 focus:ring-indigo-500 text-base"
                         placeholder="••••••••" />
                 </div>
                 <button type="submit"
                     class="w-full flex justify-center py-4 mb-4 text-lg font-medium border border-transparent rounded-lg shadow-md text-white bg-indigo-500 hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-all">
-                    <span v-if="isLoading">Loading...</span>
-                    <span v-else>Đăng nhập</span>
+                    <span v-if="isLoading">{{ $t('lang_core_login_loading') }}</span>
+                    <span v-else>{{ $t('lang_core_login_button') }}</span>
                 </button>
                 <p v-if="errorMessage" class="error text-center text-xs text-red-500">{{ errorMessage }}</p>
             </form>
             <div class="flex gap-2 justify-center text-sm text-center">
-                <p class="">Bạn chưa có tài khoản?</p>
+                <p class="">{{ $t('lang_core_login_no_account') }}</p>
                 <NuxtLink to="/register" class="text-center">
-                    <p class="text-indigo-500">Đăng ký</p>
+                    <p class="text-indigo-500">{{ $t('lang_core_login_register') }}</p>
                 </NuxtLink>
             </div>
         </div>
@@ -44,6 +44,7 @@ import { useRouter } from "vue-router";
 import { ref } from "vue";
 import { useMyBaseStore } from "@/stores/base.store";
 import { loginUser } from "@/composables/Auth"; 
+import { useI18n } from "vue-i18n";
 
 definePageMeta({
     layout: "app-none",
@@ -55,6 +56,8 @@ const email = ref("");
 const password = ref("");
 const isLoading = ref(false);
 const errorMessage = ref("");
+
+const { t } = useI18n();
 
 const handleLogin = async () => {
     try {
@@ -69,17 +72,16 @@ const handleLogin = async () => {
             await baseStore.loadUserInfo();
             router.push("/");
         } else {
-            errorMessage.value = "Đăng nhập thất bại, vui lòng thử lại.";
+            errorMessage.value = t('lang_core_login_error_default');
         }
     } catch (error) {
         if ((error as any).response?.status === 401) {
-            errorMessage.value = "Email hoặc mật khẩu không đúng.";
+            errorMessage.value = t('lang_core_login_error_invalid');
         } else {
-            errorMessage.value = "Lỗi máy chủ, vui lòng thử lại sau.";
+            errorMessage.value = t('lang_core_login_error_server');
         }
     } finally {
         isLoading.value = false;
     }
 };
 </script>
-

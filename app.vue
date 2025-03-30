@@ -14,6 +14,7 @@
     </div>
 </template>
 <script lang="ts" setup>
+import { useI18n } from 'vue-i18n';
 import { useMyBaseStore } from '~/stores/base.store';
 const myBaseStore = useMyBaseStore();
 const updateVh = () => {
@@ -23,6 +24,7 @@ const updateVh = () => {
 
 const makeAuth = async () => {
   myBaseStore.loadAuthUser();
+  myBaseStore.loadLocale();
 }
 
 onMounted(() => {

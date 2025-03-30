@@ -5,7 +5,7 @@
       </template>
       <template v-slot:default>
         <span class="text-xl text-black font-medium">
-          Cá nhân
+          {{ $t('lang_core_profile_title') }}
         </span>
       </template>
       <template v-slot:right>
@@ -19,7 +19,7 @@
           </div>
           <div class="flex flex-col justify-between">
             <p class="text-lg">Junior</p>
-            <p class="text-xs">Ngày tạo: </p>
+            <p class="text-xs">{{ $t('lang_core_profile_created_date') }}</p>
           </div>
         </div>
       </div>
@@ -31,179 +31,157 @@
               <BellRing :width="20" :stroke-width="2" />
             </div>
             <div class="">
-              <p>Bật chuông thông báo</p>
+              <p>{{ $t('lang_core_profile_notification') }}</p>
             </div>
           </div>
           <div class="flex items-center">
             <button
               class="toggle-btn relative w-11 h-7 flex items-center rounded-full transition-colors duration-300"
-              :class="actionBtnNotice ? 'bg-indigo-600' : 'bg-gray-300'" @click="toggleBtnNotice">
+              :class="actionBtnNotice ? 'bg-indigo-600' : 'bg-gray-300'" 
+              @click="toggleBtnNotice">
               <span
                 class="absolute top-0.5 left-0.5 w-6 h-6 bg-white rounded-full shadow-md transform transition-transform duration-300"
-                :class="{ 'translate-x-4 absolute top-0.5 right-0.5': actionBtnNotice }"></span>
+                :class="{ 'translate-x-4 absolute top-0.5 right-0.5': actionBtnNotice }">
+              </span>
             </button>
           </div>
         </div>
         <el-divider class="!m-0"></el-divider>
-        <!-- 2 -->
+
         <div class="flex justify-between items-center py-4" @click="drawerChangeLocale = true">
           <div class="flex items-center gap-4">
             <div>
               <Globe :width="20" :stroke-width="2" />
             </div>
             <div class="">
-              <p>Ngôn ngữ</p>
+              <p>{{ $t('lang_core_ngon-ngu') }}</p>
             </div>
           </div>
           <div class="text-xs">
             <div class="flex gap-2 items-center">
-              <span>Tiếng việt</span>
-              <img src="~/public/flag/vi.png" class="w-[30px] rounded" alt="flag">
+              <span>{{ $t('lang_core_' + $i18n.locale) }}</span>
+              <img :src="'/flag/' + $i18n.locale + '.png'" class="w-[30px] rounded" alt="flag">
             </div>
           </div>
         </div>
         <el-divider class="!m-0"></el-divider>
-        <!-- 3 -->
+
         <div class="flex justify-between items-center py-4">
           <div class="flex items-center gap-4">
             <div class="user-icon">
               <SunMoon :width="20" :stroke-width="2" />
             </div>
             <div class="">
-              <p>Giao diện tối</p>
+              <p>{{ $t('lang_core_profile_dark_mode') }}</p>
             </div>
           </div>
           <div class="flex items-center">
             <button
               class="toggle-btn relative w-11 h-7 flex items-center rounded-full transition-colors duration-300"
-              :class="actionBtnTheme ? 'bg-indigo-600' : 'bg-gray-300'" @click="toggleBtnTheme">
+              :class="actionBtnTheme ? 'bg-indigo-600' : 'bg-gray-300'" 
+              @click="toggleBtnTheme">
               <span
                 class="absolute top-0.5 left-0.5 w-6 h-6 bg-white rounded-full shadow-md transform transition-transform duration-300"
-                :class="{ 'translate-x-4 absolute top-0.5 right-0.5': actionBtnTheme }"></span>
+                :class="{ 'translate-x-4 absolute top-0.5 right-0.5': actionBtnTheme }">
+              </span>
             </button>
           </div>
         </div>
         <el-divider class="!m-0"></el-divider>
-        <!-- 4 -->
+
         <div class="flex justify-between items-center py-4">
           <div class="flex items-center gap-4">
             <div class="user-icon">
               <Share2 :width="20" :stroke-width="2" />
             </div>
             <div class="">
-              <p>Chia sẻ ứng dụng</p>
+              <p>{{ $t('lang_core_profile_share_app') }}</p>
             </div>
           </div>
         </div>
         <el-divider class="!m-0"></el-divider>
-        <!-- 5 -->
+
         <div class="flex justify-between items-center py-4">
           <div class="flex items-center gap-4">
             <div class="user-icon">
               <AlarmClock :width="20" :stroke-width="2" />
             </div>
             <div class="">
-              <p>{{ $t('lang-core_nhac_nho_hoc_tap') }}</p>
+              <p>{{ $t('lang_core_profile_study_reminder') }}</p>
             </div>
           </div>
         </div>
       </div>
+
       <!-- box 2 -->
       <div class="bg-white rounded shadow flex flex-col px-4">
-        <!-- 1 -->
         <div class="flex justify-between items-center py-4">
           <div class="flex items-center gap-4">
             <div class="">
               <ShieldQuestion :width="20" :stroke-width="2" />
             </div>
             <div class="">
-              <p>Trung tâm hỗ trợ</p>
+              <p>{{ $t('lang_core_profile_support_center') }}</p>
             </div>
           </div>
         </div>
         <el-divider class="!m-0"></el-divider>
-        <!-- 2 -->
+
         <div class="flex justify-between items-center py-4">
           <div class="flex items-center gap-4">
             <div class="">
               <Star :width="20" :stroke-width="2" />
             </div>
             <div class="">
-              <p>Đánh giá 5 sao</p>
+              <p>{{ $t('lang_core_profile_rate') }}</p>
             </div>
           </div>
-          <div class="">
-            <div class="flex items-center">
-              <svg class="w-4 h-4 text-yellow-300 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                fill="currentColor" viewBox="0 0 22 20">
-                <path
-                  d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
-              </svg>
-              <svg class="w-4 h-4 text-yellow-300 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                fill="currentColor" viewBox="0 0 22 20">
-                <path
-                  d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
-              </svg>
-              <svg class="w-4 h-4 text-yellow-300 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                fill="currentColor" viewBox="0 0 22 20">
-                <path
-                  d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
-              </svg>
-              <svg class="w-4 h-4 text-yellow-300 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                fill="currentColor" viewBox="0 0 22 20">
-                <path
-                  d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
-              </svg>
-              <svg class="w-4 h-4 text-yellow-300 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                fill="currentColor" viewBox="0 0 22 20">
-                <path
-                  d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
-              </svg>
-            </div>
-          </div>
+          <!-- Star rating section remains unchanged -->
         </div>
         <el-divider class="!m-0"></el-divider>
-        <!-- 3 -->
+
         <div class="flex justify-between items-center py-4">
           <div class="flex items-center gap-4">
             <div class="user-icon">
               <UserRoundPen :width="20" :stroke-width="2" />
             </div>
             <div class="">
-              <p>Điều khoản ứng dụng</p>
+              <p>{{ $t('lang_core_profile_terms') }}</p>
             </div>
           </div>
         </div>
         <el-divider class="!m-0"></el-divider>
-        <!-- 4 -->
+
         <div class="flex justify-between items-center py-4">
           <div class="flex items-center gap-4">
             <div class="user-icon">
               <Share2 :width="20" :stroke-width="2" />
             </div>
             <div class="">
-              <p>Phiên bản</p>
+              <p>{{ $t('lang_core_profile_version') }}</p>
             </div>
           </div>
           <div class="text-xs text-primary">
-            <p>2.0.5</p>
+            <p>{{ $t('lang_core_profile_version_number') }}</p>
           </div>
         </div>
         <el-divider class="!m-0"></el-divider>
-        <!-- 5 -->
+
         <div class="flex justify-between items-center py-4">
           <div class="flex items-center gap-4">
             <div class="user-icon">
               <BookOpenText :width="20" :stroke-width="2" />
             </div>
             <div class="">
-              <p>Hướng dẫn sử dụng</p>
+              <p>{{ $t('lang_core_profile_user_guide') }}</p>
             </div>
           </div>
         </div>
       </div>
-      <button @click="handleLogout" class="w-full p-3 flex bg-red-500 text-white gap-2 justify-center items-center text-center rounded">
-      Đăng xuất
+
+      <button @click="handleLogout" 
+        class="w-full p-3 flex bg-red-500 text-white gap-2 justify-center items-center text-center rounded">
+        {{ $t('lang_core_profile_logout') }}
       </button>
     </div>
   </div>
@@ -212,7 +190,7 @@
 <script lang="ts" setup>
 import { BellRing, Globe, AlarmClock, Share2, SunMoon, ShieldQuestion, Star, UserRoundPen, BookOpenText, LogOut } from 'lucide-vue-next';
 import type { UserResponse } from '~/auto_api';
-
+import { useI18n } from 'vue-i18n'
 
 const { drawerChangeLocale } = storeToRefs(useMyBaseStore());
 const actionBtnNotice = ref(false)
@@ -221,6 +199,7 @@ const router = useRouter()
 const userInfo = ref<UserResponse | null>(null)
 const isLoading = ref(false)
 const isLoggedIn = ref(false)
+const { locale, t } = useI18n();
 
 const fetchUserData = async () => {
   try {

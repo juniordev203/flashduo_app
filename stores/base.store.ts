@@ -1,4 +1,5 @@
 import { defineStore } from "pinia";
+import { useI18n } from "vue-i18n";
 import type { AuthLoginRequest, AuthLoginResponse, UserResponse } from "~/auto_api";
 import { fetchUserInfo } from "~/composables/User"
 export const useMyBaseStore = defineStore({
@@ -48,6 +49,29 @@ export const useMyBaseStore = defineStore({
       this.userInfo = undefined;
       localStorage.removeItem("authUser");
       localStorage.removeItem("userInfo");
+    },
+    setLocale(newLocale: "vi" | "en") {
+      const { locale } = useI18n(); // Lấy i18n locale từ vue-i18n
+      if (this.locales.includes(newLocale)) {
+        this.locale = newLocale;         // Cập nhật trong store
+        locale.value = newLocale;        // Đồng bộ với i18n
+        localStorage.setItem("locale", newLocale); // Lưu vào localStorage
+      }
+    },
+
+    // Tải ngôn ngữ từ localStorage khi khởi động
+    loadLocale() {
+      const { locale } = useI18n();
+      const savedLocale = localStorage.getItem("locale");
+      if (savedLocale && this.locales.includes(savedLocale as "vi" | "en")) {
+        this.locale = savedLocale as "vi" | "en"; // Cập nhật store
+        locale.value = savedLocale;              // Đồng bộ với i18n
+      } else {
+        // Nếu không có trong localStorage, dùng giá trị mặc định và lưu lại
+        this.locale = "vi";
+        locale.value = "vi";
+        localStorage.setItem("locale", "vi");
+      }
     },
   },
 });
