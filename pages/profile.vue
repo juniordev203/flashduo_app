@@ -11,15 +11,15 @@
       <template v-slot:right>
       </template>
     </AtomHeaderSafe>
-    <div class="p-4 h-full w-full overflow-auto flex flex-col gap-6">
+    <div v-if="userInfo" class="p-4 h-full w-full overflow-auto flex flex-col gap-6">
       <div class="flex justify-between items-center">
         <div class="flex gap-4 items-center">
           <div class="w-[40px] h-[40px] rounded-full border border-primary flex justify-center items-center">
             <img class="w-[32px] h-[32px] rounded-full" src="~/assets/images/avatar.jpg" alt="">
           </div>
           <div class="flex flex-col justify-between">
-            <p class="text-lg">Junior</p>
-            <p class="text-xs">{{ $t('lang_core_profile_created_date') }}</p>
+            <p class="text-lg">{{ userInfo.fullName }}</p>
+            <p class="text-xs">{{ $t('lang_core_profile_created_date') }}{{ formatedCreatedAt }}</p>
           </div>
         </div>
       </div>
@@ -196,28 +196,13 @@ const { drawerChangeLocale } = storeToRefs(useMyBaseStore());
 const actionBtnNotice = ref(false)
 const actionBtnTheme = ref(false)
 const router = useRouter()
-const userInfo = ref<UserResponse | null>(null)
-const isLoading = ref(false)
-const isLoggedIn = ref(false)
-const { locale, t } = useI18n();
+const userInfo = computed(() => useMyBaseStore().userInfo)
+console.log('userInfo', userInfo)
 
-const fetchUserData = async () => {
-  try {
-    isLoading.value = true
-    const accountId = localStorage.getItem('accountId')
-    if (!accountId) {
-      isLoggedIn.value = false
-      return
-    }
-    const { data } = await userApiUtil.apiUserInfoUserGet(Number(accountId))
-    userInfo.value = data
-    isLoggedIn.value = true
-  } catch (error) {
-    console.log(error)
-  } finally {
-    isLoading.value = false
-  }
-}
+const createdAt = userInfo.value?.createdAt;
+console.log('createdAt', createdAt)
+const formatedCreatedAt = formatCustomDateTime(createdAt);
+console.log('formatedCreatedAt', formatedCreatedAt)
 const toggleBtnNotice = () => {
   actionBtnNotice.value = !actionBtnNotice.value;
 }
@@ -228,9 +213,7 @@ const handleLogout = async () => {
   await logoutUser();
   router.push('/login')
 }
-onMounted(() => {
-  fetchUserData()
-})
+
 </script>
 
 <style scoped></style>

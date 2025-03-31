@@ -15,7 +15,7 @@
     <div class="h-full w-full overflow-hidden p-4 flex flex-col gap-6 items-center justify-center">
       <h2 class="text-2xl font-semibold text-gray-800 text-center">Điểm TOEIC của bạn</h2>
 
-      <div v-if="dataScore" class="bg-white w-full p-6 flex flex-col gap-4 rounded shadow text-center">
+      <div v-if="dataScore" class="bg-white w-full p-6 flex flex-col gap-4 rounded-xl shadow-xl text-center">
         <div class="flex gap-1 justify-center items-center">
           <Headphones />
           <p class="text-xl font-medium text-gray-700">Listening: <span class="text-blue-500 text-2xl">{{ dataScore.scoreListening }}</span></p>

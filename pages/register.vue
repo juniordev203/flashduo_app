@@ -43,7 +43,7 @@
                         v-model="form.password" 
                         type="password"
                         class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-3 border focus:border-indigo-500 focus:ring-indigo-500"
-                        :placeholder="$t('lang_core_register_password_placeholder')" 
+                        :placeholder="$t('lang_core_register_password_label')" 
                     />
                 </div>
                 <div class="mb-4">
@@ -55,7 +55,7 @@
                         v-model="form.firmPassword" 
                         type="password"
                         class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-3 border focus:border-indigo-500 focus:ring-indigo-500"
-                        :placeholder="$t('lang_core_register_confirm_password_placeholder')" 
+                        :placeholder="$t('lang_core_register_confirm_password_label')" 
                     />
                 </div>
                 <button 

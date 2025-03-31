@@ -13,14 +13,10 @@
       <template v-slot:right> </template>
     </AtomHeaderSafe>
 
-    <div
-      class="h-full w-full overflow-auto p-4 flex flex-col gap-6 items-center justify-center"
-    >
-      <div
-        v-if="examDetail"
-        class="px-6 py-8 bg-white w-full h-fit flex flex-col gap-4 justify-center items-center rounded shadow"
-      >
-        <h1 class="text-2xl font-bold text-gray-800 mb-4">
+    <div class="h-full w-full overflow-auto p-4 flex flex-col gap-6 items-center justify-center">
+      <div v-if="examDetail"
+        class="px-6 py-8 bg-white w-full h-fit flex flex-col gap-4 justify-center items-center rounded-xl shadow-xl">
+        <h1 class="text-2xl font-bold text-blue-600 mb-4">
           {{ examDetail.examName }}
         </h1>
         <div class="flex flex-col gap-2 items-center">
@@ -39,14 +35,9 @@
             định.
           </p>
         </div>
-        <NuxtLink
-          v-if="examDetail && examDetail.id"
-          class="w-full"
-          :to="`/exam/${examDetail.id}/do`"
-        >
+        <NuxtLink v-if="examDetail && examDetail.id" class="w-full" :to="`/exam/${examDetail.id}/do`">
           <button
-            class="w-full py-2 text-lg font-semibold text-white bg-indigo-500 rounded transition-transform duration-150 active:scale-95 touch-manipulation"
-          >
+            class="w-full py-2 text-lg font-semibold text-white bg-indigo-500 rounded transition-transform duration-150 active:scale-95 touch-manipulation">
             Làm bài
           </button>
         </NuxtLink>

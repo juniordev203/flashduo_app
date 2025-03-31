@@ -1,13 +1,13 @@
 <template>
-  <div class="h-full w-full flex flex-col bg-slate-50">
+  <div v-if="userInfo" class="h-full w-full flex flex-col bg-slate-50">
     <AtomHeaderSafe class="shadow-md">
       <template v-slot:left>
         <NuxtLink to="/profile">
           <div class="flex gap-1">
-            <img src="../assets/images/avatar.jpg" class="w-10 h-10 rounded-full mr-2" alt="Profile avatar" />
+            <img :src="userInfo.avatarUrl" class="w-10 h-10 rounded-full mr-2" alt="Profile avatar" />
             <div class="text-black">
               <p class="text-sm font-light">{{ $t('lang_core_home_hi_guy') }}</p>
-              <p class="text-xl font-bold">Junior203</p>
+              <p class="text-xl font-bold">{{ userInfo.fullName }}</p>
             </div>
           </div>
         </NuxtLink>
@@ -113,7 +113,8 @@
 
 <script lang="ts" setup>
 import { Bell, Book, ChevronRight, Globe, Headphones, Mic, Search } from 'lucide-vue-next';
-
+import { useMyBaseStore } from '~/stores/base.store';
+const userInfo = computed(() => useMyBaseStore().userInfo);
 </script>
 
 <style scoped>

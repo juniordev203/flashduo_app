@@ -86,9 +86,9 @@
     <div class="border-t border-gray-300 bg-white p-4">
       <form @submit.prevent="store.sendMessage" class="flex space-x-2">
         <input v-model="store.inputMessage" type="text" placeholder="Nhập tin nhắn..."
-          class="flex-1 p-2 border border-gray-300 rounded !focus: outline-none" :disabled="store.isLoading" />
+          class="flex-1 px-4 py-2 border border-gray-300 rounded-full !focus: outline-none" :disabled="store.isLoading" />
         <button type="submit"
-          class="px-4 py-2 bg-violet-600 text-white rounded transition-transform duration-150 active:scale-95 touch-manipulation"
+          class="px-4 py-2 bg-black text-white rounded-full transition-transform duration-150 active:scale-95 touch-manipulation"
           :disabled="store.isLoading || !store.inputMessage.trim()">
           <span v-if="!store.isLoading">{{ $t('lang_core_chat_gui') }}</span>
           <svg v-else class="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -99,7 +99,7 @@
           </svg>
         </button>
       </form>
-      <div class="text-xs text-gray-500 mt-1 text-center">
+      <div class="text-[8px] text-gray-500 mt-1 text-center">
         {{ $t('lang_core_chat_footer') }}
       </div>
     </div>
