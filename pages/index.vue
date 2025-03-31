@@ -21,7 +21,7 @@
       </template>
     </AtomHeaderSafe>
     <div class="h-full w-full overflow-auto p-4 flex flex-col gap-6">
-      <div class="flex flex-col gap-4 mb-28">
+      <div class="flex flex-col gap-6 mb-28">
         <!-- Search -->
         <div class="flex items-center border border-gray-200 rounded-lg px-3 py-3 mb-4">
           <Search color="black" :size="22" />
@@ -29,7 +29,7 @@
             type="text" mode="text"/>
         </div>
         <!-- Horizontal Scrollable Cards -->
-        <div class="w-full h-full flex flex-col gap-5 justify-center items-center">
+        <div class="w-full h-full flex flex-col gap-5">
           <p class="text-lg font-semibold">
             {{ $t('lang_core_home_hoc_cung') }} <span class="text-indigo-500 font-extrabold">{{ $t('lang_core_home_flashduo') }}</span>
           </p>
@@ -73,7 +73,7 @@
           </div>
         </div>
         <!-- All Courses -->
-        <!-- <div class="">
+        <div class="">
           <div class="flex justify-between items-center mb-2">
             <p class="text-lg font-semibold">{{ $t('lang_core_home_tat_ca_khoa_hoc') }}</p>
             <p class="text-xs text-blue-500 underline decoration-gray-500 cursor-pointer">{{ $t('lang_core_home_xem_them') }}</p>
@@ -92,7 +92,7 @@
               <p class="text-sm text-yellow-500">{{ $t('lang_core_home_ielts') }}</p>
             </button>
           </div>
-        </div> -->
+        </div>
       </div>
       <!-- Chat Support -->
       <NuxtLink to="/chat">
