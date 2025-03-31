@@ -8,20 +8,21 @@
         <NuxtLayout>
             <NuxtPage />
             <!-- Drawer Global -->
-            <!-- <UserDrawerChangeLocale />
-            <UserDrawerChangeRank /> -->
+            <UserDrawerChangeLocale />
+            <!-- <UserDrawerChangeRank /> -->
         </NuxtLayout>
     </div>
 </template>
 <script lang="ts" setup>
-import { useI18n } from 'vue-i18n';
 import { useMyBaseStore } from '~/stores/base.store';
+import { useLangStore } from '~/stores/lang';
+
+const langStore = useLangStore();
 const myBaseStore = useMyBaseStore();
 const updateVh = () => {
   const vh = window.innerHeight * 0.01;
   document.documentElement.style.setProperty('--vh', `${vh}px`);
 }
-
 const makeAuth = async () => {
   myBaseStore.loadAuthUser();
   myBaseStore.loadLocale();
@@ -31,6 +32,7 @@ onMounted(() => {
   updateVh();
   window.addEventListener('resize', updateVh);
   makeAuth();
+  langStore.initializeLocale();
 })
 
 </script>

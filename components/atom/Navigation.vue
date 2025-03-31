@@ -8,22 +8,22 @@
       <router-link to="/" class="flex flex-col justify-center gap-1 items-center"
         :class="{ 'menu-active': route.name?.toString().startsWith('index') }">
         <Home class="nav_icon text-[#d9d9d9]"/>
-        <span class="text-sm text-[#d9d9d9]">Trang chủ</span>
+        <span class="text-sm text-[#d9d9d9]">{{ $t('lang_core_navigation_home') }}</span>
       </router-link>
       <router-link to="/exam" class="flex flex-col justify-center gap-1 items-center"
         :class="{ 'menu-active': route.name?.toString().startsWith('exam') }">
         <SquarePen class="nav_icon text-[#d9d9d9]"/>
-        <span class="text-sm text-[#d9d9d9]">Thi thử</span>
+        <span class="text-sm text-[#d9d9d9]">{{ $t('lang_core_navigation_exam') }}</span>
       </router-link>
       <router-link to="/forum" class="flex flex-col justify-center gap-1 items-center"
         :class="{ 'menu-active': route.name?.toString().startsWith('forum') }">
         <MessagesSquare class="nav_icon text-[#d9d9d9]"/>
-        <span class="text-sm text-[#d9d9d9]">Diễn đàn</span>
+        <span class="text-sm text-[#d9d9d9]">{{ $t('lang_core_navigation_forum') }}</span>
       </router-link>
       <router-link to="/profile" class="flex flex-col justify-center gap-1 items-center"
         :class="{ 'menu-active': route.name?.toString().startsWith('profile') }">
         <UserPen class="nav_icon text-[#d9d9d9]"/>
-        <span class="text-sm text-[#d9d9d9]">Tài khoản</span>
+        <span class="text-sm text-[#d9d9d9]">{{ $t('lang_core_navigation_account') }}</span>
       </router-link>
     </div>
   </div>

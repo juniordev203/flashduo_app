@@ -54,12 +54,12 @@
               <Globe :width="20" :stroke-width="2" />
             </div>
             <div class="">
-              <p>{{ $t('lang_core_ngon-ngu') }}</p>
+              <p>{{ $t('lang_core_profile_language') }}</p>
             </div>
           </div>
           <div class="text-xs">
             <div class="flex gap-2 items-center">
-              <span>{{ $t('lang_core_' + $i18n.locale) }}</span>
+              <span>{{ $t('lang_core_profile_' + $i18n.locale) }}</span>
               <img :src="'/flag/' + $i18n.locale + '.png'" class="w-[30px] rounded" alt="flag">
             </div>
           </div>

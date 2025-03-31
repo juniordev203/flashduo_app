@@ -82,5 +82,10 @@
     "lang_core_profile_version": "Phiên bản",
     "lang_core_profile_version_number": "2.0.5",
     "lang_core_profile_user_guide": "Hướng dẫn sử dụng",
-    "lang_core_profile_logout": "Đăng xuất"
+    "lang_core_profile_logout": "Đăng xuất",
+
+    "lang_core_navigation_home": "Trang chủ",
+    "lang_core_navigation_exam": "Thi thử",
+    "lang_core_navigation_forum": "Diễn đàn",
+    "lang_core_navigation_account": "Tài khoản"
 }

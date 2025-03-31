@@ -83,5 +83,10 @@
   "lang_core_profile_version": "Version",
   "lang_core_profile_version_number": "2.0.5",
   "lang_core_profile_user_guide": "User guide",
-  "lang_core_profile_logout": "Logout"
+  "lang_core_profile_logout": "Logout",
+
+  "lang_core_navigation_home": "Home",
+  "lang_core_navigation_exam": "Exam",
+  "lang_core_navigation_forum": "Forum",
+  "lang_core_navigation_account": "Account"
 }
