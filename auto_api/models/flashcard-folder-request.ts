@@ -11,9 +11,24 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-export * from './apis/auth-api';
-export * from './apis/exam-api';
-export * from './apis/flashcard-api';
-export * from './apis/forum-api';
-export * from './apis/user-api';
 
+ /**
+ * 
+ *
+ * @export
+ * @interface FlashcardFolderRequest
+ */
+export interface FlashcardFolderRequest {
+
+    /**
+     * @type {string}
+     * @memberof FlashcardFolderRequest
+     */
+    folderName: string;
+
+    /**
+     * @type {number}
+     * @memberof FlashcardFolderRequest
+     */
+    userId: number;
+}

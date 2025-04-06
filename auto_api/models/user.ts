@@ -13,7 +13,10 @@
  */
 
 import { Account } from './account';
+import { FlashcardFolder } from './flashcard-folder';
+import { FlashcardTest } from './flashcard-test';
 import { UserExam } from './user-exam';
+import { UserFlashcardSet } from './user-flashcard-set';
  /**
  * 
  *
@@ -63,4 +66,22 @@ export interface User {
      * @memberof User
      */
     userExams?: Array<UserExam> | null;
+
+    /**
+     * @type {Array<FlashcardFolder>}
+     * @memberof User
+     */
+    flashcardFolders?: Array<FlashcardFolder> | null;
+
+    /**
+     * @type {Array<FlashcardTest>}
+     * @memberof User
+     */
+    flashcardTests?: Array<FlashcardTest> | null;
+
+    /**
+     * @type {Array<UserFlashcardSet>}
+     * @memberof User
+     */
+    userFlashcardSets?: Array<UserFlashcardSet> | null;
 }
