@@ -34,7 +34,7 @@
             {{ $t('lang_core_home_hoc_cung') }} <span class="text-indigo-500 font-extrabold">{{ $t('lang_core_home_flashduo') }}</span>
           </p>
           <div class="flex flex-wrap gap-5 justify-center w-full overflow-visible">
-            <NuxtLink to="/functions/flashcard" class="block transition-transform duration-150 active:scale-95 touch-manipulation">
+            <NuxtLink to="/flashcard" class="block transition-transform duration-150 active:scale-95 touch-manipulation">
               <div class="bg-blue-200 px-2 pt-2 pb-5 rounded-lg w-40 h-40 shadow">
                 <div class="p-3 relative w-full h-full flex flex-col gap-1 bg-blue-100 rounded-lg">
                   <p class="text-2xl font-bold">Flashcard</p>
