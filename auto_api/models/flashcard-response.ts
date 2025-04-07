@@ -16,43 +16,49 @@
  * 
  *
  * @export
- * @interface FlashcardRequest
+ * @interface FlashcardResponse
  */
-export interface FlashcardRequest {
+export interface FlashcardResponse {
 
     /**
-     * @type {string}
-     * @memberof FlashcardRequest
+     * @type {number}
+     * @memberof FlashcardResponse
      */
-    termLanguage: string;
+    id?: number;
 
     /**
      * @type {string}
-     * @memberof FlashcardRequest
+     * @memberof FlashcardResponse
      */
-    definitionLanguage: string;
+    termLanguage?: string | null;
 
     /**
      * @type {string}
-     * @memberof FlashcardRequest
+     * @memberof FlashcardResponse
+     */
+    definitionLanguage?: string | null;
+
+    /**
+     * @type {string}
+     * @memberof FlashcardResponse
      */
     imageUrl?: string | null;
 
     /**
      * @type {string}
-     * @memberof FlashcardRequest
+     * @memberof FlashcardResponse
      */
     audioUrl?: string | null;
 
     /**
      * @type {number}
-     * @memberof FlashcardRequest
+     * @memberof FlashcardResponse
      */
-    flashcardSetId: number;
+    flashcardSetId?: number;
 
     /**
      * @type {number}
-     * @memberof FlashcardRequest
+     * @memberof FlashcardResponse
      */
-    userId: number;
+    userId?: number;
 }

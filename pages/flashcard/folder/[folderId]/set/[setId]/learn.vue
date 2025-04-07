@@ -1,0 +1,13 @@
+<template>
+    <div>
+học
+    </div>
+</template>
+
+<script setup lang="ts">
+
+</script>
+
+<style scoped>
+
+</style>

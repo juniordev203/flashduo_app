@@ -12,59 +12,66 @@
  * Do not edit the class manually.
  */
 
+import { FlashcardResponse } from './flashcard-response';
  /**
  * 
  *
  * @export
- * @interface FlashcardSetResponse
+ * @interface FlashcardSetDetailResponse
  */
-export interface FlashcardSetResponse {
+export interface FlashcardSetDetailResponse {
 
     /**
      * @type {number}
-     * @memberof FlashcardSetResponse
+     * @memberof FlashcardSetDetailResponse
      */
     id?: number;
 
     /**
      * @type {string}
-     * @memberof FlashcardSetResponse
+     * @memberof FlashcardSetDetailResponse
      */
     setName?: string | null;
 
     /**
      * @type {string}
-     * @memberof FlashcardSetResponse
+     * @memberof FlashcardSetDetailResponse
      */
     description?: string | null;
 
     /**
      * @type {boolean}
-     * @memberof FlashcardSetResponse
+     * @memberof FlashcardSetDetailResponse
      */
     isPublic?: boolean;
 
     /**
      * @type {number}
-     * @memberof FlashcardSetResponse
+     * @memberof FlashcardSetDetailResponse
      */
     folderId?: number;
 
     /**
      * @type {number}
-     * @memberof FlashcardSetResponse
+     * @memberof FlashcardSetDetailResponse
      */
     userId?: number;
 
     /**
      * @type {Date}
-     * @memberof FlashcardSetResponse
+     * @memberof FlashcardSetDetailResponse
      */
     createdAt?: Date;
 
     /**
      * @type {number}
-     * @memberof FlashcardSetResponse
+     * @memberof FlashcardSetDetailResponse
      */
     totalCards?: number;
+
+    /**
+     * @type {Array<FlashcardResponse>}
+     * @memberof FlashcardSetDetailResponse
+     */
+    flashcards?: Array<FlashcardResponse> | null;
 }
