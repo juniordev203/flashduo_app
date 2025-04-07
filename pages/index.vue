@@ -37,13 +37,13 @@
             <NuxtLink to="/flashcard" class="block transition-transform duration-150 active:scale-95 touch-manipulation">
               <div class="bg-blue-200 px-2 pt-2 pb-5 rounded-lg w-40 h-40 shadow">
                 <div class="p-3 relative w-full h-full flex flex-col gap-1 bg-blue-100 rounded-lg">
-                  <p class="text-2xl font-bold">Flashcard</p>
+                  <p class="text-2xl font-bold">{{ $t('lang_core_home_flashcard') }}</p>
                   <p class="text-sm text-gray-500">{{ $t('lang_core_home_lessons') }}</p>
                   <Globe class="absolute bottom-3 left-3" :size="20" />
                 </div>
               </div>
             </NuxtLink>
-            <NuxtLink to="" class="block transition-transform duration-150 active:scale-95 touch-manipulation">
+            <NuxtLink to="/grammar" class="block transition-transform duration-150 active:scale-95 touch-manipulation">
               <div class="bg-red-200 px-2 pt-2 pb-5 rounded-lg w-40 h-40 shadow">
                 <div class="p-3 relative w-full h-full flex flex-col gap-1 bg-red-100 rounded-lg">
                   <p class="text-2xl font-bold">{{ $t('lang_core_home_ngu_phap') }}</p>

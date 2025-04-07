@@ -1,105 +1,202 @@
 <template>
-    <div class="h-full w-full flex flex-col bg-slate-50">
-        <AtomHeaderSafe class="shadow-md">
-            <template v-slot:left>
-            </template>
-            <template v-slot:default>
-                <span class="text-xl text-black font-medium">
-                    {{ $t('lang_core_exam_title') }}
-                    <span class="text-blue-500 font-bold">{{ $t('lang_core_exam_title_highlight') }}</span>
-                </span>
-            </template>
-            <template v-slot:right>
-            </template>
-        </AtomHeaderSafe>
+  <div class="h-full w-full flex flex-col bg-slate-50">
+    <!-- Header -->
+    <AtomHeaderSafe class="shadow-md">
+      <template v-slot:default>
+        <span class="text-xl text-black font-medium">
+          {{ $t("lang_core_exam_title") }}
+          <span class="text-blue-600 font-bold">{{
+            $t("lang_core_exam_title_highlight")
+          }}</span>
+        </span>
+      </template>
+    </AtomHeaderSafe>
 
-        <div class="p-4 w-full h-full flex flex-col gap-6 overflow-auto">
-            <div class="flex items-center border border-gray-200 rounded-lg px-3 py-3 mb-4">
-                <Search color="black" :size="22" />
-                <input class="ml-2 text-base outline-none bg-slate-50"
-                    :placeholder="$t('lang_core_exam_search_placeholder')" type="text" mode="text" />
+    <!-- Main Content -->
+    <div class="p-4 w-full h-full flex flex-col gap-6 overflow-auto">
+      <!-- Search Bar -->
+      <div class="relative">
+        <Search class="absolute left-4 top-3.5 text-gray-400" :size="20" />
+        <input
+          v-model="searchQuery"
+          class="w-full h-12 pl-12 pr-4 rounded-xl border border-gray-200 focus:outline-none focus:border-blue-500 bg-white transition-all"
+          :placeholder="$t('lang_core_exam_search_placeholder')"
+          type="text"
+        />
+      </div>
+
+      <!-- Tabs Section -->
+      <div class="flex flex-col gap-4">
+        <el-tabs v-model="activeTab" class="exam-tabs">
+          <!-- Exam List Tab -->
+          <el-tab-pane :label="$t('lang_core_exam_list_title')" name="exam">
+            <div class="space-y-4">
+              <!-- Filter Button -->
+              <div class="flex justify-between items-center">
+                <el-dropdown trigger="click">
+                  <el-button
+                    type="primary"
+                    class="!bg-blue-50 !border-blue-100 !text-blue-600 hover:!bg-blue-100 !shadow-sm"
+                  >
+                    {{ $t("lang_core_exam_filter_button") }}
+                    <el-icon class="el-icon--right"><arrow-down /></el-icon>
+                  </el-button>
+                  <template #dropdown>
+                    <el-dropdown-menu>
+                      <el-dropdown-item>{{
+                        $t("lang_core_exam_filter_new_economy")
+                      }}</el-dropdown-item>
+                      <el-dropdown-item>{{
+                        $t("lang_core_exam_filter_old_economy")
+                      }}</el-dropdown-item>
+                      <el-dropdown-item>{{
+                        $t("lang_core_exam_filter_longman")
+                      }}</el-dropdown-item>
+                    </el-dropdown-menu>
+                  </template>
+                </el-dropdown>
+              </div>
+
+              <!-- Exam Cards -->
+              <div class="grid gap-4">
+                <div v-if="loading" class="flex justify-center py-8">
+                  <el-loading />
+                </div>
+                <!-- No Results State -->
+                <div
+                  v-else-if="filteredExams.length === 0"
+                  class="flex flex-col items-center justify-center gap-4 py-8"
+                >
+                  <Search class="text-gray-400" :size="48" />
+                  <p class="text-gray-500">Không tìm thấy bài thi phù hợp</p>
+                </div>
+                <!-- Exam Cards -->
+                <div v-else
+                  v-for="data in filteredExams"
+                  :key="data.id"
+                  class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:border-blue-500 transition-all duration-200"
+                >
+                  <div class="p-5">
+                    <h3 class="text-lg font-bold text-gray-800 mb-2">
+                      {{ data.examName }}
+                    </h3>
+                    <p class="text-gray-600 text-sm mb-4">
+                      {{ data.description }}
+                    </p>
+
+                    <div
+                      class="flex flex-wrap items-center gap-4 text-sm text-gray-500 mb-4"
+                    >
+                      <div class="flex items-center gap-2">
+                        <Clock class="text-blue-500" :size="18" />
+                        <span>{{ $t("lang_core_exam_time") }}</span>
+                      </div>
+                      <div class="flex items-center gap-2">
+                        <UserPen class="text-green-500" :size="18" />
+                        <span>{{ $t("lang_core_exam_total_users") }}</span>
+                      </div>
+                      <div class="flex items-center gap-2">
+                        <FileText class="text-purple-500" :size="18" />
+                        <span
+                          >{{ $t("lang_core_exam_parts") }} |
+                          {{ data.totalQuestions }}
+                          {{ $t("lang_core_exam_questions") }}</span
+                        >
+                      </div>
+                    </div>
+
+                    <NuxtLink :to="`/exam/${data.id}`" class="block w-full">
+                      <button
+                        class="w-full py-2.5 px-4 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-all duration-200 active:scale-95 touch-manipulation flex items-center justify-center gap-2"
+                      >
+                        {{ $t("lang_core_exam_detail_button") }}
+                        <ChevronRight :size="18" />
+                      </button>
+                    </NuxtLink>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div class="flex flex-col gap-4">
-                <el-tabs v-model="activeTab" class="w-full flex justify-between">
-                    <el-tab-pane :label="$t('lang_core_exam_list_title')" name="exam" class="flex flex-col gap-2">
-                        <div class="flex justify-between items-center">
-                            <el-dropdown trigger="click">
-                                <el-button type="primary"
-                                    class="!bg-blue-200 !border-none !text-black transition-transform duration-150 active:scale-95 touch-manipulation">
-                                    {{ $t('lang_core_exam_filter_button') }}<el-icon
-                                        class="el-icon--right"><arrow-down /></el-icon>
-                                </el-button>
-                                <template #dropdown>
-                                    <el-dropdown-menu>
-                                        <el-dropdown-item>{{ $t('lang_core_exam_filter_new_economy')
-                                            }}</el-dropdown-item>
-                                        <el-dropdown-item>{{ $t('lang_core_exam_filter_old_economy')
-                                            }}</el-dropdown-item>
-                                        <el-dropdown-item>{{ $t('lang_core_exam_filter_longman') }}</el-dropdown-item>
-                                    </el-dropdown-menu>
-                                </template>
-                            </el-dropdown>
-                        </div>
-                        <div class="flex flex-col gap-4">
-                            <div v-for="(data) in examInfo" :key="data.id"
-                                class="p-4 w-full h-full flex flex-col gap-2 bg-white rounded shadow">
-                                <p class="text-lg font-bold">{{ data.examName }}</p>
-                                <p class="">{{ data.description }}</p>
-                                <div class="flex justify-between items-center text-xs mb-2">
-                                    <div class="flex gap-4">
-                                        <div class="flex gap-2 items-center">
-                                            <Clock class="w-4 h-4" />
-                                            <p class="">{{ $t('lang_core_exam_time') }}</p>
-                                        </div>
-                                        <div class="flex gap-2 items-center">
-                                            <UserPen class="w-4 h-4" />
-                                            <p class="">{{ $t('lang_core_exam_total_users') }}</p>
-                                        </div>
-                                    </div>
-                                    <p class="">{{ $t('lang_core_exam_parts') }} | {{ data.totalQuestions }} {{
-                                        $t('lang_core_exam_questions') }}</p>
-                                </div>
-                                <NuxtLink :to="`/exam/${data.id}`" class="w-full">
-                                    <button
-                                        class="text-white w-full px-4 py-2 bg-indigo-500 rounded transition-transform duration-150 active:scale-95 touch-manipulation">
-                                        {{ $t('lang_core_exam_detail_button') }}
-                                    </button>
-                                </NuxtLink>
-                            </div>
-                        </div>
-                    </el-tab-pane>
-                    <el-tab-pane :label="$t('lang_core_exam_history')" name="vocab">
-                        <div class="flex flex-col gap-4 px-8 py-4 text-center bg-white rounded-lg">
-                            <p class="text-sm">Bạn chưa có từ vựng yêu thích nào !</p>
-                        </div>
-                    </el-tab-pane>
-                </el-tabs>
+          </el-tab-pane>
+
+          <!-- History Tab -->
+          <el-tab-pane :label="$t('lang_core_exam_history')" name="vocab">
+            <div
+              class="flex flex-col items-center justify-center gap-4 p-8 text-center bg-white rounded-xl border border-gray-100"
+            >
+              <History class="text-gray-400" :size="48" />
+              <p class="text-gray-500">Bạn chưa làm bài thi nào!</p>
             </div>
-        </div>
+          </el-tab-pane>
+        </el-tabs>
+      </div>
     </div>
+  </div>
 </template>
 
 <script setup lang="ts">
-import { Search, Clock, UserPen } from 'lucide-vue-next'
-import { ArrowDown } from '@element-plus/icons-vue'
-import type { ExamResponse } from '~/auto_api/models'
-import type { TabsInstance } from 'element-plus'
+import { Search, Clock, UserPen } from "lucide-vue-next";
+import { ArrowDown } from "@element-plus/icons-vue";
+import type { ExamResponse } from "~/auto_api/models";
+import type { TabsInstance } from "element-plus";
 
-const tabPosition = ref<TabsInstance['tabPosition']>('bottom')
+const tabPosition = ref<TabsInstance["tabPosition"]>("bottom");
 const activeTab = ref("exam");
+const searchQuery = ref("");
 
 const examInfo = ref<ExamResponse[]>([]);
+const loading = ref(false);
+
 const makeExams = async () => {
-    try {
-        const response = await examApiUtil.apiExamExamGet();
-        examInfo.value = response.data;
-    } catch (error) {
-        console.error("Lỗi khi lấy danh sách đề thi:", error);
-    }
+  try {
+    loading.value = true;
+    const response = await examApiUtil.apiExamExamGet();
+    examInfo.value = response.data;
+  } catch (error) {
+    console.error("Lỗi khi lấy danh sách đề thi:", error);
+    ElMessage.error("Không thể tải danh sách đề thi");
+  } finally {
+    loading.value = false;
+  }
 };
 onMounted(() => {
-    makeExams();
-})
+  makeExams();
+});
+
+const filteredExams = computed(() => {
+  const query = searchQuery.value.toLowerCase().trim();
+
+  if (!query) return examInfo.value;
+
+  return examInfo.value.filter((exam) => {
+    return (
+      exam.examName?.toLowerCase().includes(query) ||
+      exam.description?.toLowerCase().includes(query) ||
+      exam.totalQuestions?.toString().includes(query) 
+    );
+  });
+});
 </script>
 
-<style scoped></style>
+<style scoped>
+.exam-tabs :deep(.el-tabs__item) {
+  font-size: 1rem;
+  padding: 0 1.5rem 1rem;
+}
+
+.exam-tabs :deep(.el-tabs__active-bar) {
+  height: 3px;
+  border-radius: 1.5px;
+  background-color: #2563eb;
+}
+
+.exam-tabs :deep(.el-tabs__item.is-active) {
+  color: #2563eb;
+  font-weight: 600;
+}
+
+.exam-tabs :deep(.el-tabs__nav-wrap::after) {
+  height: 1px;
+  background-color: #e5e7eb;
+}
+</style>
