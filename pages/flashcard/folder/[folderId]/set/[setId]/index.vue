@@ -24,7 +24,7 @@
     <!-- Main Content -->
     <div class="h-full w-full overflow-auto p-4 flex flex-col gap-6">
       <!-- Set Info Card -->
-      <div class="bg-white rounded-lg p-4 shadow-sm border border-gray-100">
+      <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
         <div class="flex items-center justify-between mb-4">
           <div>
             <h2 class="text-lg font-semibold">{{ currentSet?.setName }}</h2>
@@ -44,14 +44,14 @@
       <div class="grid grid-cols-2 gap-4">
         <button
           @click="startFlashcards"
-          class="p-4 bg-blue-100 rounded-lg flex flex-col items-center justify-center gap-2"
+          class="p-4 bg-blue-100 rounded-xl flex flex-col items-center justify-center gap-2"
         >
           <Copy class="text-blue-600" :size="24" />
           <span class="text-sm font-medium">Học thẻ</span>
         </button>
         <button
           @click="startQuiz"
-          class="p-4 bg-green-100 rounded-lg flex flex-col items-center justify-center gap-2"
+          class="p-4 bg-green-100 rounded-xl flex flex-col items-center justify-center gap-2"
         >
           <BookOpen class="text-green-600" :size="24" />
           <span class="text-sm font-medium">Kiểm tra</span>
@@ -76,17 +76,17 @@
             v-model="searchQuery"
             type="text"
             placeholder="Tìm kiếm từ vựng..."
-            class="w-full p-3 pl-10 rounded-lg border border-gray-200 focus:outline-none focus:border-blue-500"
+            class="w-full p-3 pl-10 rounded-xl border border-gray-200 focus:outline-none focus:border-blue-500"
           />
           <Search class="absolute left-3 top-3 text-gray-400" />
         </div>
 
         <!-- Words List -->
-        <div class="grid grid-cols-1 gap-4">
+        <div class="flex flex-col gap-2">
           <div
             v-for="word in filteredVocabularies"
             :key="word.id"
-            class="p-4 bg-white rounded-lg shadow-sm border border-gray-100"
+            class="p-4 bg-white rounded-xl shadow-sm border border-gray-100"
           >
             <div class="flex justify-between items-start">
               <div>
@@ -95,7 +95,7 @@
               </div>
               <Star
                 :class="[
-                  word.isFavorite
+                  word.isFavourite
                     ? 'text-yellow-400 fill-yellow-400'
                     : 'text-gray-400',
                   'cursor-pointer',
@@ -122,14 +122,14 @@
     <el-dialog v-model="showActions" title="Tùy chọn" width="90%">
       <div class="flex flex-col gap-4">
         <button
-          class="text-left p-3 hover:bg-gray-50 rounded-lg"
+          class="text-left p-3 hover:bg-gray-50 rounded-xl"
           @click="handleEdit"
         >
           <Edit2 class="inline-block mr-2" :size="20" />
           Chỉnh sửa thông tin
         </button>
         <button
-          class="text-left p-3 hover:bg-gray-50 rounded-lg text-red-500"
+          class="text-left p-3 hover:bg-gray-50 rounded-xl text-red-500"
           @click="handleDelete"
         >
           <Trash2 class="inline-block mr-2" :size="20" />
@@ -179,32 +179,45 @@ const searchQuery = ref("");
 const showActions = ref(false);
 const showAddWord = ref(false);
 
-const currentSet = computed(() => {
-  return store.vocabSets.find((set) => set.id === setId) as
-    | FlashcardSet
-    | undefined;
-});
-const filteredVocabularies = computed(() => {
-  if (!vocabularies.value || !Array.isArray(vocabularies.value)) {
-    return [];
-  }
-  return vocabularies.value.filter(
-    (vocab) =>
-      vocab.termLanguage?.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
-      vocab.definitionLanguage?.toLowerCase().includes(searchQuery.value.toLowerCase())
-  );
-});
-
 onMounted(async () => {
   if (setId) {
     try {
-      await store.getVocabSetsInFolder(folderId);
-      await store.getFlashcardsInSet(setId);
+      console.log("Fetching sets in folder:", folderId);
+    await store.fetchSetsInFolder(folderId);
+    console.log("Sets in folder result:", store.setsInfolder);
+    
+    console.log("Fetching flashcards in set:", setId);
+    await store.fetchFlashcardsInSet(setId);
+    console.log("Flashcards fetched:", vocabularies.value);
     } catch (err) {
       console.error("Lỗi khi lấy danh sách từ vựng:", err);
       ElMessage.error("Không thể tải danh sách từ vựng");
     }
   }
+});
+console.log("vocab: ", vocabularies.value);
+
+const currentSet = computed(() => {
+  if (!store.setsInfolder || !Array.isArray(store.setsInfolder)) {
+    console.warn("setsInfolder is not available or not an array");
+    return undefined;
+  }
+  return store.setsInfolder.find((set) => set.id === setId);
+});
+const filteredVocabularies = computed(() => {
+  if (!vocabularies.value || !Array.isArray(vocabularies.value)) {
+    console.warn("vocabularies is not available or not an array");
+    return [];
+  }
+  
+  const query = searchQuery.value.toLowerCase().trim();
+  if (!query) return vocabularies.value;
+  
+  return vocabularies.value.filter(
+    (vocab) =>
+      (vocab.termLanguage?.toLowerCase() || "").includes(query) ||
+      (vocab.definitionLanguage?.toLowerCase() || "").includes(query)
+  );
 });
 
 const startFlashcards = () => {
@@ -234,7 +247,7 @@ const handleWordCreated = async (flashcard: FlashcardRequest) => {
       flashcard.flashcardSetId,
       flashcard.userId
     );
-    await store.getFlashcardsInSet(setId);
+    await store.fetchFlashcardsInSet(setId);
     ElMessage.success("Thêm từ mới thành công");
   } catch (err) {
     console.error("Lỗi khi thêm từ mới:", err);

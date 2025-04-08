@@ -36,7 +36,7 @@
                     </div>
                 </div>
                 <div class="flex gap-4 text-sm text-gray-500">
-                    <span>{{ vocabSets.length }} bộ thẻ</span>
+                    <span>{{ setsInfolder.length }} bộ thẻ</span>
                     <span>{{ vocabularies.length }} từ vựng</span>
                 </div>
             </div>
@@ -62,7 +62,7 @@
                     </NuxtLink>
                 </div>
                 <!-- Empty State -->
-                <div v-show="vocabSets.length === 0" class="text-center py-8 text-gray-500">
+                <div v-show="setsInfolder.length === 0" class="text-center py-8 text-gray-500">
                     <Files :size="48" class="mx-auto mb-4 opacity-50" />
                     <p>Chưa có bộ thẻ nào. Hãy tạo bộ thẻ đầu tiên!</p>
                 </div>
@@ -101,7 +101,7 @@ import CreateSetModal from '~/components/flashcard/CreateSetModal.vue';
 const route = useRoute();
 const router = useRouter();
 const store = FlashcardStore();
-const { folders, vocabSets, loading, vocabularies } = storeToRefs(store);
+const { folders, setsInfolder, loading, vocabularies } = storeToRefs(store);
 const folderId = Number(route.params.folderId);
 const searchQuery = ref('');
 const showActions = ref(false);
@@ -110,7 +110,7 @@ const showCreateSetModal = ref(false);
 onMounted(async () => {
     if (folderId) {
         try {
-            await store.getVocabSetsInFolder(folderId);
+            await store.fetchSetsInFolder(folderId);
         } catch (err) {
             console.error("Lỗi khi lấy danh sách bộ thẻ:", err);
             ElMessage.error("Không thể tải danh sách bộ thẻ");
@@ -121,15 +121,15 @@ const currentFolder = computed(() =>
     folders.value.find(f => f.id === folderId)
 );
 const filteredSets = computed(() =>
-    vocabSets.value.filter(set =>
+    setsInfolder.value.filter(set =>
         set.setName.toLowerCase().includes(searchQuery.value.toLowerCase())
-    )
+    ) || []
 );
 const createNewSet = () => {
     showCreateSetModal.value = true;
 };
 const handleSetCreated = async () => {
-    await store.getVocabSetsInFolder(folderId);
+    await store.fetchSetsInFolder(folderId);
 };
 const handleRename = () => {
     showActions.value = false;

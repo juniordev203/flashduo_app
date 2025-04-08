@@ -1,36 +1,39 @@
 <template>
-  <div class="h-full w-full flex flex-col bg-slate-50">
-    <AtomHeaderSafe class="shadow-md">
+  <div class="h-full w-full flex flex-col bg-gray-100">
+    <AtomHeaderSafe class="shadow-md bg-white">
       <template v-slot:left>
         <NuxtLink to="/exam">
-          <div class="flex gap-2 items-center text-gray-400">
-            <X class="w-6 h-6" />
+          <div class="flex gap-2 items-center text-gray-600 active:text-gray-800 transition-colors">
+            <X class="w-5 h-5" />
+            <span class="text-sm font-medium">Thoát</span>
           </div>
         </NuxtLink>
       </template>
-      <template v-slot:default> </template>
+      <template v-slot:default></template>
       <template v-slot:right>
         <button
           @click="confirmSubmit"
-          class="px-4 py-2 text-center text-sm font-medium text-gray-50 bg-red-500 rounded"
+          class="px-4 py-2 text-center text-sm font-medium text-white bg-red-500 active:bg-red-600 rounded-lg transition-colors duration-150 active:scale-95"
         >
           Nộp bài
         </button>
       </template>
     </AtomHeaderSafe>
-    <div class="h-full w-full overflow-hidden p-4 flex flex-col gap-6">
+    
+    <div class="h-full w-full overflow-hidden p-4 flex flex-col gap-5">
       <!-- header -->
       <ExamHeader
         :timeRemaining="examStore.timeRemaining"
         :examInfo="examStore.currentExam"
         @toggle-section="toggleSection"
+        class="bg-white p-3 rounded-xl shadow-sm"
       />
-      <div class="flex flex-col gap-2 h-full">
-        <div
-          class="flex-1 flex flex-col justify-between bg-white shadow-sm rounded-lg"
-        >
+      
+      <div class="flex flex-col gap-4 h-full">
+        <!-- Main question area -->
+        <div class="flex-1 flex flex-col justify-between bg-white shadow-sm rounded-xl overflow-hidden">
           <!-- section -->
-          <div class="px-1 py-2 flex-1 border-blue-300 border-2 rounded">
+          <div class="px-3 py-4 flex-1 border-blue-400 border-2 rounded-lg m-1">
             <!-- listening -->
             <ListeningSection
               v-if="examStore.currentSection === QuestionSectionEnum.Listening"
@@ -52,38 +55,37 @@
               @change-question="setCurrentQuestion"
             />
           </div>
-          <!-- control -->
-          <div class="p-2 h-12 bg-slate-50 flex justify-between">
+          
+          <!-- Navigation controls -->
+          <div class="p-3 bg-gray-50 border-t flex justify-between items-center">
             <button
               @click="previousQuestion"
-              class="flex items-center px-4 py-2 border border-gray-300 shadow text-sm font-medium rounded text-gray-700 bg-white transition-transform duration-150 active:scale-95 touch-manipulation"
+              class="flex items-center gap-2 px-4 py-2 border border-gray-200 text-sm font-medium rounded-lg text-gray-700 bg-white active:bg-gray-200 transition-all duration-150 active:scale-95 disabled:opacity-50 disabled:active:scale-100 disabled:active:bg-white shadow-sm touch-manipulation"
               :disabled="examStore.currentQuestionIndex === 0"
             >
-              <ChevronLeft class="w-5 h-5" /> Câu trước
+              <ChevronLeft class="w-4 h-4" /> Câu trước
             </button>
 
             <button
               @click="nextQuestion"
-              class="flex items-center px-4 py-2 border border-gray-300 shadow text-sm font-medium rounded text-gray-700 bg-white transition-transform duration-150 active:scale-95 touch-manipulation"
-              :disabled="
-                examStore.currentQuestionIndex ===
-                (examStore.currentExam?.totalQuestions || 0) - 1
-              "
+              class="flex items-center gap-2 px-4 py-2 border border-gray-200 text-sm font-medium rounded-lg text-gray-700 bg-white active:bg-gray-200 transition-all duration-150 active:scale-95 disabled:opacity-50 disabled:active:scale-100 disabled:active:bg-white shadow-sm touch-manipulation"
+              :disabled="examStore.currentQuestionIndex === (examStore.currentExam?.totalQuestions || 0) - 1"
             >
-              Câu tiếp theo <ChevronRight class="w-5 h-5" />
+              Câu tiếp theo <ChevronRight class="w-4 h-4" />
             </button>
           </div>
         </div>
-        <!-- question list -->
-        <div class="h-22 bg-white shadow-sm rounded-lg">
-          <div class="p-4 flex flex-col gap-2">
-            <h3 class="text-lg font-medium text-gray-900">Danh sách câu hỏi</h3>
+        
+        <!-- Question list -->
+        <div class="bg-white shadow-sm rounded-xl">
+          <div class="p-4 flex flex-col gap-3">
+            <h3 class="text-base font-semibold text-gray-800">Danh sách câu hỏi</h3>
             <div class="flex flex-wrap gap-2">
               <button
                 v-for="index in totalQuestionListening"
                 :key="index -1"
                 @click="setCurrentQuestion(index - 1)"
-                class="w-10 h-10 flex items-center justify-center text-sm rounded-md"
+                class="w-10 h-10 flex items-center justify-center text-sm font-medium rounded-lg transition-all duration-150 active:scale-90 touch-manipulation"
                 :class="getQuestionButtonClass(index - 1)"
               >
                 {{ index }}
@@ -93,10 +95,8 @@
                 v-for="index in totalQuestionReading"
                 :key="index - 1"
                 @click="setCurrentQuestion(index - 1 + totalQuestionListening)"
-                class="w-10 h-10 flex items-center justify-center text-sm rounded-md"
-                :class="
-                  getQuestionButtonClass(index - 1 + totalQuestionListening)
-                "
+                class="w-10 h-10 flex items-center justify-center text-sm font-medium rounded-lg transition-all duration-150 active:scale-90 touch-manipulation"
+                :class="getQuestionButtonClass(index - 1 + totalQuestionListening)"
               >
                 {{ index + totalQuestionListening }}
               </button>
@@ -213,6 +213,7 @@ const previousQuestion = () => {
     }
   }
 };
+
 const setCurrentQuestion = (index: number) => {
   examStore.setQuestionIndex(index);
   const halfTotal = Math.ceil(totalQuestion.value / 2);
@@ -222,6 +223,7 @@ const setCurrentQuestion = (index: number) => {
     examStore.setSection(QuestionSectionEnum.Reading);
   }
 };
+
 const toggleSection = () => {
   const halfTotal = Math.ceil(totalQuestion.value / 2);
   if (examStore.currentSection === QuestionSectionEnum.Listening) {
@@ -235,7 +237,7 @@ const toggleSection = () => {
 
 const getQuestionButtonClass = (index: number) => {
   if (index === examStore.currentQuestionIndex) {
-    return "bg-blue-300 text-white";
+    return "bg-blue-500 text-white shadow-md";
   }
   let questionId;
   const halfTotal = Math.ceil(totalQuestion.value / 2);
@@ -246,8 +248,8 @@ const getQuestionButtonClass = (index: number) => {
     questionId = examStore.readingQuestion[readingIndex]?.id;
   }
   return questionId !== undefined && examStore.answers[questionId] !== undefined
-    ? "bg-green-300 text-white"
-    : "bg-gray-100 text-gray-700";
+    ? "bg-green-500 text-white shadow-sm"
+    : "bg-gray-100 text-gray-600";
 };
 
 const saveAnswer = async ({
@@ -266,6 +268,7 @@ const saveAnswer = async ({
    });
    console.log("Câu trả lời đã lưu: ", questionId, section, answer);
 };
+
 const confirmSubmit = async () => {
   console.log("userExamId trong component: ", userExamId.value)
   if (confirm("Bạn có chắc chắn muốn nộp bài không?")) {
@@ -280,4 +283,6 @@ const confirmSubmit = async () => {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+/* Add any additional scoped styles here */
+</style>

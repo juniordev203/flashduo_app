@@ -51,6 +51,42 @@ export interface FlashcardResponse {
     audioUrl?: string | null;
 
     /**
+     * @type {boolean}
+     * @memberof FlashcardResponse
+     */
+    isFavourite?: boolean;
+
+    /**
+     * @type {boolean}
+     * @memberof FlashcardResponse
+     */
+    isDeleted?: boolean;
+
+    /**
+     * @type {number}
+     * @memberof FlashcardResponse
+     */
+    correctCount?: number;
+
+    /**
+     * @type {number}
+     * @memberof FlashcardResponse
+     */
+    wrongCount?: number;
+
+    /**
+     * @type {Date}
+     * @memberof FlashcardResponse
+     */
+    lastReviewedAt?: Date | null;
+
+    /**
+     * @type {Date}
+     * @memberof FlashcardResponse
+     */
+    createdAt?: Date;
+
+    /**
      * @type {number}
      * @memberof FlashcardResponse
      */

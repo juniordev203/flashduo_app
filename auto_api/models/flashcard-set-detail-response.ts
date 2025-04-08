@@ -49,7 +49,7 @@ export interface FlashcardSetDetailResponse {
      * @type {number}
      * @memberof FlashcardSetDetailResponse
      */
-    folderId?: number;
+    flashcardFolderId?: number;
 
     /**
      * @type {number}

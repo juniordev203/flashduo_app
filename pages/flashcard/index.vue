@@ -44,7 +44,13 @@
       <!-- Folders -->
       <div class="space-y-4">
         <h2 class="text-lg font-semibold">Thư mục của tôi</h2>
-        <div class="flex flex-col gap-4">
+        <div v-if="loading && folders.length === 0" class="flex justify-center py-4">
+          <div class="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-blue-500"></div>
+        </div>
+        <div v-else-if="folders.length === 0" class="p-4 bg-white rounded-lg shadow-sm border border-gray-100 text-center">
+          <p class="text-gray-500">Bạn chưa có thư mục nào</p>
+        </div>
+        <div v-else class="flex flex-col gap-4">
           <NuxtLink
             v-for="folder in folders"
             :key="folder.id"
@@ -59,6 +65,43 @@
                   <p class="text-sm text-gray-500">
                     {{ formatCustomDateTime(folder.createdAt) }}
                   </p>
+                </div>
+              </div>
+              <ChevronRight class="text-gray-400" />
+            </div>
+          </NuxtLink>
+        </div>
+      </div>
+      <!-- Set -->
+      <div class="space-y-4">
+        <h2 class="text-lg font-semibold">Bộ thẻ của tôi</h2>
+        <div v-if="loading" class="flex justify-center py-4">
+          <div class="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-blue-500"></div>
+        </div>
+        <div v-else-if="setsInUser.length === 0" class="p-4 bg-white rounded-lg shadow-sm border border-gray-100 text-center">
+          <p class="text-gray-500">Bạn chưa có bộ thẻ nào</p>
+        </div>
+        <div v-else class="flex flex-col gap-4">
+          <NuxtLink
+            v-for="set in filteredSets"
+            :key="set.id"
+            :to="`/flashcard/folder/${set.flashcardFolderId}/set/${set.id}`"
+            class="p-4 bg-white rounded-lg shadow-sm border border-gray-100 block"
+          >
+            <div class="flex justify-between items-center">
+              <div class="flex items-center gap-3">
+                <Layers class="text-green-500" />
+                <div>
+                  <h3 class="font-medium">{{ set.setName }}</h3>
+                  <div class="flex items-center gap-2">
+                    <p class="text-sm text-gray-500">
+                      {{ set.totalCards || 0 }} thẻ
+                    </p>
+                    <span class="text-gray-300">•</span>
+                    <p class="text-sm text-gray-500">
+                      {{ formatCustomDateTime(set.createdAt) }}
+                    </p>
+                  </div>
                 </div>
               </div>
               <ChevronRight class="text-gray-400" />
@@ -92,6 +135,7 @@ import {
   Plus,
   Folder,
   ChevronRight,
+  Layers
 } from "lucide-vue-next";
 import { ElMessage } from "element-plus";
 import { FlashcardStore } from "~/stores/flashcard";
@@ -102,7 +146,7 @@ import { useRouter } from "vue-router";
 
 const router = useRouter();
 const store = FlashcardStore();
-const { folders, loading, error } = storeToRefs(store);
+const { folders, loading, error, setsInUser } = storeToRefs(store);
 const searchQuery = ref("");
 const userInfo = computed(() => useMyBaseStore().userInfo);
 const userId = computed(() => userInfo.value?.id);
@@ -112,13 +156,25 @@ const showCreateSetModal = ref(false);
 onMounted(async () => {
   if (userId.value) {
     try {
-      await store.getFoldersForUser(userId.value);
+      await store.fetchFoldersByUser(userId.value);
+      await store.fetchSetsInUser(userId.value);
     } catch (err) {
-      console.error("Lỗi khi lấy folder:", err);
-      ElMessage.error("Không thể tải danh sách thư mục");
+      console.error("Lỗi khi lấy danh sách bộ thẻ:", err);
+      ElMessage.error("Không thể tải danh sách bộ thẻ");
     }
   }
+})
+
+const filteredSets = computed(() => {
+  if (!searchQuery.value.trim()) {
+    return setsInUser.value;
+  }
+  const query = searchQuery.value.toLowerCase().trim();
+  return setsInUser.value.filter(set => 
+    set.setName.toLowerCase().includes(query)
+  );
 });
+
 const handleFolderCreate = async (name: string) => {
   if (userId.value) {
     try {
@@ -133,7 +189,7 @@ const handleFolderCreate = async (name: string) => {
 };
 const handleSetCreated = async () => {
   if (userId.value) {
-    await store.getFoldersForUser(userId.value);
+    await store.fetchFoldersByUser(userId.value);
   }
 };
 const createNewFolder = () => {

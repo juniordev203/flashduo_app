@@ -98,7 +98,7 @@
           class="block w-full"
         >
           <button
-            class="w-full py-3 text-lg font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-all duration-200 active:scale-95 touch-manipulation flex items-center justify-center gap-2"
+            class="w-full py-3 text-lg font-semibold text-white bg-blue-600 rounded-xl transition-all duration-200 active:scale-95 touch-manipulation flex items-center justify-center gap-2"
           >
             <Play :size="20" />
             Bắt đầu làm bài
@@ -116,6 +116,7 @@
 <script setup lang="ts">
 import {
   ChevronLeft,
+  ChevronRight,
   Clock,
   FileQuestion,
   LayoutList,
@@ -123,6 +124,7 @@ import {
   Circle,
   Play,
 } from "lucide-vue-next";
+import { ElLoading } from 'element-plus'
 import {
   type ExamResponse,
 } from "~/auto_api/models";

@@ -7,7 +7,7 @@
           {{ $t("lang_core_exam_title") }}
           <span class="text-blue-600 font-bold">{{
             $t("lang_core_exam_title_highlight")
-          }}</span>
+            }}</span>
         </span>
       </template>
     </AtomHeaderSafe>
@@ -17,12 +17,9 @@
       <!-- Search Bar -->
       <div class="relative">
         <Search class="absolute left-4 top-3.5 text-gray-400" :size="20" />
-        <input
-          v-model="searchQuery"
+        <input v-model="searchQuery"
           class="w-full h-12 pl-12 pr-4 rounded-xl border border-gray-200 focus:outline-none focus:border-blue-500 bg-white transition-all"
-          :placeholder="$t('lang_core_exam_search_placeholder')"
-          type="text"
-        />
+          :placeholder="$t('lang_core_exam_search_placeholder')" type="text" />
       </div>
 
       <!-- Tabs Section -->
@@ -34,10 +31,8 @@
               <!-- Filter Button -->
               <div class="flex justify-between items-center">
                 <el-dropdown trigger="click">
-                  <el-button
-                    type="primary"
-                    class="!bg-blue-50 !border-blue-100 !text-blue-600 hover:!bg-blue-100 !shadow-sm"
-                  >
+                  <el-button type="primary"
+                    class="!bg-blue-50 !border-blue-100 !text-blue-600 hover:!bg-blue-100 !shadow-sm">
                     {{ $t("lang_core_exam_filter_button") }}
                     <el-icon class="el-icon--right"><arrow-down /></el-icon>
                   </el-button>
@@ -45,13 +40,13 @@
                     <el-dropdown-menu>
                       <el-dropdown-item>{{
                         $t("lang_core_exam_filter_new_economy")
-                      }}</el-dropdown-item>
+                        }}</el-dropdown-item>
                       <el-dropdown-item>{{
                         $t("lang_core_exam_filter_old_economy")
-                      }}</el-dropdown-item>
+                        }}</el-dropdown-item>
                       <el-dropdown-item>{{
                         $t("lang_core_exam_filter_longman")
-                      }}</el-dropdown-item>
+                        }}</el-dropdown-item>
                     </el-dropdown-menu>
                   </template>
                 </el-dropdown>
@@ -63,19 +58,14 @@
                   <el-loading />
                 </div>
                 <!-- No Results State -->
-                <div
-                  v-else-if="filteredExams.length === 0"
-                  class="flex flex-col items-center justify-center gap-4 py-8"
-                >
+                <div v-else-if="filteredExams.length === 0"
+                  class="flex flex-col items-center justify-center gap-4 py-8">
                   <Search class="text-gray-400" :size="48" />
                   <p class="text-gray-500">Không tìm thấy bài thi phù hợp</p>
                 </div>
                 <!-- Exam Cards -->
-                <div v-else
-                  v-for="data in filteredExams"
-                  :key="data.id"
-                  class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:border-blue-500 transition-all duration-200"
-                >
+                <div v-else v-for="data in filteredExams" :key="data.id"
+                  class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:border-blue-500 transition-all duration-200">
                   <div class="p-5">
                     <h3 class="text-lg font-bold text-gray-800 mb-2">
                       {{ data.examName }}
@@ -84,9 +74,7 @@
                       {{ data.description }}
                     </p>
 
-                    <div
-                      class="flex flex-wrap items-center gap-4 text-sm text-gray-500 mb-4"
-                    >
+                    <div class="flex flex-wrap items-center gap-4 text-sm text-gray-500 mb-4">
                       <div class="flex items-center gap-2">
                         <Clock class="text-blue-500" :size="18" />
                         <span>{{ $t("lang_core_exam_time") }}</span>
@@ -97,18 +85,15 @@
                       </div>
                       <div class="flex items-center gap-2">
                         <FileText class="text-purple-500" :size="18" />
-                        <span
-                          >{{ $t("lang_core_exam_parts") }} |
+                        <span>{{ $t("lang_core_exam_parts") }} |
                           {{ data.totalQuestions }}
-                          {{ $t("lang_core_exam_questions") }}</span
-                        >
+                          {{ $t("lang_core_exam_questions") }}</span>
                       </div>
                     </div>
 
                     <NuxtLink :to="`/exam/${data.id}`" class="block w-full">
                       <button
-                        class="w-full py-2.5 px-4 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-all duration-200 active:scale-95 touch-manipulation flex items-center justify-center gap-2"
-                      >
+                        class="w-full py-2.5 px-4 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-all duration-200 active:scale-95 touch-manipulation flex items-center justify-center gap-2">
                         {{ $t("lang_core_exam_detail_button") }}
                         <ChevronRight :size="18" />
                       </button>
@@ -122,8 +107,7 @@
           <!-- History Tab -->
           <el-tab-pane :label="$t('lang_core_exam_history')" name="vocab">
             <div
-              class="flex flex-col items-center justify-center gap-4 p-8 text-center bg-white rounded-xl border border-gray-100"
-            >
+              class="flex flex-col items-center justify-center gap-4 p-8 text-center bg-white rounded-xl border border-gray-100">
               <History class="text-gray-400" :size="48" />
               <p class="text-gray-500">Bạn chưa làm bài thi nào!</p>
             </div>
@@ -135,12 +119,10 @@
 </template>
 
 <script setup lang="ts">
-import { Search, Clock, UserPen } from "lucide-vue-next";
+import { Search, Clock, UserPen, History, ChevronRight } from "lucide-vue-next";
 import { ArrowDown } from "@element-plus/icons-vue";
 import type { ExamResponse } from "~/auto_api/models";
-import type { TabsInstance } from "element-plus";
 
-const tabPosition = ref<TabsInstance["tabPosition"]>("bottom");
 const activeTab = ref("exam");
 const searchQuery = ref("");
 
@@ -172,7 +154,7 @@ const filteredExams = computed(() => {
     return (
       exam.examName?.toLowerCase().includes(query) ||
       exam.description?.toLowerCase().includes(query) ||
-      exam.totalQuestions?.toString().includes(query) 
+      exam.totalQuestions?.toString().includes(query)
     );
   });
 });
