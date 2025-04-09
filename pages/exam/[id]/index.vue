@@ -11,7 +11,7 @@
         </NuxtLink>
       </template>
     </AtomHeaderSafe>
-    <div class="h-full w-full overflow-auto">
+    <div class="h-full w-full overflow-auto mb-10">
       <div v-if="examDetail" class="max-w-3xl mx-auto p-4">
         <!-- Exam Header -->
         <div class="bg-white rounded-xl shadow-md p-6 mb-4">

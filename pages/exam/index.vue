@@ -122,6 +122,7 @@
 import { Search, Clock, UserPen, History, ChevronRight } from "lucide-vue-next";
 import { ArrowDown } from "@element-plus/icons-vue";
 import type { ExamResponse } from "~/auto_api/models";
+import type { TabsInstance } from "element-plus";
 
 const activeTab = ref("exam");
 const searchQuery = ref("");

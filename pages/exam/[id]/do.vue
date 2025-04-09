@@ -274,6 +274,7 @@ const confirmSubmit = async () => {
   if (confirm("Bạn có chắc chắn muốn nộp bài không?")) {
     if (!userExamId.value) {
       console.error("Không tìm thấy userId");
+      ElMessage.error("Bạn cần đăng nhập để xem đáp án!");
       return
     }
     console.log("✅ Gọi submitExam với userExamId:", userExamId.value, "và userId:", userId.value);

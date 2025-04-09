@@ -302,6 +302,17 @@ export const FlashcardStore = defineStore("flashcard", () => {
     }
   };
 
+  const reset = () => {
+    folders.value = [];
+    setsInfolder.value = [];
+    setsInUser.value = [];
+    vocabularies.value = [];
+    loading.value = false;
+    error.value = null;
+    currentFolder.value = null;
+    currentSet.value = null;
+    currentFlashcard.value = null;
+  }
   // Thêm method mới để làm rõ mục đích và tên phương thức
   const getFlashcardSetsForUser = fetchSetsInUser;
   const getFoldersForUser = fetchFoldersByUser;
@@ -339,5 +350,6 @@ export const FlashcardStore = defineStore("flashcard", () => {
     setCurrentFolder,
     setCurrentSet,
     setCurrentFlashcard,
+    reset
   };
 });

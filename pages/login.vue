@@ -29,10 +29,27 @@
                 </button>
                 <p v-if="errorMessage" class="error text-center text-xs text-red-500">{{ errorMessage }}</p>
             </form>
-            <div class="flex gap-2 justify-center text-sm text-center">
-                <p class="">{{ $t('lang_core_login_no_account') }}</p>
-                <NuxtLink to="/register" class="text-center">
-                    <p class="text-indigo-500">{{ $t('lang_core_login_register') }}</p>
+            <div class="space-y-4 px-6">
+                <div class="flex gap-2 justify-center text-sm">
+                    <p class="text-gray-600">{{ $t('lang_core_login_no_account') }}</p>
+                    <NuxtLink to="/register" class="text-center">
+                        <p class="text-indigo-500 font-medium">{{ $t('lang_core_login_register') }}</p>
+                    </NuxtLink>
+                </div>
+                
+                <div class="flex items-center justify-center">
+                    <div class="h-px bg-gray-200 flex-grow"></div>
+                    <span class="px-4 text-sm text-gray-500">hoặc</span>
+                    <div class="h-px bg-gray-200 flex-grow"></div>
+                </div>
+                
+                <NuxtLink to="/" class="block">
+                    <button 
+                        class="w-full flex items-center justify-center gap-2 py-3 px-4 bg-white border border-gray-200 rounded-lg shadow-sm text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-200 transition-all"
+                    >
+                        <EyeIcon class="w-5 h-5 text-gray-500" />
+                        <span class="font-medium">Trải nghiệm với tư cách khách</span>
+                    </button>
                 </NuxtLink>
             </div>
         </div>

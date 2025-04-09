@@ -68,6 +68,7 @@
     "lang_core_login_error_default": "Đăng nhập thất bại, vui lòng thử lại.",
     "lang_core_login_error_invalid": "Email hoặc mật khẩu không đúng.",
     "lang_core_login_error_server": "Lỗi máy chủ, vui lòng thử lại sau.",
+    "lang_core_login_no_login": "Trải nghiệm với tư cách khách!",
     "lang_core_register_title": "Đăng ký",
     "lang_core_register_subtitle": "Bạn sẽ lưu lại được",
     "lang_core_register_data_process": "Dữ liệu & Quá trình học",
@@ -99,6 +100,8 @@
     "lang_core_profile_version_number": "2.0.5",
     "lang_core_profile_user_guide": "Hướng dẫn sử dụng",
     "lang_core_profile_logout": "Đăng xuất",
+    "lang_core_profile_login" : "Đăng nhập",
+
 
     "lang_core_navigation_home": "Trang chủ",
     "lang_core_navigation_exam": "Thi thử",

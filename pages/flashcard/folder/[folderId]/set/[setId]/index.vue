@@ -221,11 +221,11 @@ const filteredVocabularies = computed(() => {
 });
 
 const startFlashcards = () => {
-  router.push(`/flashcard/study/${setId}/flashcards`);
+  router.push(`/flashcard/folder/${folderId}/set/${setId}/learn`);
 };
 
 const startQuiz = () => {
-  router.push(`/flashcard/study/${setId}/quiz`);
+  router.push(`/flashcard/folder/${folderId}/set/${setId}/test`);
 };
 
 const toggleFavorite = async (wordId: number) => {
@@ -287,7 +287,5 @@ const handleDelete = async () => {
 </script>
 
 <style scoped>
-.grid {
-  display: grid;
-}
+
 </style>

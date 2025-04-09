@@ -11,20 +11,20 @@
       <template v-slot:right>
       </template>
     </AtomHeaderSafe>
-    <div v-if="userInfo" class="p-4 h-full w-full overflow-auto flex flex-col gap-6">
+    <div class="p-4 h-full w-full overflow-auto flex flex-col gap-6">
       <div class="flex justify-between items-center">
         <div class="flex gap-4 items-center">
           <div class="w-[40px] h-[40px] rounded-full border border-primary flex justify-center items-center">
             <img class="w-[32px] h-[32px] rounded-full" src="~/assets/images/avatar.jpg" alt="">
           </div>
-          <div class="flex flex-col justify-between">
+          <div v-if="userInfo" class="flex flex-col justify-between">
             <p class="text-lg">{{ userInfo.fullName }}</p>
             <p class="text-xs">{{ $t('lang_core_profile_created_date') }}{{ formatedCreatedAt }}</p>
           </div>
         </div>
       </div>
       <!-- box 1 -->
-      <div class="bg-white rounded shadow flex flex-col px-4">
+      <div class="bg-white rounded-xl shadow flex flex-col px-4">
         <div class="flex justify-between items-center py-4">
           <div class="flex items-center gap-4">
             <div>
@@ -114,7 +114,7 @@
       </div>
 
       <!-- box 2 -->
-      <div class="bg-white rounded shadow flex flex-col px-4">
+      <div class="bg-white rounded-xl shadow flex flex-col px-4">
         <div class="flex justify-between items-center py-4">
           <div class="flex items-center gap-4">
             <div class="">
@@ -179,19 +179,23 @@
         </div>
       </div>
 
-      <button @click="handleLogout" 
-        class="w-full p-3 flex bg-red-500 text-white gap-2 justify-center items-center text-center rounded">
+      <button v-if="userInfo" @click="handleLogout" 
+        class="w-full p-3 flex bg-red-500 text-white gap-2 justify-center items-center text-center rounded-xl">
         {{ $t('lang_core_profile_logout') }}
+      </button>
+
+      <button v-if="!userInfo" @click="handleLogin" 
+      class="w-full p-3 flex bg-blue-500 text-white gap-2 justify-center items-center text-center rounded-xl">
+        <p class="text-sm">{{ $t('lang_core_profile_login') }}</p>
       </button>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { BellRing, Globe, AlarmClock, Share2, SunMoon, ShieldQuestion, Star, UserRoundPen, BookOpenText, LogOut } from 'lucide-vue-next';
-import type { UserResponse } from '~/auto_api';
-import { useI18n } from 'vue-i18n'
-
+import { BellRing, Globe, AlarmClock, Share2, SunMoon, ShieldQuestion, Star, UserRoundPen, BookOpenText, LogOut, LogIn } from 'lucide-vue-next';
+import { FlashcardStore } from '@/stores/flashcard';
+const flashcardStore =  FlashcardStore();
 const { drawerChangeLocale } = storeToRefs(useMyBaseStore());
 const actionBtnNotice = ref(false)
 const actionBtnTheme = ref(false)
@@ -211,6 +215,12 @@ const toggleBtnTheme = () => {
 }
 const handleLogout = async () => {
   await logoutUser();
+  useMyBaseStore().$reset();
+  flashcardStore.reset();
+
+  router.push('/login')
+}
+const handleLogin = async () => {
   router.push('/login')
 }
 

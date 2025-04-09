@@ -70,6 +70,7 @@
   "lang_core_login_error_default": "Login failed, please try again.",
   "lang_core_login_error_invalid": "Invalid email or password.",
   "lang_core_login_error_server": "Server error, please try again later.",
+  "lang_core_login_no_login": "Experience as a guest!",
   "lang_core_register_title": "Register",
   "lang_core_register_subtitle": "You will be able to save",
   "lang_core_register_data_process": "Data & Learning Process",
@@ -101,6 +102,7 @@
   "lang_core_profile_version_number": "2.0.5",
   "lang_core_profile_user_guide": "User guide",
   "lang_core_profile_logout": "Logout",
+  "lang_core_profile_login": "Login",
 
   "lang_core_navigation_home": "Home",
   "lang_core_navigation_exam": "Exam",

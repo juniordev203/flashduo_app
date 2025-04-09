@@ -101,7 +101,7 @@ import CreateSetModal from '~/components/flashcard/CreateSetModal.vue';
 const route = useRoute();
 const router = useRouter();
 const store = FlashcardStore();
-const { folders, setsInfolder, loading, vocabularies } = storeToRefs(store);
+const { folders, setsInfolder, setsInUser, loading, vocabularies } = storeToRefs(store);
 const folderId = Number(route.params.folderId);
 const searchQuery = ref('');
 const showActions = ref(false);
