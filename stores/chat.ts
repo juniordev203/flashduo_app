@@ -57,7 +57,7 @@ export const useChatStore = defineStore('chat', {
       this.error = '';
       
       try {
-        const { data, error } = await useFetch('/api/gemini', {
+        const { data, error } = await useFetch('/api/chat/gemini', {
           method: 'POST',
           body: {
             prompt: userMessage

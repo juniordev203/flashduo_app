@@ -83,6 +83,35 @@
         </el-dialog>
         <!-- Create Set Modal -->
         <CreateSetModal v-model:visible="showCreateSetModal" :folder-id="folderId" @created="handleSetCreated" />
+        <el-dialog
+        v-model="showRenameModal"
+        title="Đổi tên thư mục"
+        width="90%"
+        :show-close="false"
+        :close-on-click-modal="false"
+    >
+        <div class="p-4">
+            <input
+                v-model="newFolderName"
+                type="text"
+                class="w-full p-3 rounded-lg border border-gray-200 focus:outline-none"
+                placeholder="Nhập tên thư mục mới"
+                @keyup.enter="submitRename"
+            />
+        </div>
+        <template #footer>
+            <div class="flex justify-end gap-2">
+                <el-button @click="showRenameModal = false">Hủy</el-button>
+                <el-button
+                    type="primary"
+                    @click="submitRename"
+                    :disabled="!newFolderName.trim() || newFolderName === currentFolder?.folderName"
+                >
+                    Lưu
+                </el-button>
+            </div>
+        </template>
+    </el-dialog>
     </div>
 </template>
 
@@ -106,6 +135,8 @@ const folderId = Number(route.params.folderId);
 const searchQuery = ref('');
 const showActions = ref(false);
 const showCreateSetModal = ref(false);
+const showRenameModal = ref(false);
+const newFolderName = ref('');
 
 onMounted(async () => {
     if (folderId) {
@@ -134,7 +165,30 @@ const handleSetCreated = async () => {
 const handleRename = () => {
     showActions.value = false;
     // Implement rename logic
+    newFolderName.value = currentFolder.value?.folderName || ''; 
+    showRenameModal.value = true;
 };
+const submitRename = async () => {
+    try {
+        if (!newFolderName.value.trim()) {
+            ElMessage.error('Tên thư mục không được để trống');
+            return;
+        }
+        if (newFolderName.value === currentFolder.value?.folderName) {
+            showRenameModal.value = false;
+            return;
+        }
+        await store.updateFolderName(folderId, newFolderName.value.trim());
+        ElMessage.success('Đã đổi tên thư mục');
+        showRenameModal.value = false;
+        await store.fetchSetsInFolder(folderId);
+        showActions.value = false;
+    } catch (err) {
+        console.error("Lỗi khi đổi tên thư mục:", err);
+        ElMessage.error('Đổi tên thư mục thất bại');
+        showRenameModal.value = false;
+    }
+}
 const handleDelete = async () => {
     try {
         await ElMessageBox.confirm(

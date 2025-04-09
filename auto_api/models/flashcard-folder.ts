@@ -53,6 +53,12 @@ export interface FlashcardFolder {
     createdAt?: Date;
 
     /**
+     * @type {Date}
+     * @memberof FlashcardFolder
+     */
+    updatedNameAt?: Date;
+
+    /**
      * @type {Array<FlashcardSet>}
      * @memberof FlashcardFolder
      */

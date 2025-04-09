@@ -3,6 +3,8 @@ PODS:
     - Capacitor
   - Capacitor (6.2.0):
     - CapacitorCordova
+  - CapacitorCamera (7.0.1):
+    - Capacitor
   - CapacitorCordova (6.2.0)
   - CapacitorDevice (6.0.2):
     - Capacitor
@@ -16,6 +18,7 @@ PODS:
 DEPENDENCIES:
   - "AashuDubeyCapacitorStatusbarSafeArea (from `../../node_modules/@aashu-dubey/capacitor-statusbar-safe-area`)"
   - "Capacitor (from `../../node_modules/@capacitor/ios`)"
+  - "CapacitorCamera (from `../../node_modules/@capacitor/camera`)"
   - "CapacitorCordova (from `../../node_modules/@capacitor/ios`)"
   - "CapacitorDevice (from `../../node_modules/@capacitor/device`)"
   - "CapacitorKeyboard (from `../../node_modules/@capacitor/keyboard`)"
@@ -27,6 +30,8 @@ EXTERNAL SOURCES:
     :path: "../../node_modules/@aashu-dubey/capacitor-statusbar-safe-area"
   Capacitor:
     :path: "../../node_modules/@capacitor/ios"
+  CapacitorCamera:
+    :path: "../../node_modules/@capacitor/camera"
   CapacitorCordova:
     :path: "../../node_modules/@capacitor/ios"
   CapacitorDevice:
@@ -41,12 +46,13 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   AashuDubeyCapacitorStatusbarSafeArea: a33a5d9dd9f08c0aa68e7ee6c261767c67694a9a
   Capacitor: 05d35014f4425b0740fc8776481f6a369ad071bf
+  CapacitorCamera: 6e73f1fc6c629a672658705a02409b60854bc0f1
   CapacitorCordova: b33e7f4aa4ed105dd43283acdd940964374a87d9
   CapacitorDevice: 9efd479d71d1baad74b75df531184c3f730eaa48
   CapacitorKeyboard: 4db71e694e7afb5d7c0be09b05495c19f7d6c914
   CapacitorStorage: 5525ad0c4925b07029da1d2724bb479449e218d9
   CapacitorVoiceRecorder: aa2a99f1688c09a66e6988e2df554ab3865d1ae3
 
-PODFILE CHECKSUM: 621bdd122aac12d7b3d8bc03d9231d1bf28c9940
+PODFILE CHECKSUM: 7885c6f0a4616b3a3b21bb9996e43b79e929d509
 
 COCOAPODS: 1.16.2

@@ -104,6 +104,14 @@
   "lang_core_profile_logout": "Logout",
   "lang_core_profile_login": "Login",
 
+  "lang_core_flashcard_add_newvocab": "Add new vocabulary",
+  "lang_core_flashcard_vocab": "Vocabulary",
+  "lang_core_flashcard_definition": "Definition",
+  
+  "lang_core_internal_add": "Add",
+  "lang_core_internal_image": "Image",
+  "lang_core_internal_audio": "Audio",
+  "lang_core_internal_cancel": "Cancel",
   "lang_core_navigation_home": "Home",
   "lang_core_navigation_exam": "Exam",
   "lang_core_navigation_forum": "Forum",

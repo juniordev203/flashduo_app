@@ -101,8 +101,14 @@
     "lang_core_profile_user_guide": "Hướng dẫn sử dụng",
     "lang_core_profile_logout": "Đăng xuất",
     "lang_core_profile_login" : "Đăng nhập",
-
-
+    "lang_core_flashcard_add_newvocab": "Thêm từ mới",
+    "lang_core_flashcard_vocab": "Từ vựng",
+    "lang_core_flashcard_definition": "Định nghĩa",
+    
+    "lang_core_internal_add": "Thêm từ",
+    "lang_core_internal_image": "Hình ảnh",
+    "lang_core_internal_audio": "Âm thanh",
+    "lang_core_internal_cancel": "Huỷ",
     "lang_core_navigation_home": "Trang chủ",
     "lang_core_navigation_exam": "Thi thử",
     "lang_core_navigation_forum": "Diễn đàn",

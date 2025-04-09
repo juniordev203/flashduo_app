@@ -15,7 +15,6 @@ export default defineEventHandler(async (event) => {
   const systemPrompt = locale === "en" ? en.system_prompt_flashduo : vi.system_prompt_flashduo;
 
   const finalPrompt = `${systemPrompt}\n\n${body.prompt}`;
-  console.log("finalPrompt:", finalPrompt);
 
   const config = useRuntimeConfig();
   try {

@@ -86,7 +86,29 @@ export const FlashcardStore = defineStore("flashcard", () => {
     setsInfolder.value = [];
     vocabularies.value = [];
   };
-
+  const updateFolderName = async (folderId: number, name: string) => {
+    try {
+      loading.value = true;
+      if (!folderId || !name) {
+        throw new Error("Folder ID or name is missing");
+      }
+      const response = await flashcardApiUtil.apiFlashcardFlashcardFolderNameIdPut(folderId, name);
+      if (response.status === 200) {
+        const folderIndex = folders.value.findIndex((f) => f.id === folderId);
+        if (folderIndex !== -1) {
+          folders.value[folderIndex].folderName = name;
+        }
+        return response.data;
+      } else {
+        throw new Error("Failed to update folder name");
+      }
+    } catch (err: any) {
+      handleApiError(err);
+      throw err;
+    } finally {
+      loading.value = false;
+    }
+  }
   //xoa folder theo id folder
   const deleteFolder = async (folderId: number) => {
     try {
@@ -350,6 +372,7 @@ export const FlashcardStore = defineStore("flashcard", () => {
     setCurrentFolder,
     setCurrentSet,
     setCurrentFlashcard,
-    reset
+    reset,
+    updateFolderName
   };
 });

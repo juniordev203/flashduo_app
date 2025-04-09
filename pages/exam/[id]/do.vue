@@ -237,7 +237,7 @@ const toggleSection = () => {
 
 const getQuestionButtonClass = (index: number) => {
   if (index === examStore.currentQuestionIndex) {
-    return "bg-blue-500 text-white shadow-md";
+    return "bg-blue-400 text-white shadow-md";
   }
   let questionId;
   const halfTotal = Math.ceil(totalQuestion.value / 2);
@@ -273,11 +273,9 @@ const confirmSubmit = async () => {
   console.log("userExamId trong component: ", userExamId.value)
   if (confirm("Bạn có chắc chắn muốn nộp bài không?")) {
     if (!userExamId.value) {
-      console.error("Không tìm thấy userId");
       ElMessage.error("Bạn cần đăng nhập để xem đáp án!");
       return
     }
-    console.log("✅ Gọi submitExam với userExamId:", userExamId.value, "và userId:", userId.value);
     await examStore.submitExam(userExamId.value, userId.value);
     router.push(`/exam/${examId}/result`);
   }
