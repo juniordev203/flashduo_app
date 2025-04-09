@@ -1,6 +1,6 @@
 import { Configuration, AuthApi, ForumApi, UserApi, ExamApi, FlashcardApi } from "~/auto_api";
 const config = new Configuration ({
-    basePath: "http://localhost:5286",
+    basePath: import.meta.env.VITE_API_URL,
     apiKey: () => {
         const { authUser } = useMyBaseStore();
         if (!authUser) return "";

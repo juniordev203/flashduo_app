@@ -3,9 +3,11 @@
     <!-- Header -->
     <AtomHeaderSafe class="shadow-md">
       <template v-slot:left>
-        <button @click="router.back()">
-          <ChevronLeft class="w-6 h-6 text-black" />
-        </button>
+        <NuxtLink :to="`/flashcard/folder/${folderId}`">
+          <button>
+            <ChevronLeft class="w-6 h-6 text-black" />
+          </button>
+        </NuxtLink>
       </template>
       <template v-slot:default>
         <span class="text-base font-medium text-black">

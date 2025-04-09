@@ -43,7 +43,7 @@
             <NuxtLink
               v-for="topic in basicTopics"
               :key="topic.id"
-              :to="`/grammar/topics/${topic.id}`"
+              to="/" 
               class="p-4 bg-white rounded-lg shadow-sm border border-gray-100"
             >
               <div class="flex justify-between items-start">
@@ -81,7 +81,7 @@
             <NuxtLink
               v-for="topic in intermediateTopics"
               :key="topic.id"
-              :to="`/grammar/topics/${topic.id}`"
+              :to="`/`"
               class="p-4 bg-white rounded-lg shadow-sm border border-gray-100"
             >
               <div class="flex justify-between items-start">

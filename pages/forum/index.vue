@@ -52,7 +52,7 @@
             <p class="">{{ $t('lang_core_forum_chu_de') }}</p>
             <div class="flex flex-col gap-4">
               <!-- Chủ đề 1 -->
-              <NuxtLink to="/forum-topic">
+              <NuxtLink to="/">
                 <div class="flex flex-col gap-3 bg-white p-4 rounded-lg shadow-md">
                   <p class="font-bold text-lg text-blue-600">{{ $t('lang_core_forum_topic1_title') }}</p>
                   <div class="flex flex-col gap-2">
@@ -78,7 +78,7 @@
                   </div>
                 </div>
               </NuxtLink>
-              <NuxtLink to="/forum-topic">
+              <NuxtLink to="/">
                 <div class="flex flex-col gap-3 bg-white p-4 rounded-lg shadow-md">
                   <p class="font-bold text-lg text-blue-600">{{ $t('lang_core_forum_topic2_title') }}</p>
                   <div class="flex flex-col gap-2">
