@@ -15,11 +15,7 @@
         </span>
       </template>
       <template v-slot:right>
-        <MoreVertical
-          class="text-black cursor-pointer"
-          :size="20"
-          @click="showActions = true"
-        />
+        <MoreVertical class="text-black cursor-pointer" :size="20" @click="showActions = true" />
       </template>
     </AtomHeaderSafe>
 
@@ -36,37 +32,27 @@
         </div>
         <div class="flex gap-4 text-sm text-gray-500">
           <span>{{ vocabularies.length }} từ vựng</span>
-          <span
-            >Tạo ngày: {{ formatCustomDateTime(currentSet?.createdAt) }}</span
-          >
+          <span>Tạo ngày: {{ formatCustomDateTime(currentSet?.createdAt) }}</span>
         </div>
       </div>
 
       <!-- Study Options -->
       <div class="grid grid-cols-2 gap-4">
-        <button
-          @click="startFlashcards"
-          class="p-4 bg-blue-100 rounded-xl flex flex-col items-center justify-center gap-2"
-        >
+        <button @click="startFlashcards"
+          class="p-4 bg-blue-100 rounded-xl flex flex-col items-center justify-center gap-2">
           <Copy class="text-blue-600" :size="24" />
           <span class="text-sm font-medium">Học thẻ</span>
         </button>
-        <button
-          @click="startQuiz"
-          class="p-4 bg-green-100 rounded-xl flex flex-col items-center justify-center gap-2"
-        >
+        <button @click="startQuiz" class="p-4 bg-green-100 rounded-xl flex flex-col items-center justify-center gap-2">
           <BookOpen class="text-green-600" :size="24" />
-          <span class="text-sm font-medium">Kiểm tra</span>
+          <span class="text-sm font-medium">Game vui</span>
         </button>
       </div>
       <!-- Vocabulary List -->
       <div class="space-y-4">
         <div class="flex justify-between items-center">
           <h3 class="text-lg font-semibold">Danh sách từ vựng</h3>
-          <button
-            @click="showAddWord = true"
-            class="flex items-center gap-2 text-blue-600"
-          >
+          <button @click="showAddWord = true" class="flex items-center gap-2 text-blue-600">
             <Plus :size="20" />
             <span class="text-sm font-medium">Thêm từ</span>
           </button>
@@ -74,46 +60,32 @@
 
         <!-- Search Bar -->
         <div class="relative">
-          <input
-            v-model="searchQuery"
-            type="text"
-            placeholder="Tìm kiếm từ vựng..."
-            class="w-full p-3 pl-10 rounded-xl border border-gray-200 focus:outline-none focus:border-blue-500"
-          />
+          <input v-model="searchQuery" type="text" placeholder="Tìm kiếm từ vựng..."
+            class="w-full p-3 pl-10 rounded-xl border border-gray-200 focus:outline-none focus:border-blue-500" />
           <Search class="absolute left-3 top-3 text-gray-400" />
         </div>
 
         <!-- Words List -->
         <div class="flex flex-col gap-2">
-          <div
-            v-for="word in filteredVocabularies"
-            :key="word.id"
-            class="p-4 bg-white rounded-xl shadow-sm border border-gray-100"
-          >
+          <div v-for="word in filteredVocabularies" :key="word.id"
+            class="p-4 bg-white rounded-xl shadow-sm border border-gray-100">
             <div class="flex justify-between items-start">
               <div>
                 <h4 class="font-medium">{{ word.termLanguage }}</h4>
                 <p class="text-gray-600">{{ word.definitionLanguage }}</p>
               </div>
-              <Star
-                :class="[
-                  word.isFavourite
-                    ? 'text-yellow-400 fill-yellow-400'
-                    : 'text-gray-400',
-                  'cursor-pointer',
-                ]"
-                :size="20"
-                @click="toggleFavorite(Number(word.id))"
-              />
+              <Star :class="[
+                word.isFavourite
+                  ? 'text-yellow-400 fill-yellow-400'
+                  : 'text-gray-400',
+                'cursor-pointer',
+              ]" :size="20" @click="toggleFavorite(Number(word.id))" />
             </div>
           </div>
         </div>
 
         <!-- Empty State -->
-        <div
-          v-if="vocabularies.length === 0"
-          class="text-center py-8 text-gray-500"
-        >
+        <div v-if="vocabularies.length === 0" class="text-center py-8 text-gray-500">
           <BookOpen :size="48" class="mx-auto mb-4 opacity-50" />
           <p>Chưa có từ vựng nào. Hãy thêm từ đầu tiên!</p>
         </div>
@@ -123,17 +95,11 @@
     <!-- Action Sheet -->
     <el-dialog v-model="showActions" title="Tùy chọn" width="90%">
       <div class="flex flex-col gap-4">
-        <button
-          class="text-left p-3 hover:bg-gray-50 rounded-xl"
-          @click="handleEdit"
-        >
+        <button class="text-left p-3 hover:bg-gray-50 rounded-xl" @click="handleEdit">
           <Edit2 class="inline-block mr-2" :size="20" />
           Chỉnh sửa thông tin
         </button>
-        <button
-          class="text-left p-3 hover:bg-gray-50 rounded-xl text-red-500"
-          @click="handleDelete"
-        >
+        <button class="text-left p-3 hover:bg-gray-50 rounded-xl text-red-500" @click="handleDelete">
           <Trash2 class="inline-block mr-2" :size="20" />
           Xóa bộ thẻ
         </button>
@@ -141,11 +107,7 @@
     </el-dialog>
 
     <!-- Add Word Modal -->
-    <AddFlashcardModal
-      v-model:visible="showAddWord"
-      :set-id="setId"
-      @created="handleWordCreated"
-    />
+    <AddFlashcardModal v-model:visible="showAddWord" :set-id="setId" @created="handleWordCreated" />
   </div>
 </template>
 
@@ -184,20 +146,15 @@ const showAddWord = ref(false);
 onMounted(async () => {
   if (setId) {
     try {
-      console.log("Fetching sets in folder:", folderId);
-    await store.fetchSetsInFolder(folderId);
-    console.log("Sets in folder result:", store.setsInfolder);
-    
-    console.log("Fetching flashcards in set:", setId);
-    await store.fetchFlashcardsInSet(setId);
-    console.log("Flashcards fetched:", vocabularies.value);
+      //lay tat ca set theo folderId
+      await store.fetchSetsInFolder(folderId);
+      //lay tat ca flashcard theo setId
+      await store.fetchFlashcardsInSet(setId);
     } catch (err) {
-      console.error("Lỗi khi lấy danh sách từ vựng:", err);
       ElMessage.error("Không thể tải danh sách từ vựng");
     }
   }
 });
-console.log("vocab: ", vocabularies.value);
 
 const currentSet = computed(() => {
   if (!store.setsInfolder || !Array.isArray(store.setsInfolder)) {
@@ -211,10 +168,10 @@ const filteredVocabularies = computed(() => {
     console.warn("vocabularies is not available or not an array");
     return [];
   }
-  
+
   const query = searchQuery.value.toLowerCase().trim();
   if (!query) return vocabularies.value;
-  
+
   return vocabularies.value.filter(
     (vocab) =>
       (vocab.termLanguage?.toLowerCase() || "").includes(query) ||
@@ -227,7 +184,7 @@ const startFlashcards = () => {
 };
 
 const startQuiz = () => {
-  router.push(`/flashcard/folder/${folderId}/set/${setId}/test`);
+  router.push(`/flashcard/folder/${folderId}/set/${setId}/game`);
 };
 
 const toggleFavorite = async (wordId: number) => {
@@ -288,6 +245,4 @@ const handleDelete = async () => {
 };
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

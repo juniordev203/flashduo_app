@@ -73,7 +73,7 @@
 
 <script setup lang="ts">
 import { ref, reactive, computed } from "vue";
-import { Type, BookOpen, ImagePlus } from "lucide-vue-next";
+import { Type, BookOpen, ImagePlus, X } from "lucide-vue-next";
 import { ElMessage } from "element-plus";
 import type { FlashcardRequest } from "~/auto_api";
 import { useMyBaseStore } from "~/stores/base.store";
@@ -138,10 +138,6 @@ const resetForm = () => {
   formData.audioUrl = null;
   imagePreview.value = null;
 };
-const handleClose = () => {
-  emit("update:visible", false);
-  resetForm();
-};
 const requestFullPhotoPermission = async () => {
   const { photos } = await Camera.requestPermissions({ permissions: ['photos'] });
 
@@ -173,6 +169,10 @@ const removeImage = () => {
   formData.imageUrl = null;
   imagePreview.value = null;
 
+};
+const handleClose = () => {
+  emit("update:visible", false);
+  resetForm();
 };
 </script>
 
