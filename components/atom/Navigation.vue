@@ -4,26 +4,31 @@
       paddingLeft: safeArea.left + 'px',
       paddingRight: safeArea.right + 'px',
     }">
-    <div class="grid grid-cols-4 p-2">
+    <div class="grid grid-cols-5 px-1 py-2">
       <router-link to="/" class="flex flex-col justify-center gap-1 items-center"
         :class="{ 'menu-active': route.name?.toString().startsWith('index') }">
         <Home class="nav_icon text-[#d9d9d9]"/>
-        <span class="text-sm text-[#d9d9d9]">{{ $t('lang_core_navigation_home') }}</span>
+        <span class="text-xs text-[#d9d9d9]">{{ $t('lang_core_navigation_home') }}</span>
       </router-link>
       <router-link to="/exam" class="flex flex-col justify-center gap-1 items-center"
         :class="{ 'menu-active': route.name?.toString().startsWith('exam') }">
         <SquarePen class="nav_icon text-[#d9d9d9]"/>
-        <span class="text-sm text-[#d9d9d9]">{{ $t('lang_core_navigation_exam') }}</span>
+        <span class="text-xs text-[#d9d9d9]">{{ $t('lang_core_navigation_exam') }}</span>
       </router-link>
       <router-link to="/forum" class="flex flex-col justify-center gap-1 items-center"
         :class="{ 'menu-active': route.name?.toString().startsWith('forum') }">
         <MessagesSquare class="nav_icon text-[#d9d9d9]"/>
-        <span class="text-sm text-[#d9d9d9]">{{ $t('lang_core_navigation_forum') }}</span>
+        <span class="text-xs text-[#d9d9d9]">{{ $t('lang_core_navigation_forum') }}</span>
+      </router-link>
+      <router-link to="/favorites" class="flex flex-col justify-center gap-1 items-center"
+        :class="{ 'menu-active': route.name?.toString().startsWith('favorites') }">
+        <Heart class="nav_icon text-[#d9d9d9]"/>
+        <span class="text-xs text-[#d9d9d9]">{{ $t('lang_core_navigation_favorites') }}</span>
       </router-link>
       <router-link to="/profile" class="flex flex-col justify-center gap-1 items-center"
         :class="{ 'menu-active': route.name?.toString().startsWith('profile') }">
         <UserPen class="nav_icon text-[#d9d9d9]"/>
-        <span class="text-sm text-[#d9d9d9]">{{ $t('lang_core_navigation_account') }}</span>
+        <span class="text-xs text-[#d9d9d9]">{{ $t('lang_core_navigation_account') }}</span>
       </router-link>
     </div>
   </div>
@@ -33,7 +38,7 @@
 import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { defaultSafeAreaInsets, getSafeAreaInsets } from '~/utils/screen.utils.ts';
-import { Home, SquarePen, MessagesSquare, UserPen } from 'lucide-vue-next';
+import { Home, SquarePen, MessagesSquare, UserPen, Heart } from 'lucide-vue-next';
 
 const route = useRoute();
 const safeArea = ref(defaultSafeAreaInsets());

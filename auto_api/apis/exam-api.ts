@@ -22,6 +22,7 @@ import { ProblemDetails } from '../models';
 import { UserAnswerRequest } from '../models';
 import { UserExamBaseRequest } from '../models';
 import { UserExamFavoriteResponse } from '../models';
+import { UserExamResultResponse } from '../models';
 import { UserExamScoreResponse } from '../models';
 /**
  * ExamApi - axios parameter creator
@@ -343,6 +344,45 @@ export const ExamApiAxiosParamCreator = function (configuration?: Configuration)
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @param {number} userId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiExamUserExamUserIdResultExamsGet: async (userId: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'userId' is not null or undefined
+            if (userId === null || userId === undefined) {
+                throw new RequiredError('userId','Required parameter userId was null or undefined when calling apiExamUserExamUserIdResultExamsGet.');
+            }
+            const localVarPath = `/api/Exam/user-exam/{userId}/result-exams`
+                .replace(`{${"userId"}}`, encodeURIComponent(String(userId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, 'https://example.com');
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions :AxiosRequestConfig = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            const query = new URLSearchParams(localVarUrlObj.search);
+            for (const key in localVarQueryParameter) {
+                query.set(key, localVarQueryParameter[key]);
+            }
+            for (const key in options.params) {
+                query.set(key, options.params[key]);
+            }
+            localVarUrlObj.search = (new URLSearchParams(query)).toString();
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -457,6 +497,19 @@ export const ExamApiFp = function(configuration?: Configuration) {
                 return axios.request(axiosRequestArgs);
             };
         },
+        /**
+         * 
+         * @param {number} userId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiExamUserExamUserIdResultExamsGet(userId: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => Promise<AxiosResponse<UserExamResultResponse>>> {
+            const localVarAxiosArgs = await ExamApiAxiosParamCreator(configuration).apiExamUserExamUserIdResultExamsGet(userId, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs :AxiosRequestConfig = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
     }
 };
 
@@ -538,6 +591,15 @@ export const ExamApiFactory = function (configuration?: Configuration, basePath?
          */
         async apiExamUserExamUserIdFavoriteGet(userId: number, options?: AxiosRequestConfig): Promise<AxiosResponse<UserExamFavoriteResponse>> {
             return ExamApiFp(configuration).apiExamUserExamUserIdFavoriteGet(userId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {number} userId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiExamUserExamUserIdResultExamsGet(userId: number, options?: AxiosRequestConfig): Promise<AxiosResponse<UserExamResultResponse>> {
+            return ExamApiFp(configuration).apiExamUserExamUserIdResultExamsGet(userId, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -629,5 +691,15 @@ export class ExamApi extends BaseAPI {
      */
     public async apiExamUserExamUserIdFavoriteGet(userId: number, options?: AxiosRequestConfig) : Promise<AxiosResponse<UserExamFavoriteResponse>> {
         return ExamApiFp(this.configuration).apiExamUserExamUserIdFavoriteGet(userId, options).then((request) => request(this.axios, this.basePath));
+    }
+    /**
+     * 
+     * @param {number} userId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ExamApi
+     */
+    public async apiExamUserExamUserIdResultExamsGet(userId: number, options?: AxiosRequestConfig) : Promise<AxiosResponse<UserExamResultResponse>> {
+        return ExamApiFp(this.configuration).apiExamUserExamUserIdResultExamsGet(userId, options).then((request) => request(this.axios, this.basePath));
     }
 }

@@ -35,10 +35,8 @@
             </div>
           </div>
           <div class="flex items-center">
-            <button
-              class="toggle-btn relative w-11 h-7 flex items-center rounded-full transition-colors duration-300"
-              :class="actionBtnNotice ? 'bg-indigo-600' : 'bg-gray-300'" 
-              @click="toggleBtnNotice">
+            <button class="toggle-btn relative w-11 h-7 flex items-center rounded-full transition-colors duration-300"
+              :class="actionBtnNotice ? 'bg-indigo-600' : 'bg-gray-300'" @click="toggleBtnNotice">
               <span
                 class="absolute top-0.5 left-0.5 w-6 h-6 bg-white rounded-full shadow-md transform transition-transform duration-300"
                 :class="{ 'translate-x-4 absolute top-0.5 right-0.5': actionBtnNotice }">
@@ -76,10 +74,8 @@
             </div>
           </div>
           <div class="flex items-center">
-            <button
-              class="toggle-btn relative w-11 h-7 flex items-center rounded-full transition-colors duration-300"
-              :class="actionBtnTheme ? 'bg-indigo-600' : 'bg-gray-300'" 
-              @click="toggleBtnTheme">
+            <button class="toggle-btn relative w-11 h-7 flex items-center rounded-full transition-colors duration-300"
+              :class="actionBtnTheme ? 'bg-indigo-600' : 'bg-gray-300'" @click="toggleBtnTheme">
               <span
                 class="absolute top-0.5 left-0.5 w-6 h-6 bg-white rounded-full shadow-md transform transition-transform duration-300"
                 :class="{ 'translate-x-4 absolute top-0.5 right-0.5': actionBtnTheme }">
@@ -179,13 +175,13 @@
         </div>
       </div>
 
-      <button v-if="userInfo" @click="handleLogout" 
+      <button v-if="userInfo" @click="handleLogout"
         class="w-full p-3 flex bg-red-500 text-white gap-2 justify-center items-center text-center rounded-xl">
         {{ $t('lang_core_profile_logout') }}
       </button>
 
-      <button v-if="!userInfo" @click="handleLogin" 
-      class="w-full p-3 flex bg-blue-500 text-white gap-2 justify-center items-center text-center rounded-xl">
+      <button v-if="!userInfo" @click="handleLogin"
+        class="w-full p-3 flex bg-blue-500 text-white gap-2 justify-center items-center text-center rounded-xl">
         <p class="text-sm">{{ $t('lang_core_profile_login') }}</p>
       </button>
     </div>
@@ -193,20 +189,20 @@
 </template>
 
 <script lang="ts" setup>
-import { BellRing, Globe, AlarmClock, Share2, SunMoon, ShieldQuestion, Star, UserRoundPen, BookOpenText, LogOut, LogIn } from 'lucide-vue-next';
+import { BellRing, Globe, AlarmClock, Share2, SunMoon, ShieldQuestion, Star, UserRoundPen, BookOpenText, Volume2 } from 'lucide-vue-next';
 import { FlashcardStore } from '@/stores/flashcard';
-const flashcardStore =  FlashcardStore();
+import type { FlashcardFavoritesResponse } from '~/auto_api';
+
+const flashcardStore = FlashcardStore();
 const { drawerChangeLocale } = storeToRefs(useMyBaseStore());
 const actionBtnNotice = ref(false)
 const actionBtnTheme = ref(false)
 const router = useRouter()
 const userInfo = computed(() => useMyBaseStore().userInfo)
-console.log('userInfo', userInfo)
 
 const createdAt = userInfo.value?.createdAt;
-console.log('createdAt', createdAt)
 const formatedCreatedAt = formatCustomDateTime(createdAt);
-console.log('formatedCreatedAt', formatedCreatedAt)
+
 const toggleBtnNotice = () => {
   actionBtnNotice.value = !actionBtnNotice.value;
 }
@@ -223,7 +219,6 @@ const handleLogout = async () => {
 const handleLogin = async () => {
   router.push('/login')
 }
-
 </script>
 
 <style scoped></style>
