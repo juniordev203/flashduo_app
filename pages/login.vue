@@ -62,6 +62,7 @@ import { ref } from "vue";
 import { useMyBaseStore } from "@/stores/base.store";
 import { loginUser } from "@/composables/Auth"; 
 import { useI18n } from "vue-i18n";
+import { EyeIcon } from 'lucide-vue-next'
 
 definePageMeta({
     layout: "app-none",

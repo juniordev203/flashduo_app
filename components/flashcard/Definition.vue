@@ -1,19 +1,19 @@
 <!-- filepath: /Users/apple/Junior@203/source_code/flashduo/mobile/components/flashcard/Definition.vue -->
 <template>
     <div class="definition-card w-full h-full bg-white rounded-2xl shadow-lg overflow-hidden">
-      <div class="flex-1 flex flex-col items-center justify-center px-8 py-10 h-full">
-        <h2 class="text-2xl font-light text-center text-gray-800 mb-6">
+      <div class="px-8 py-10 flex-1 flex flex-col gap-2 items-center justify-center h-full">
+        <h2 :class="['text-2xl font-light text-center text-gray-800', textSize]">
           {{ definitionText }}
         </h2>
         <div 
           v-if="hasImage" 
-          class="w-3/4 h-48 overflow-hidden rounded-lg mb-6"
+          class="w-full overflow-hidden rounded-lg"
         >
           <img :src="currentCard?.imageUrl || ''" alt="Flashcard image" class="w-full h-full object-cover">
         </div>
         
-        <!-- Audio button if available -->
-        <div v-if="hasAudio" class="mt-4 flex justify-center">
+        <!-- Hiển thị audio btn nếu có -->
+        <div v-if="hasAudio" class="flex justify-center">
           <button 
             @click="playAudio" 
             class="flex items-center gap-1 py-2 px-4 bg-blue-100 rounded-full text-blue-600 hover:bg-blue-200"
@@ -34,6 +34,7 @@ import type { IVocabFlashcard } from '~/types/vocab-flashcard.types';
   
   const props = defineProps<{
     card: IVocabFlashcard;
+    textSize: string
   }>();
   
   // Xác định nếu card là mảng hoặc một object đơn lẻ

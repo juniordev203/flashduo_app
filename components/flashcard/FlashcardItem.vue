@@ -5,12 +5,12 @@
             @touchend="handleTouchEnd" @touchmove="handleTouchMove" @mousemove="handleMouseMove">
             <!-- Front (Term) -->
             <template v-slot:front>
-                <Term :card="card" />
+                <Term :card="card" text-size="text-3xl"/>
             </template>
 
             <!-- Back (Definition) -->
             <template v-slot:back>
-                <Definition :card="card" />
+                <Definition :card="card" text-size="text-3xl"/>
             </template>
         </CardFlip>
     </div>
