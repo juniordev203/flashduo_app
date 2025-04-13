@@ -83,11 +83,13 @@
                     </el-tab-pane>
 
                     <!-- History Tab -->
+                    <!-- Thay thế phần exam tab trong template -->
                     <el-tab-pane :label="$t('lang_core_exam_history')" name="exam">
                         <div class="flex flex-col gap-4">
+                            <!-- Header -->
                             <div class="flex justify-between items-center">
                                 <p class="text-sm text-indigo-600">
-                                    Bài thi đã làm:
+                                    Bài thi đã làm: {{ examCompleteds.length }}
                                 </p>
                                 <NuxtLink to="/exam"
                                     class="inline-flex items-center gap-2 px-3 py-1.5 bg-indigo-50 text-indigo-600 rounded-lg hover:bg-indigo-100 transition-colors text-sm">
@@ -95,14 +97,51 @@
                                     <span>Làm bài thi ngay</span>
                                 </NuxtLink>
                             </div>
+
+                            <!-- Exam History Card -->
                             <div class="bg-white rounded-xl shadow-sm overflow-hidden">
-                                <div class="flex flex-col items-center justify-center py-12 px-4">
+                                <!-- Empty state -->
+                                <div v-if="!examCompleteds.length"
+                                    class="flex flex-col items-center justify-center py-12 px-4">
                                     <div class="bg-gray-50 rounded-full p-3 mb-3">
                                         <History class="w-8 h-8 text-gray-400" />
                                     </div>
                                     <p class="text-gray-500 text-center">
                                         Bạn chưa làm bài thi nào!
                                     </p>
+                                </div>
+
+                                <!-- History list -->
+                                <div v-else class="divide-y divide-gray-100">
+                                    <div v-for="(exam, index) in sortedExamCompleteds" :key="index"
+                                        class="flex items-center p-4 hover:bg-gray-50 transition-colors group">
+                                        <!-- Result circle -->
+                                        <div class="mr-4">
+                                            <div
+                                                class="w-12 h-12 rounded-full flex items-center justify-center text-sm font-medium">
+                                                {{ exam.totalScore }}
+                                            </div>
+                                        </div>
+                                        <!-- Exam info -->
+                                        <div class="flex-1 min-w-0">
+                                            <div class="flex items-center justify-between gap-2">
+                                                <h3
+                                                    class="font-medium text-gray-800 truncate group-hover:text-indigo-600 transition-colors">
+                                                    {{ exam.examName }}
+                                                </h3>
+                                                <time class="text-xs text-gray-500 whitespace-nowrap">
+                                                    {{ exam.startTime ? formatCustomDateTime(exam.startTime) : '' }}
+                                                </time>
+                                            </div>
+                                        </div>
+                                        <!-- Action buttons -->
+                                        <div class="ml-4">
+                                            <NuxtLink to="/"
+                                                class="p-2 text-gray-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-full transition-colors">
+                                                <ExternalLink class="w-4 h-4" />
+                                            </NuxtLink>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -115,14 +154,26 @@
 
 
 <script setup lang="ts">
-import { Star, Volume2, BookOpen, History, SquarePen } from 'lucide-vue-next';
-import type { FlashcardFavoritesResponse } from '~/auto_api';
+import {
+    Star,
+    Volume2,
+    BookOpen,
+    History,
+    SquarePen,
+    CheckCircle2,
+    Clock,
+    ExternalLink,
+    ChevronLeft
+} from 'lucide-vue-next';
+import type { UserExamResultResponse, FlashcardFavoritesResponse } from '~/auto_api';
 // store
 const flashcardStore = FlashcardStore();
+const examStore = useExamStore();
 const userInfo = computed(() => useMyBaseStore().userInfo)
 
 const userId = userInfo.value?.id;
 const vocabFavories = ref<FlashcardFavoritesResponse[]>([]);
+const examCompleteds = ref<UserExamResultResponse[]>([]);
 const activeTab = ref('vocab');
 
 const fetchVocabFavorites = async (userId: number) => {
@@ -133,9 +184,16 @@ const fetchVocabFavorites = async (userId: number) => {
         throw (err);
     }
 }
+const fetchExamCompleted = async (userId: number) => {
+    try {
+        const data = await examStore.fetchExamCompleted(userId);
+        examCompleteds.value = Array.isArray(data) ? data : [];
+    } catch (err: any) {
+        throw (err);
+    }
+}
 const toggleFavorite = async (flashcardId?: number) => {
     if (!flashcardId) return;
-
     try {
         await flashcardStore.toggleFavorite(flashcardId);
         if (userId) {
@@ -146,9 +204,20 @@ const toggleFavorite = async (flashcardId?: number) => {
         ElMessage.error('Không thể cập nhật trạng thái yêu thích');
     }
 }
+//sap xep ds theo thoi gian 
+const sortedExamCompleteds = computed(() => {
+    return [...examCompleteds.value].sort((a, b) => {
+        const timeA = a.startTime ? new Date(a.startTime).getTime() : 0;
+        const timeB = b.startTime ? new Date(b.startTime).getTime() : 0;
+        // Sort in descending order (newest first)
+        return timeB - timeA;
+    });
+});
+
 onMounted(async () => {
     if (userId) {
         await fetchVocabFavorites(Number(userId));
+        await fetchExamCompleted(Number(userId));
     }
 })
 </script>

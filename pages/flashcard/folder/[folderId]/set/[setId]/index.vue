@@ -75,7 +75,7 @@
                 <p class="text-gray-600">{{ word.definitionLanguage }}</p>
               </div>
               <Star :class="[
-                word.isFavourite
+                word.isFavorite
                   ? 'text-yellow-400 fill-yellow-400'
                   : 'text-gray-400',
                 'cursor-pointer',
@@ -130,19 +130,21 @@ import {
 import { ElMessage, ElMessageBox } from "element-plus";
 import { FlashcardStore } from "~/stores/flashcard";
 import AddFlashcardModal from "~/components/flashcard/AddFlashcardModal.vue";
-import type { FlashcardRequest, FlashcardSet } from "~/auto_api";
+import { type FlashcardResponse, type FlashcardRequest, type FlashcardSet, type FlashcardSetDetailResponse, type FlashcardFavoritesResponse } from "~/auto_api";
 
 const route = useRoute();
 const router = useRouter();
 const store = FlashcardStore();
-const { vocabularies, loading } = storeToRefs(store);
-
+// const vocabularies = ref<FlashcardFavoritesResponse[]>([]);
 const setId = Number(route.params.setId);
 const folderId = Number(route.params.folderId);
 const searchQuery = ref("");
 const showActions = ref(false);
 const showAddWord = ref(false);
+const loading = ref(false)
+const isFavorite = ref(false)
 
+const { vocabularies} = storeToRefs(store);
 onMounted(async () => {
   if (setId) {
     try {
@@ -150,6 +152,8 @@ onMounted(async () => {
       await store.fetchSetsInFolder(folderId);
       //lay tat ca flashcard theo setId
       await store.fetchFlashcardsInSet(setId);
+
+      await fetchVocabularies(setId)
     } catch (err) {
       ElMessage.error("Không thể tải danh sách từ vựng");
     }
@@ -157,11 +161,11 @@ onMounted(async () => {
 });
 
 const currentSet = computed(() => {
-  if (!store.setsInfolder || !Array.isArray(store.setsInfolder)) {
+  if (!store.setsInFolder || !Array.isArray(store.setsInFolder)) {
     console.warn("setsInfolder is not available or not an array");
     return undefined;
   }
-  return store.setsInfolder.find((set) => set.id === setId);
+  return store.setsInFolder.find((set) => set.id === setId);
 });
 const filteredVocabularies = computed(() => {
   if (!vocabularies.value || !Array.isArray(vocabularies.value)) {
@@ -179,6 +183,19 @@ const filteredVocabularies = computed(() => {
   );
 });
 
+const fetchVocabularies = async (setId: number) => {
+  try {
+    loading.value = true;
+    const response = await store.fetchFlashcardsInSet(setId);
+    vocabularies.value = Array.isArray(response) ? response : [];
+  } catch (error) {
+    console.error('Error fetching vocabularies:', error);
+    ElMessage.error("Không thể tải danh sách từ vựng");
+  } finally {
+    loading.value = false;
+  }
+};
+
 const startFlashcards = () => {
   router.push(`/flashcard/folder/${folderId}/set/${setId}/learn`);
 };
@@ -189,7 +206,9 @@ const startQuiz = () => {
 
 const toggleFavorite = async (wordId: number) => {
   try {
+    isFavorite.value = !isFavorite.value;
     await store.toggleFavorite(wordId);
+    
   } catch (err) {
     console.error("Lỗi khi đánh dấu yêu thích:", err);
     ElMessage.error("Không thể đánh dấu yêu thích");

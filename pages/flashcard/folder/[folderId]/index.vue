@@ -36,7 +36,7 @@
                     </div>
                 </div>
                 <div class="flex gap-4 text-sm text-gray-500">
-                    <span>{{ setsInfolder.length }} bộ thẻ</span>
+                    <span>{{ setsInFolder.length }} bộ thẻ</span>
                     <span>{{ vocabularies.length }} từ vựng</span>
                 </div>
             </div>
@@ -62,7 +62,7 @@
                     </NuxtLink>
                 </div>
                 <!-- Empty State -->
-                <div v-show="setsInfolder.length === 0" class="text-center py-8 text-gray-500">
+                <div v-show="setsInFolder.length === 0" class="text-center py-8 text-gray-500">
                     <Files :size="48" class="mx-auto mb-4 opacity-50" />
                     <p>Chưa có bộ thẻ nào. Hãy tạo bộ thẻ đầu tiên!</p>
                 </div>
@@ -130,7 +130,7 @@ import CreateSetModal from '~/components/flashcard/CreateSetModal.vue';
 const route = useRoute();
 const router = useRouter();
 const store = FlashcardStore();
-const { folders, setsInfolder, setsInUser, loading, vocabularies } = storeToRefs(store);
+const { folders, setsInFolder, setsInUser, loading, vocabularies } = storeToRefs(store);
 const folderId = Number(route.params.folderId);
 const searchQuery = ref('');
 const showActions = ref(false);
@@ -152,7 +152,7 @@ const currentFolder = computed(() =>
     folders.value.find(f => f.id === folderId)
 );
 const filteredSets = computed(() =>
-    setsInfolder.value.filter(set =>
+    setsInFolder.value.filter(set =>
         set.setName.toLowerCase().includes(searchQuery.value.toLowerCase())
     ) || []
 );

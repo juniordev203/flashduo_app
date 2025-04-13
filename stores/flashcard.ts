@@ -1,6 +1,5 @@
 import { defineStore } from "pinia";
 import { ref, computed } from "vue";
-import { Storage } from "@capacitor/storage";
 import type {
   FlashcardFolder,
   FlashcardSet,
@@ -11,54 +10,48 @@ import type {
   FlashcardFavoritesResponse,
 } from "@/auto_api/models";
 import { flashcardApiUtil } from "~/utils/api.utils";
-import { FlashcardApi } from "~/auto_api";
-import { da } from "date-fns/locale";
 
 export const FlashcardStore = defineStore("flashcard", () => {
+  // State
   const folders = ref<FlashcardFolder[]>([]);
-  const setsInfolder = ref<FlashcardSet[]>([]);
+  const setsInFolder = ref<FlashcardSet[]>([]);
   const setsInUser = ref<FlashcardSet[]>([]);
   const vocabularies = ref<FlashcardResponse[]>([]);
-  const vocabFavories = ref<FlashcardFavoritesResponse[]>([]);
-  const loading = ref(false);
-  const error = ref<string | null>(null);
+  const vocabFavorites = ref<FlashcardFavoritesResponse[]>([]);
+
   const currentFolder = ref<FlashcardFolder | null>(null);
   const currentSet = ref<FlashcardSet | null>(null);
   const currentFlashcard = ref<Flashcard | null>(null);
 
+  const loading = ref(false);
+  const error = ref<string | null>(null);
+
+  // Computed
   const getFolders = computed(() => folders.value);
-  const getSetsInFolder = computed(() => setsInfolder.value);
+  const getSetsInFolder = computed(() => setsInFolder.value);
   const getSetsInUser = computed(() => setsInUser.value);
   const getVocabularies = computed(() => vocabularies.value);
+  const getvocabularies = computed(() => vocabularies.value);
   const getCurrentFolder = computed(() => currentFolder.value);
   const getCurrentSet = computed(() => currentSet.value);
   const getCurrentFlashcard = computed(() => currentFlashcard.value);
 
+  // Error handler
   const handleApiError = (err: any) => {
-    error.value =
-      err?.response?.data?.message || err?.message || "Lỗi không xác định!";
+    error.value = err?.response?.data?.message || err?.message || "Lỗi không xác định!";
     console.error(error.value);
   };
 
-  // tao folder voi ten va id user
-  const createFolder = async (name: string, userId: number) => {
-    if (!name || name.trim() === "") {
-      error.value = "Tên folder không được để trống!";
-      return;
-    }
+  // Folder Methods
+  const fetchFoldersByUser = async (userId: number) => {
     try {
       loading.value = true;
-      const response = await flashcardApiUtil.apiFlashcardFlashcardFolderPost({
-        folderName: name,
-        userId: userId,
-      });
+      const response = await flashcardApiUtil.apiFlashcardFlashcardFoldersUserIdGet(userId);
       if (response.status === 200) {
-        await fetchFoldersByUser(userId);
-        return response.data;
-      } else {
-        throw new Error("Lỗi khi tạo folder mới!");
+        folders.value = Array.isArray(response.data) ? response.data : [];
+        return folders.value;
       }
-    } catch (err: any) {
+    } catch (err) {
       handleApiError(err);
       throw err;
     } finally {
@@ -66,18 +59,52 @@ export const FlashcardStore = defineStore("flashcard", () => {
     }
   };
 
-  //lay danh sach folder cua user
-  const fetchFoldersByUser = async (userId: number) => {
+  const createFolder = async (name: string, userId: number) => {
+    if (!name || name.trim() === "") {
+      error.value = "Tên folder không được để trống!";
+      return;
+    }
     try {
       loading.value = true;
-      const response =
-        await flashcardApiUtil.apiFlashcardFlashcardFoldersUserIdGet(userId);
+      const response = await flashcardApiUtil.apiFlashcardFlashcardFolderPost({ folderName: name, userId });
       if (response.status === 200) {
-        const data = response.data || [];
-        folders.value = Array.isArray(data) ? data : [];
+        await fetchFoldersByUser(userId);
         return response.data;
       }
-    } catch (err: any) {
+    } catch (err) {
+      handleApiError(err);
+      throw err;
+    } finally {
+      loading.value = false;
+    }
+  };
+
+  const updateFolderName = async (folderId: number, name: string) => {
+    try {
+      loading.value = true;
+      const response = await flashcardApiUtil.apiFlashcardFlashcardFolderNameIdPut(folderId, name);
+      if (response.status === 200) {
+        const index = folders.value.findIndex((f) => f.id === folderId);
+        if (index !== -1) folders.value[index].folderName = name;
+        return response.data;
+      }
+    } catch (err) {
+      handleApiError(err);
+      throw err;
+    } finally {
+      loading.value = false;
+    }
+  };
+
+  const deleteFolder = async (folderId: number) => {
+    try {
+      loading.value = true;
+      const response = await flashcardApiUtil.apiFlashcardFlashcardFolderDeleteIdDelete(folderId);
+      if (response.status === 200) {
+        folders.value = folders.value.filter((folder) => folder.id !== folderId);
+        return true;
+      }
+    } catch (err) {
       handleApiError(err);
       throw err;
     } finally {
@@ -87,51 +114,20 @@ export const FlashcardStore = defineStore("flashcard", () => {
 
   const setCurrentFolder = (folder: FlashcardFolder) => {
     currentFolder.value = folder;
-    setsInfolder.value = [];
+    setsInFolder.value = [];
     vocabularies.value = [];
   };
-  const updateFolderName = async (folderId: number, name: string) => {
+
+  // Set Methods
+  const fetchSetsInFolder = async (folderId: number) => {
     try {
       loading.value = true;
-      if (!folderId || !name) {
-        throw new Error("Folder ID or name is missing");
-      }
-      const response =
-        await flashcardApiUtil.apiFlashcardFlashcardFolderNameIdPut(
-          folderId,
-          name
-        );
+      const response = await flashcardApiUtil.apiFlashcardFlashcardSetsFolderFolderIdGet(folderId);
       if (response.status === 200) {
-        const folderIndex = folders.value.findIndex((f) => f.id === folderId);
-        if (folderIndex !== -1) {
-          folders.value[folderIndex].folderName = name;
-        }
-        return response.data;
-      } else {
-        throw new Error("Failed to update folder name");
+        setsInFolder.value = Array.isArray(response.data) ? response.data : [];
+        return setsInFolder.value;
       }
-    } catch (err: any) {
-      handleApiError(err);
-      throw err;
-    } finally {
-      loading.value = false;
-    }
-  };
-  //xoa folder theo id folder
-  const deleteFolder = async (folderId: number) => {
-    try {
-      loading.value = true;
-      const response =
-        await flashcardApiUtil.apiFlashcardFlashcardFolderDeleteIdDelete(
-          folderId
-        );
-      if (response.status === 200) {
-        folders.value = folders.value.filter(
-          (folder) => folder.id !== folderId
-        );
-        return response.data;
-      }
-    } catch (err: any) {
+    } catch (err) {
       handleApiError(err);
       throw err;
     } finally {
@@ -139,32 +135,33 @@ export const FlashcardStore = defineStore("flashcard", () => {
     }
   };
 
-  // tao bo the tu vung
-  const createVocabSet = async (
-    setName: string,
-    description: string,
-    isPublic: boolean,
-    folderId: number,
-    userId: number
-  ) => {
+  const fetchSetsInUser = async (userId: number) => {
     try {
       loading.value = true;
-      const payload: FlashcardSetRequest = {
-        setName: setName,
-        description: description,
-        isPublic: isPublic,
-        flashcardFolderId: folderId,
-        userId: userId,
-      };
-      const response = await flashcardApiUtil.apiFlashcardFlashcardSetPost(
-        payload
-      );
+      const response = await flashcardApiUtil.apiFlashcardFlashcardSetsUserUserIdGet(userId);
+      if (response.status === 200) {
+        setsInUser.value = Array.isArray(response.data) ? response.data : [];
+        return setsInUser.value;
+      }
+    } catch (err) {
+      handleApiError(err);
+      throw err;
+    } finally {
+      loading.value = false;
+    }
+  };
+
+  const createVocabSet = async (setName: string, description: string, isPublic: boolean, folderId: number, userId: number) => {
+    try {
+      loading.value = true;
+      const payload: FlashcardSetRequest = { setName, description, isPublic, flashcardFolderId: folderId, userId };
+      const response = await flashcardApiUtil.apiFlashcardFlashcardSetPost(payload);
       if (response.status === 200) {
         await fetchSetsInFolder(folderId);
         await fetchSetsInUser(userId);
         return response.data;
       }
-    } catch (err: any) {
+    } catch (err) {
       handleApiError(err);
       throw err;
     } finally {
@@ -172,39 +169,16 @@ export const FlashcardStore = defineStore("flashcard", () => {
     }
   };
 
-  // lay danh sach bo the tu vung theo id folder
-  const fetchSetsInFolder = async (folderId: number) => {
+  const deleteVocabSet = async (setId: number) => {
     try {
       loading.value = true;
-      const response =
-        await flashcardApiUtil.apiFlashcardFlashcardSetsFolderFolderIdGet(
-          folderId
-        );
+      const response = await flashcardApiUtil.apiFlashcardFlashcardSetDeleteIdDelete(setId);
       if (response.status === 200) {
-        const data = response.data || [];
-        setsInfolder.value = Array.isArray(data) ? data : [];
-        return response.data;
+        setsInFolder.value = setsInFolder.value.filter((s) => s.id !== setId);
+        setsInUser.value = setsInUser.value.filter((s) => s.id !== setId);
+        return true;
       }
-    } catch (err: any) {
-      handleApiError(err);
-      throw err;
-    } finally {
-      loading.value = false;
-    }
-  };
-
-  // Lấy tất cả bộ thẻ của user
-  const fetchSetsInUser = async (userId: number) => {
-    try {
-      loading.value = true;
-      const response =
-        await flashcardApiUtil.apiFlashcardFlashcardSetsUserUserIdGet(userId);
-      if (response.status === 200) {
-        const data = response.data || [];
-        setsInUser.value = Array.isArray(data) ? data : [];
-        return response.data;
-      }
-    } catch (err: any) {
+    } catch (err) {
       handleApiError(err);
       throw err;
     } finally {
@@ -217,17 +191,34 @@ export const FlashcardStore = defineStore("flashcard", () => {
     vocabularies.value = [];
   };
 
-  const deleteVocabSet = async (setId: number) => {
+  // Flashcard Methods
+  const fetchFlashcardsInSet = async (setId: number) => {
     try {
       loading.value = true;
-      const response =
-        await flashcardApiUtil.apiFlashcardFlashcardSetDeleteIdDelete(setId);
+      const response = await flashcardApiUtil.apiFlashcardFlashcardSetSetIdGet(setId);
       if (response.status === 200) {
-        setsInfolder.value = setsInfolder.value.filter((s) => s.id !== setId);
-        setsInUser.value = setsInUser.value.filter((s) => s.id !== setId);
-        return true;
+        vocabularies.value = Array.isArray(response.data) ? response.data : [];
+        return vocabularies.value;
       }
-    } catch (err: any) {
+    } catch (err) {
+      handleApiError(err);
+      vocabularies.value = [];
+      throw err;
+    } finally {
+      loading.value = false;
+    }
+  };
+
+  const createFlashcard = async (termLanguage: string, definitionLanguage: string, imageUrl: string, audioUrl: string, setId: number, userId: number) => {
+    try {
+      loading.value = true;
+      const payload: FlashcardRequest = { termLanguage, definitionLanguage, imageUrl: imageUrl || "", audioUrl: audioUrl || "", flashcardSetId: setId, userId };
+      const response = await flashcardApiUtil.apiFlashcardFlashcardPost(payload);
+      if (response.status === 200) {
+        await fetchFlashcardsInSet(setId);
+        return response.data;
+      }
+    } catch (err) {
       handleApiError(err);
       throw err;
     } finally {
@@ -235,57 +226,50 @@ export const FlashcardStore = defineStore("flashcard", () => {
     }
   };
 
-  //flashcard
-  const createFlashcard = async (
-    termLanguage: string,
-    definitionLanguage: string,
-    imageUrl: string,
-    audioUrl: string,
-    setId: number,
-    userId: number
-  ) => {
+  const deleteFlashcard = async (flashcardId: number) => {
     try {
       loading.value = true;
-      const payload: FlashcardRequest = {
-        termLanguage: termLanguage,
-        definitionLanguage: definitionLanguage,
-        imageUrl: imageUrl || "",
-        audioUrl: audioUrl || "",
-        flashcardSetId: setId,
-        userId: userId,
-      };
-      const response = await flashcardApiUtil.apiFlashcardFlashcardPost(
-        payload
-      );
+      const response = await flashcardApiUtil.apiFlashcardFlashcardDeleteIdDelete(flashcardId);
       if (response.status === 200) {
-        await fetchFlashcardsInSet(setId);
-        return response.data;
+        vocabularies.value = vocabularies.value.filter((v) => v.id !== flashcardId);
+        return true;
       }
-    } catch (err: any) {
+    } catch (err) {
       handleApiError(err);
       throw err;
     } finally {
       loading.value = false;
     }
   };
-  //lay the trong bo the
-  const fetchFlashcardsInSet = async (setId: number) => {
+
+  const toggleFavorite = async (flashcardId: number) => {
     try {
-      console.log("Fetching flashcards in set:", setId);
       loading.value = true;
-      const response = await flashcardApiUtil.apiFlashcardFlashcardSetIdGet(
-        setId
-      );
+      const response = await flashcardApiUtil.apiFlashcardFlashcardIdFavoritePut(flashcardId);
       if (response.status === 200) {
-        const data = response.data || [];
-        vocabularies.value = Array.isArray(data.flashcards)
-          ? data.flashcards
-          : [];
-        return response.data;
+        const index = vocabularies.value.findIndex((f) => f.id === flashcardId);
+        if (index !== -1) {
+          vocabularies.value[index].isFavorite = !vocabularies.value[index].isFavorite;
+        }
       }
-    } catch (err: any) {
+    } catch (err) {
       handleApiError(err);
-      vocabularies.value = [];
+      throw err;
+    } finally {
+      loading.value = false;
+    }
+  };
+
+  const fetchVocabFavoritesByUserId = async (userId: number) => {
+    try {
+      loading.value = true;
+      const response = await flashcardApiUtil.apiFlashcardFlashcardFavoritesUserIdGet(userId);
+      if (response.status === 200) {
+        vocabFavorites.value = Array.isArray(response.data) ? response.data : [];
+        return vocabFavorites.value;
+      }
+    } catch (err) {
+      handleApiError(err);
       throw err;
     } finally {
       loading.value = false;
@@ -295,110 +279,64 @@ export const FlashcardStore = defineStore("flashcard", () => {
   const setCurrentFlashcard = (flashcard: Flashcard) => {
     currentFlashcard.value = flashcard;
   };
-  //xoa tu vung
-  const deleteFlashcard = async (flashcardId: number) => {
-    try {
-      loading.value = true;
-      const response =
-        await flashcardApiUtil.apiFlashcardFlashcardDeleteIdDelete(flashcardId);
-      if (response.status === 200) {
-        vocabularies.value = vocabularies.value.filter(
-          (v) => v.id !== flashcardId
-        );
-        return true;
-      }
-    } catch (err: any) {
-      handleApiError(err);
-      throw err;
-    } finally {
-      loading.value = false;
-    }
-  };
-  //yeu thich tu vung
-  const toggleFavorite = async (flashcardId: number) => {
-    try {
-      loading.value = true;
-      const response = await flashcardApiUtil.apiFlashcardFlashcardIdFavoritePut(flashcardId);
-      if (response.status === 200) {
-        return true;
-      }
-    } catch (err: any) {
-      handleApiError(err);
-      throw err;
-    } finally {
-      loading.value = false;
-    }
-  };
-  //lay danh sach tu vung yeu thich theo user
-  const fetchVocabFavoritesByUserId = async (userId: number) => {
-    try {
-      loading.value = true;
-      const response =
-        await flashcardApiUtil.apiFlashcardFlashcardFavoritesUserIdGet(userId);
-      if (response.status === 200) {
-        const data = response.data || [];
-        vocabFavories.value = Array.isArray(data) ? data : [];
-        return response.data;
-      }
-    } catch (err: any) {
-      handleApiError(err);
-      throw err;
-    } finally {
-      loading.value = false;
-    }
-  };
 
   const reset = () => {
     folders.value = [];
-    setsInfolder.value = [];
+    setsInFolder.value = [];
     setsInUser.value = [];
     vocabularies.value = [];
-    loading.value = false;
-    error.value = null;
+    vocabularies.value = [];
+    vocabFavorites.value = [];
     currentFolder.value = null;
     currentSet.value = null;
     currentFlashcard.value = null;
+    error.value = null;
+    loading.value = false;
   };
-  // Thêm method mới để làm rõ mục đích và tên phương thức
-  const getFlashcardSetsForUser = fetchSetsInUser;
-  const getFoldersForUser = fetchFoldersByUser;
 
   return {
+    // State
     folders,
-    setsInfolder,
+    setsInFolder,
     setsInUser,
     vocabularies,
-    vocabFavories,
-    loading,
-    error,
+    vocabFavorites,
     currentFolder,
     currentSet,
     currentFlashcard,
+    loading,
+    error,
+
+    // Computed
     getFolders,
     getSetsInFolder,
     getSetsInUser,
     getVocabularies,
+    getvocabularies,
     getCurrentFolder,
     getCurrentSet,
     getCurrentFlashcard,
-    createFolder,
+
+    // Methods
     fetchFoldersByUser,
-    getFoldersForUser,
+    createFolder,
+    updateFolderName,
     deleteFolder,
-    createVocabSet,
+    setCurrentFolder,
+
     fetchSetsInFolder,
     fetchSetsInUser,
-    getFlashcardSetsForUser,
+    createVocabSet,
     deleteVocabSet,
-    createFlashcard,
+    setCurrentSet,
+
     fetchFlashcardsInSet,
+    createFlashcard,
     deleteFlashcard,
     toggleFavorite,
-    setCurrentFolder,
-    setCurrentSet,
-    setCurrentFlashcard,
-    reset,
-    updateFolderName,
     fetchVocabFavoritesByUserId,
+    setCurrentFlashcard,
+
+    reset,
   };
 });

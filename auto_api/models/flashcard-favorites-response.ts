@@ -55,4 +55,10 @@ export interface FlashcardFavoritesResponse {
      * @memberof FlashcardFavoritesResponse
      */
     flashcardSetId?: number;
+
+    /**
+     * @type {boolean}
+     * @memberof FlashcardFavoritesResponse
+     */
+    isFavorite?: boolean;
 }

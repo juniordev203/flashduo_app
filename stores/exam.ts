@@ -1,10 +1,13 @@
 import { defineStore } from "pinia";
 import { ref, computed } from "vue";
-import { ExamStatus, type AnswerChoiceRequest, type ExamResponse, type Question, type UserExamBaseRequest } from "~/auto_api/models";
+import { ExamStatus, type AnswerChoiceRequest, type ExamResponse, type Question, type UserExamBaseRequest, type UserExamResultResponse } from "~/auto_api/models";
 import { QuestionSectionEnum } from "~/constants/enum";
 import { Storage } from '@capacitor/storage';
+import { da } from "date-fns/locale";
 
 export const useExamStore = defineStore("exam", () => {
+  const answers = ref<Record<number, string>>({});
+  const examCompleted = ref<UserExamResultResponse[]>([]);
   const currentExam = ref<ExamResponse | null>(null);
   const currentSection = ref<QuestionSectionEnum>(
     QuestionSectionEnum.Listening
@@ -13,9 +16,10 @@ export const useExamStore = defineStore("exam", () => {
   const timeRemaining = ref(7200);
   const currentQuestionIndex = ref(0);
   const examSubmitted = ref(false);
-  const answers = ref<Record<number, string>>({});
   const userExamId = ref<number | null>(null);
+  const loading = ref(false);
 
+  //luu ket qua
   const saveAnswer = async (questionId: number, section: number, optionLabel: string) => {
     answers.value[questionId] = optionLabel;
     const answerData = JSON.stringify({ section, optionLabel });
@@ -24,6 +28,7 @@ export const useExamStore = defineStore("exam", () => {
       value: answerData,
     })
   }
+  //lay ket qua ng dung chon
   const getAnswer = async (questionId: number) => {
     if (answers.value[questionId]) return answers.value[questionId]
     const result = await Storage.get({ key: `answer_${questionId}` })
@@ -33,7 +38,7 @@ export const useExamStore = defineStore("exam", () => {
     }
     return "";
   }
-
+  //lay cau hoi listening
   const listeningQuestion = computed<Question[]>(() => {
     return (
       (currentExam.value?.examQuestion
@@ -43,7 +48,7 @@ export const useExamStore = defineStore("exam", () => {
         ) as Question[]) || []
     );
   });
-
+  //lay cau hoi reading
   const readingQuestion = computed<Question[]>(() => {
     return (
       (currentExam.value?.examQuestion
@@ -54,7 +59,7 @@ export const useExamStore = defineStore("exam", () => {
     );
   });
 
-  //call api get data exam
+  //lay bai thi
   const fetchExam = async (examId: number) => {
     if (!examId || isNaN(examId)) {
       console.error("❌ fetchExam nhận examId không hợp lệ:", examId);
@@ -72,7 +77,22 @@ export const useExamStore = defineStore("exam", () => {
       console.error("❌ Lỗi API:", error);
     }
   };
-
+  const fetchExamCompleted = async (userId: number) => {
+    try {
+      loading.value = true;
+      const response = await examApiUtil.apiExamUserExamUserIdResultExamsGet(userId);
+      if (response.status === 200) {
+        const data = response.data;
+        examCompleted.value = Array.isArray(data) ? data : [];
+        return response.data;
+      }
+    } catch (err: any) {
+      throw(err);
+    } finally {
+      loading.value = false;
+    }
+  };
+  //tao bai thi cho nguoi dung
   const postUserExam = async (userId: number, examId: number) => {
     try {
       if (!userId || !examId) {
@@ -97,16 +117,18 @@ export const useExamStore = defineStore("exam", () => {
     }
   };
 
-
+  //chon phan thi
   const setSection = (section: QuestionSectionEnum) => {
     currentSection.value = section;
   };
+  //chuyen phan thi
   const toggleSection = () => {
     currentSection.value =
       currentSection.value === QuestionSectionEnum.Listening
         ? QuestionSectionEnum.Reading
         : QuestionSectionEnum.Listening;
   };
+  //ham dem thoi gian
   const updateTime = () => {
     timeRemaining.value -= 1;
   };
@@ -114,7 +136,7 @@ export const useExamStore = defineStore("exam", () => {
   const setQuestionIndex = (index: number) => {
     currentQuestionIndex.value = index;
   };
-
+  //nop bai
   const submitExam = async (userExamId: number, userId: number) => {
     try {
       examSubmitted.value = true;
@@ -193,7 +215,7 @@ export const useExamStore = defineStore("exam", () => {
       throw error; 
     }
   };
-
+  //reset trang thai bai thi
   const resetExamState = () => {
     currentSection.value = QuestionSectionEnum.Listening;
     currentPart.value = 1;
@@ -204,6 +226,7 @@ export const useExamStore = defineStore("exam", () => {
   };
 
   return {
+    examCompleted,
     currentExam,
     currentSection,
     timeRemaining,
@@ -222,5 +245,6 @@ export const useExamStore = defineStore("exam", () => {
     getAnswer,
     submitExam,
     postUserExam,
+    fetchExamCompleted
   };
 });

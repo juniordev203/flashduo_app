@@ -27,6 +27,12 @@ export interface UserExamResultResponse {
     id?: number;
 
     /**
+     * @type {string}
+     * @memberof UserExamResultResponse
+     */
+    examName?: string | null;
+
+    /**
      * @type {Date}
      * @memberof UserExamResultResponse
      */

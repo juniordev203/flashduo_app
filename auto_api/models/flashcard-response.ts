@@ -54,7 +54,7 @@ export interface FlashcardResponse {
      * @type {boolean}
      * @memberof FlashcardResponse
      */
-    isFavourite?: boolean;
+    isFavorite?: boolean;
 
     /**
      * @type {boolean}
