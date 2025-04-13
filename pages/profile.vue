@@ -85,7 +85,7 @@
         </div>
         <el-divider class="!m-0"></el-divider>
 
-        <div class="flex justify-between items-center py-4">
+        <div @click="shareApp" class="flex justify-between items-center py-4">
           <div class="flex items-center gap-4">
             <div class="user-icon">
               <Share2 :width="20" :stroke-width="2" />
@@ -209,6 +209,28 @@ const toggleBtnNotice = () => {
 const toggleBtnTheme = () => {
   actionBtnTheme.value = !actionBtnTheme.value;
 }
+// Thêm function shareApp vào script setup
+const shareApp = async () => {
+  const shareData = {
+    title: 'FlashDuo',
+    text: 'Học từ vựng hiệu quả với FlashDuo!',
+    url: window.location.origin
+  };
+
+  try {
+    if (navigator.share) {
+      // Sử dụng native share trên mobile
+      await navigator.share(shareData);
+    } else {
+      // Fallback: Copy link trên desktop
+      await navigator.clipboard.writeText(shareData.url);
+      ElMessage.success('Đã sao chép liên kết ứng dụng');
+    }
+  } catch (error) {
+    console.error('Error sharing:', error);
+    ElMessage.error('Không thể chia sẻ ứng dụng');
+  }
+};
 const handleLogout = async () => {
   await logoutUser();
   useMyBaseStore().$reset();

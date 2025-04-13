@@ -25,7 +25,7 @@
         {{ currentIndex + 1 }} / {{ cards.length }}
       </span>
       <div class="flex gap-2">
-        <button v-if="currentCard?.isFavourite" @click="toggleFavorite(currentCard)"
+        <button v-if="currentCard?.isFavorite" @click="toggleFavorite(currentCard)"
           class="flex items-center gap-1 py-1 px-2 bg-yellow-50 rounded text-xs font-medium text-yellow-600">
           <Star class="w-3.5 h-3.5 fill-yellow-400 text-yellow-400" />
           Yêu thích

@@ -60,7 +60,7 @@ function formatTime(seconds: number): string {
   
   return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`
 }
-const examId = Number(route.params.id)
+const examId = Number(route.params.examId)
 onMounted(() => {
   examStore.fetchExam(Number(examId))
 })

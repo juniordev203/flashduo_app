@@ -136,7 +136,7 @@
                                         </div>
                                         <!-- Action buttons -->
                                         <div class="ml-4">
-                                            <NuxtLink to="/"
+                                            <NuxtLink :to="`/exam/result/${exam.id}`"
                                                 class="p-2 text-gray-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-full transition-colors">
                                                 <ExternalLink class="w-4 h-4" />
                                             </NuxtLink>
@@ -172,6 +172,7 @@ const examStore = useExamStore();
 const userInfo = computed(() => useMyBaseStore().userInfo)
 
 const userId = userInfo.value?.id;
+console.log('ủe id trong store: ', userId);
 const vocabFavories = ref<FlashcardFavoritesResponse[]>([]);
 const examCompleteds = ref<UserExamResultResponse[]>([]);
 const activeTab = ref('vocab');
@@ -185,9 +186,11 @@ const fetchVocabFavorites = async (userId: number) => {
     }
 }
 const fetchExamCompleted = async (userId: number) => {
+    console.log('fet exam dc go')
     try {
-        const data = await examStore.fetchExamCompleted(userId);
+        const data = await examStore.fetchExamCompletedByUserId(userId);
         examCompleteds.value = Array.isArray(data) ? data : [];
+        console.log("exam completed: ", examCompleteds.value)
     } catch (err: any) {
         throw (err);
     }

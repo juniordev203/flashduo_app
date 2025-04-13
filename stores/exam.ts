@@ -3,11 +3,10 @@ import { ref, computed } from "vue";
 import { ExamStatus, type AnswerChoiceRequest, type ExamResponse, type Question, type UserExamBaseRequest, type UserExamResultResponse } from "~/auto_api/models";
 import { QuestionSectionEnum } from "~/constants/enum";
 import { Storage } from '@capacitor/storage';
-import { da } from "date-fns/locale";
+import { examApiUtil } from "~/utils/api.utils";
 
 export const useExamStore = defineStore("exam", () => {
   const answers = ref<Record<number, string>>({});
-  const examCompleted = ref<UserExamResultResponse[]>([]);
   const currentExam = ref<ExamResponse | null>(null);
   const currentSection = ref<QuestionSectionEnum>(
     QuestionSectionEnum.Listening
@@ -77,16 +76,17 @@ export const useExamStore = defineStore("exam", () => {
       console.error("❌ Lỗi API:", error);
     }
   };
-  const fetchExamCompleted = async (userId: number) => {
+  const fetchExamCompletedByUserId = async (userId: number) => {
     try {
+      console.log("ham fet exam trong store dc goi")
       loading.value = true;
       const response = await examApiUtil.apiExamUserExamUserIdResultExamsGet(userId);
+      console.log('API Response:', response);
       if (response.status === 200) {
-        const data = response.data;
-        examCompleted.value = Array.isArray(data) ? data : [];
         return response.data;
       }
     } catch (err: any) {
+      console.error('Error fetching exam completed:', err);
       throw(err);
     } finally {
       loading.value = false;
@@ -226,7 +226,6 @@ export const useExamStore = defineStore("exam", () => {
   };
 
   return {
-    examCompleted,
     currentExam,
     currentSection,
     timeRemaining,
@@ -245,6 +244,6 @@ export const useExamStore = defineStore("exam", () => {
     getAnswer,
     submitExam,
     postUserExam,
-    fetchExamCompleted
+    fetchExamCompletedByUserId
   };
 });

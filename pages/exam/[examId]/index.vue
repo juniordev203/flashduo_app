@@ -92,18 +92,13 @@
           </div>
         </div>
         <!-- Start Button -->
-        <NuxtLink
-          v-if="examDetail.id"
-          :to="`/exam/${examDetail.id}/do`"
-          class="block w-full"
-        >
-          <button
-            class="w-full py-3 text-lg font-semibold text-white bg-blue-600 rounded-xl transition-all duration-200 active:scale-95 touch-manipulation flex items-center justify-center gap-2"
-          >
+        <div class="block w-full">
+          <button @click="handleCreatedUserExam"
+            class="w-full py-3 text-lg font-semibold text-white bg-blue-600 rounded-xl transition-all duration-200 active:scale-95 touch-manipulation flex items-center justify-center gap-2">
             <Play :size="20" />
             Bắt đầu làm bài
           </button>
-        </NuxtLink>
+        </div>
       </div>
       <!-- Loading State -->
       <div v-else class="h-full flex items-center justify-center">
@@ -135,13 +130,13 @@ definePageMeta({
 });
 
 const route = useRoute();
-const examId = Number(route.params.id);
+const router = useRouter();
+const examId = Number(route.params.examId);
 const examDetail = ref<ExamResponse | null>(null);
 const examStore = useExamStore();
 const userStore = useMyBaseStore();
 const userExamId = ref<number | null>(null);
-const userId = computed(() => userStore.authUser?.id);
-
+const userId = computed(() => userStore.userInfo?.id);
 const fetchExamDetail = async () => {
   try {
     const response = await examApiUtil.apiExamExamDetailExamIdGet(
@@ -152,6 +147,22 @@ const fetchExamDetail = async () => {
     console.log("Khong lay duoc chi tiet de thi", error);
   }
 };
+
+const handleCreatedUserExam = async () => {
+  if (!userId.value || Number.isNaN(Number(userId.value)) || !examId || Number.isNaN(Number(examId))) {
+    console.error("Không gọi postUserExam vì examId không hợp lệ:", userId, examId);
+    return;
+  }
+  try {
+    const result = await examStore.postUserExam(userId.value, examId);
+    if (examDetail.value?.id && result) {
+      userExamId.value = result;
+      router.push(`/exam/${examDetail.value.id}/do/${userExamId.value}`)
+    }
+  } catch (err: any) {
+    throw(err);
+  }
+}
 
 onMounted(() => {
   fetchExamDetail();
