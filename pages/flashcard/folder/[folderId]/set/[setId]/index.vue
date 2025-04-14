@@ -155,7 +155,7 @@ onMounted(async () => {
 
       await fetchVocabularies(setId)
     } catch (err) {
-      ElMessage.error("Không thể tải danh sách từ vựng");
+      showCustomMessage('error', "Không thể tải danh sách từ vựng");
     }
   }
 });
@@ -190,7 +190,7 @@ const fetchVocabularies = async (setId: number) => {
     vocabularies.value = Array.isArray(response) ? response : [];
   } catch (error) {
     console.error('Error fetching vocabularies:', error);
-    ElMessage.error("Không thể tải danh sách từ vựng");
+    showCustomMessage('error', "Không thể tải danh sách từ vựng");
   } finally {
     loading.value = false;
   }
@@ -211,7 +211,7 @@ const toggleFavorite = async (wordId: number) => {
     
   } catch (err) {
     console.error("Lỗi khi đánh dấu yêu thích:", err);
-    ElMessage.error("Không thể đánh dấu yêu thích");
+    showCustomMessage('error', "Không thể đánh dấu yêu thích");
   }
 };
 // Replace the existing handleWordCreated function
@@ -226,10 +226,10 @@ const handleWordCreated = async (flashcard: FlashcardRequest) => {
       flashcard.userId
     );
     await store.fetchFlashcardsInSet(setId);
-    ElMessage.success("Thêm từ mới thành công");
+    showCustomMessage('success', "Thêm từ mới thành công");
   } catch (err) {
     console.error("Lỗi khi thêm từ mới:", err);
-    ElMessage.error("Thêm từ mới thất bại");
+    showCustomMessage('error', "Thêm từ mới thất bại");
   } finally {
     showAddWord.value = false;
   }
@@ -253,12 +253,12 @@ const handleDelete = async () => {
     );
 
     await store.deleteVocabSet(setId);
-    ElMessage.success("Đã xóa bộ thẻ");
+    showCustomMessage('success', "Đã xóa bộ thẻ");
     router.back();
   } catch (err) {
     if (err !== "cancel") {
       console.error("Lỗi khi xóa bộ thẻ:", err);
-      ElMessage.error("Xóa bộ thẻ thất bại");
+      showCustomMessage('error', "Xóa bộ thẻ thất bại");
     }
   }
 };

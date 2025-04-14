@@ -140,12 +140,12 @@
       Number(formData.folderId),
       userInfo.value.id
     );
-    ElMessage.success('Tạo bộ thẻ thành công');
+    showCustomMessage('success', 'Tạo bộ thẻ thành công');
     emit('created');
     handleClose();
   } catch (err) {
     console.error('Lỗi khi tạo bộ thẻ:', err);
-    ElMessage.error('Tạo bộ thẻ thất bại');
+    showCustomMessage('error', 'Tạo bộ thẻ thất bại');
   }
 };
   </script>

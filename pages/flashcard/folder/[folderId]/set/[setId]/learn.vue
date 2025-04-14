@@ -105,7 +105,7 @@ onMounted(async () => {
     isLoadingCards.value = true;
     await flashcardStore.fetchFlashcardsInSet(setId);
   } catch (error) {
-    ElMessage.error("Không tải được từ vựng!");
+    showCustomMessage('error', "Không tải được từ vựng!");
   } finally {
     isLoadingCards.value = false;
   }

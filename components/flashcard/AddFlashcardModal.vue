@@ -126,7 +126,7 @@ const handleSubmit = async () => {
     handleClose();
   } catch (err) {
     console.error("Lỗi khi thêm từ mới:", err);
-    ElMessage.error("Thêm từ mới thất bại");
+    showCustomMessage('error', "Thêm từ mới thất bại");
   } finally {
     loading.value = false;
   }
@@ -162,7 +162,7 @@ const openLibrary = async () => {
     imagePreview.value = photo.dataUrl || null;
     formData.imageUrl = photo.dataUrl || null;
   } catch (err) {
-    ElMessage.error('Không thể chọn ảnh. Vui lòng thử lại.');
+    showCustomMessage('error', 'Không thể chọn ảnh. Vui lòng thử lại.');
   }
 };
 const removeImage = () => {

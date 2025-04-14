@@ -160,7 +160,7 @@ onMounted(async () => {
       await store.fetchSetsInUser(userId.value);
     } catch (err) {
       console.error("Lỗi khi lấy danh sách bộ thẻ:", err);
-      ElMessage.error("Không thể tải danh sách bộ thẻ");
+      showCustomMessage('error', "Không thể tải danh sách bộ thẻ");
     }
   }
 })
@@ -179,11 +179,11 @@ const handleFolderCreate = async (name: string) => {
   if (userId.value) {
     try {
       await store.createFolder(name, userId.value);
-      ElMessage.success("Tạo thư mục thành công");
+      showCustomMessage('success', "Tạo thư mục thành công");
       showCreateFolderModal.value = false;
     } catch (err) {
       console.error("Lỗi khi tạo folder:", err);
-      ElMessage.error("Tạo thư mục thất bại");
+      showCustomMessage('error', "Tạo thư mục thất bại");
     }
   }
 };

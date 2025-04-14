@@ -218,17 +218,18 @@ const shareApp = async () => {
   };
 
   try {
+    showCustomMessage('error', 'Không thể chia sẻ ứng dụng');
     if (navigator.share) {
       // Sử dụng native share trên mobile
       await navigator.share(shareData);
     } else {
       // Fallback: Copy link trên desktop
       await navigator.clipboard.writeText(shareData.url);
-      ElMessage.success('Đã sao chép liên kết ứng dụng');
+      showCustomMessage('success', 'Đã sao chép liên kết ứng dụng');
     }
   } catch (error) {
     console.error('Error sharing:', error);
-    ElMessage.error('Không thể chia sẻ ứng dụng');
+    showCustomMessage('error', 'Không thể chia sẻ ứng dụng');
   }
 };
 const handleLogout = async () => {

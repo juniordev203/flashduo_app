@@ -273,7 +273,7 @@
     console.log("userExamId trong component: ", userExamId.value)
     if (confirm("Bạn có chắc chắn muốn nộp bài không?")) {
       if (!userExamId.value) {
-        ElMessage.error("Bạn cần đăng nhập để xem đáp án!");
+        showCustomMessage('error', "Bạn cần đăng nhập để xem đáp án!");
         return
       }
       await examStore.submitExam(userExamId.value, userId.value);

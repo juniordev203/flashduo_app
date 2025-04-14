@@ -204,7 +204,7 @@ const toggleFavorite = async (flashcardId?: number) => {
         }
     } catch (error) {
         console.error('Error toggling favorite:', error);
-        ElMessage.error('Không thể cập nhật trạng thái yêu thích');
+        showCustomMessage('error', 'Không thể cập nhật trạng thái yêu thích');
     }
 }
 //sap xep ds theo thoi gian 

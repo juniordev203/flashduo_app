@@ -144,7 +144,7 @@ onMounted(async () => {
             await store.fetchSetsInFolder(folderId);
         } catch (err) {
             console.error("Lỗi khi lấy danh sách bộ thẻ:", err);
-            ElMessage.error("Không thể tải danh sách bộ thẻ");
+            showCustomMessage('error', "Không thể tải danh sách bộ thẻ");
         }
     }
 });
@@ -171,7 +171,7 @@ const handleRename = () => {
 const submitRename = async () => {
     try {
         if (!newFolderName.value.trim()) {
-            ElMessage.error('Tên thư mục không được để trống');
+            showCustomMessage('error', 'Tên thư mục không được để trống');
             return;
         }
         if (newFolderName.value === currentFolder.value?.folderName) {
@@ -179,13 +179,13 @@ const submitRename = async () => {
             return;
         }
         await store.updateFolderName(folderId, newFolderName.value.trim());
-        ElMessage.success('Đã đổi tên thư mục');
+        showCustomMessage('success', 'Đã đổi tên thư mục');
         showRenameModal.value = false;
         await store.fetchSetsInFolder(folderId);
         showActions.value = false;
     } catch (err) {
         console.error("Lỗi khi đổi tên thư mục:", err);
-        ElMessage.error('Đổi tên thư mục thất bại');
+        showCustomMessage('error', 'Đổi tên thư mục thất bại');
         showRenameModal.value = false;
     }
 }
@@ -202,12 +202,12 @@ const handleDelete = async () => {
         );
 
         await store.deleteFolder(folderId);
-        ElMessage.success('Đã xóa thư mục');
+        showCustomMessage('success', 'Đã xóa thư mục');
         router.push('/flashcard');
     } catch (err) {
         if (err !== 'cancel') {
             console.error("Lỗi khi xóa thư mục:", err);
-            ElMessage.error('Xóa thư mục thất bại');
+            showCustomMessage('error', 'Xóa thư mục thất bại');
         }
     }
 };

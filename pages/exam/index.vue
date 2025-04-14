@@ -138,7 +138,7 @@ const makeExams = async () => {
     examInfo.value = response.data;
   } catch (error) {
     console.error("Lỗi khi lấy danh sách đề thi:", error);
-    ElMessage.error("Không thể tải danh sách đề thi");
+    showCustomMessage('error', "Không thể tải danh sách đề thi");
   } finally {
     loading.value = false;
   }

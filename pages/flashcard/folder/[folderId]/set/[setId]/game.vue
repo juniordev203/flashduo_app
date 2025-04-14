@@ -297,7 +297,7 @@ onMounted(async () => {
         initializeGame()
     } catch (error) {
         console.error('Error initializing game:', error)
-        ElMessage.error('Không thể tải dữ liệu từ vựng')
+        showCustomMessage('error', 'Không thể tải dữ liệu từ vựng')
         router.back()
     }
 })
