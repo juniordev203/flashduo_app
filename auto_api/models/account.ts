@@ -77,4 +77,16 @@ export interface Account {
      * @memberof Account
      */
     comments?: Array<ForumComment> | null;
+
+    /**
+     * @type {string}
+     * @memberof Account
+     */
+    refreshToken?: string | null;
+
+    /**
+     * @type {Date}
+     * @memberof Account
+     */
+    refreshTokenExpiryTime?: Date;
 }

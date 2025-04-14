@@ -172,7 +172,6 @@ const examStore = useExamStore();
 const userInfo = computed(() => useMyBaseStore().userInfo)
 
 const userId = userInfo.value?.id;
-console.log('ủe id trong store: ', userId);
 const vocabFavories = ref<FlashcardFavoritesResponse[]>([]);
 const examCompleteds = ref<UserExamResultResponse[]>([]);
 const activeTab = ref('vocab');
@@ -195,6 +194,15 @@ const fetchExamCompleted = async (userId: number) => {
         throw (err);
     }
 }
+//sap xep ds theo thoi gian 
+const sortedExamCompleteds = computed(() => {
+    return [...examCompleteds.value].sort((a, b) => {
+        const timeA = a.startTime ? new Date(a.startTime).getTime() : 0;
+        const timeB = b.startTime ? new Date(b.startTime).getTime() : 0;
+        // Sort in descending order (newest first)
+        return timeB - timeA;
+    });
+});
 const toggleFavorite = async (flashcardId?: number) => {
     if (!flashcardId) return;
     try {
@@ -207,15 +215,6 @@ const toggleFavorite = async (flashcardId?: number) => {
         showCustomMessage('error', 'Không thể cập nhật trạng thái yêu thích');
     }
 }
-//sap xep ds theo thoi gian 
-const sortedExamCompleteds = computed(() => {
-    return [...examCompleteds.value].sort((a, b) => {
-        const timeA = a.startTime ? new Date(a.startTime).getTime() : 0;
-        const timeB = b.startTime ? new Date(b.startTime).getTime() : 0;
-        // Sort in descending order (newest first)
-        return timeB - timeA;
-    });
-});
 
 onMounted(async () => {
     if (userId) {

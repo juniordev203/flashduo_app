@@ -115,6 +115,9 @@
 import { Bell, Book, ChevronRight, Globe, Headphones, Mic, Search } from 'lucide-vue-next';
 import { useMyBaseStore } from '~/stores/base.store';
 const userInfo = computed(() => useMyBaseStore().userInfo);
+const authInfo = computed(() => useMyBaseStore().authUser);
+console.log('user info: ', userInfo.value)
+console.log('auth ', authInfo.value)
 </script>
 
 <style scoped>

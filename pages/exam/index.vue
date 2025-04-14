@@ -7,7 +7,7 @@
           {{ $t("lang_core_exam_title") }}
           <span class="text-blue-600 font-bold">{{
             $t("lang_core_exam_title_highlight")
-            }}</span>
+          }}</span>
         </span>
       </template>
     </AtomHeaderSafe>
@@ -40,13 +40,13 @@
                     <el-dropdown-menu>
                       <el-dropdown-item>{{
                         $t("lang_core_exam_filter_new_economy")
-                        }}</el-dropdown-item>
+                      }}</el-dropdown-item>
                       <el-dropdown-item>{{
                         $t("lang_core_exam_filter_old_economy")
-                        }}</el-dropdown-item>
+                      }}</el-dropdown-item>
                       <el-dropdown-item>{{
                         $t("lang_core_exam_filter_longman")
-                        }}</el-dropdown-item>
+                      }}</el-dropdown-item>
                     </el-dropdown-menu>
                   </template>
                 </el-dropdown>
@@ -105,11 +105,58 @@
           </el-tab-pane>
 
           <!-- History Tab -->
-          <el-tab-pane :label="$t('lang_core_exam_history')" name="vocab">
-            <div
-              class="flex flex-col items-center justify-center gap-4 p-8 text-center bg-white rounded-xl border border-gray-100">
-              <History class="text-gray-400" :size="48" />
-              <p class="text-gray-500">Bạn chưa làm bài thi nào!</p>
+          <el-tab-pane :label="$t('lang_core_exam_history')" name="examHistory">
+            <div class="flex flex-col gap-4">
+              <!-- Header -->
+              <div class="flex justify-between items-center">
+                <p class="text-sm text-indigo-600">
+                  Bài thi đã làm: {{ examCompleteds.length }}
+                </p>
+              </div>
+
+              <!-- Exam History Card -->
+              <div class="bg-white rounded-xl shadow-sm overflow-hidden">
+                <!-- Empty state -->
+                <div v-if="!examCompleteds.length" class="flex flex-col items-center justify-center py-12 px-4">
+                  <div class="bg-gray-50 rounded-full p-3 mb-3">
+                    <History class="w-8 h-8 text-gray-400" />
+                  </div>
+                  <p class="text-gray-500 text-center">
+                    Bạn chưa làm bài thi nào!
+                  </p>
+                </div>
+
+                <!-- History list -->
+                <div v-else class="divide-y divide-gray-100">
+                  <div v-for="(exam, index) in sortedExamCompleteds" :key="index"
+                    class="flex items-center p-4 hover:bg-gray-50 transition-colors group">
+                    <!-- Result circle -->
+                    <div class="mr-4">
+                      <div class="w-12 h-12 rounded-full flex items-center justify-center text-sm font-medium">
+                        {{ exam.totalScore }}
+                      </div>
+                    </div>
+                    <!-- Exam info -->
+                    <div class="flex-1 min-w-0">
+                      <div class="flex items-center justify-between gap-2">
+                        <h3 class="font-medium text-gray-800 truncate group-hover:text-indigo-600 transition-colors">
+                          {{ exam.examName }}
+                        </h3>
+                        <time class="text-xs text-gray-500 whitespace-nowrap">
+                          {{ exam.startTime ? formatCustomDateTime(exam.startTime) : '' }}
+                        </time>
+                      </div>
+                    </div>
+                    <!-- Action buttons -->
+                    <div class="ml-4">
+                      <NuxtLink :to="`/exam/result/${exam.id}`"
+                        class="p-2 text-gray-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-full transition-colors">
+                        <ExternalLink class="w-4 h-4" />
+                      </NuxtLink>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </el-tab-pane>
         </el-tabs>
@@ -119,17 +166,23 @@
 </template>
 
 <script setup lang="ts">
-import { Search, Clock, UserPen, History, ChevronRight } from "lucide-vue-next";
+import { Search, Clock, UserPen, History, ChevronRight, SquarePen, ExternalLink } from "lucide-vue-next";
 import { ArrowDown } from "@element-plus/icons-vue";
-import type { ExamResponse } from "~/auto_api/models";
+import type { ExamResponse, UserExamResultResponse } from "~/auto_api/models";
 import { ElMessage, type TabsInstance } from "element-plus";
 import { computed, onMounted, ref } from "vue";
+import { useExamStore } from '~/stores/exam'
+import { useMyBaseStore } from "~/stores/base.store";
 
+const examStore = useExamStore();
+const userInfo = computed(() => useMyBaseStore().userInfo)
+const examCompleteds = ref<UserExamResultResponse[]>([]);
 const activeTab = ref("exam");
 const searchQuery = ref("");
 
 const examInfo = ref<ExamResponse[]>([]);
 const loading = ref(false);
+const userId = userInfo.value?.id;
 
 const makeExams = async () => {
   try {
@@ -143,8 +196,28 @@ const makeExams = async () => {
     loading.value = false;
   }
 };
-onMounted(() => {
+const fetchExamCompleted = async (userId: number) => {
+    console.log('fet exam dc go')
+    try {
+        const data = await examStore.fetchExamCompletedByUserId(userId);
+        examCompleteds.value = Array.isArray(data) ? data : [];
+        console.log("exam completed: ", examCompleteds.value)
+    } catch (err: any) {
+        throw (err);
+    }
+}
+//sap xep ds theo thoi gian 
+const sortedExamCompleteds = computed(() => {
+    return [...examCompleteds.value].sort((a, b) => {
+        const timeA = a.startTime ? new Date(a.startTime).getTime() : 0;
+        const timeB = b.startTime ? new Date(b.startTime).getTime() : 0;
+        // Sort in descending order (newest first)
+        return timeB - timeA;
+    });
+});
+onMounted(async () => {
   makeExams();
+  await fetchExamCompleted(Number(userId));
 });
 
 const filteredExams = computed(() => {

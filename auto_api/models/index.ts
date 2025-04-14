@@ -2,6 +2,7 @@ export * from './account';
 export * from './answer-choice-request';
 export * from './auth-login-request';
 export * from './auth-login-response';
+export * from './auth-refresh-token-request';
 export * from './auth-register-request';
 export * from './exam';
 export * from './exam-base-response';

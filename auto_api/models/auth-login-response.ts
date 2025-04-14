@@ -24,7 +24,13 @@ export interface AuthLoginResponse {
      * @type {string}
      * @memberof AuthLoginResponse
      */
-    token?: string | null;
+    accessToken?: string | null;
+
+    /**
+     * @type {string}
+     * @memberof AuthLoginResponse
+     */
+    refreshToken?: string | null;
 
     /**
      * @type {number}
