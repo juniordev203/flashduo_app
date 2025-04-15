@@ -4,7 +4,7 @@ const config = new Configuration ({
     apiKey: () => {
         const { authUser } = useMyBaseStore();
         if (!authUser) return "";
-        return authUser.token ? "Bearer" + authUser.token : "";
+        return authUser.accessToken ? "Bearer " + authUser.accessToken : "";
     }
 });
 export const authApiUtil = new AuthApi(config);

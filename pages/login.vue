@@ -64,10 +64,6 @@ import { loginUser } from "@/composables/Auth";
 import { useI18n } from "vue-i18n";
 import { EyeIcon } from 'lucide-vue-next'
 
-const userInfo = computed(() => useMyBaseStore().userInfo);
-const authInfo = computed(() => useMyBaseStore().authUser);
-console.log('user info: ', userInfo.value)
-console.log('auth ', authInfo.value)
 
 definePageMeta({
     layout: "app-none",
