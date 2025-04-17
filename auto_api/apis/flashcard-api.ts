@@ -20,6 +20,7 @@ import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } fr
 import { FlashcardFavoritesResponse } from '../models';
 import { FlashcardFolderRequest } from '../models';
 import { FlashcardFolderResponse } from '../models';
+import { FlashcardGameResultBySetResponse } from '../models';
 import { FlashcardGameResultByUserResponse } from '../models';
 import { FlashcardGameResultRequest } from '../models';
 import { FlashcardRequest } from '../models';
@@ -371,12 +372,12 @@ export const FlashcardApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiFlashcardFlashcardGameResultSetIdGet: async (setId: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        apiFlashcardFlashcardGameResultSetSetIdGet: async (setId: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'setId' is not null or undefined
             if (setId === null || setId === undefined) {
-                throw new RequiredError('setId','Required parameter setId was null or undefined when calling apiFlashcardFlashcardGameResultSetIdGet.');
+                throw new RequiredError('setId','Required parameter setId was null or undefined when calling apiFlashcardFlashcardGameResultSetSetIdGet.');
             }
-            const localVarPath = `/api/Flashcard/flashcard/game/result/{setId}`
+            const localVarPath = `/api/Flashcard/flashcard/game-result/set/{setId}`
                 .replace(`{${"setId"}}`, encodeURIComponent(String(setId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, 'https://example.com');
@@ -418,12 +419,12 @@ export const FlashcardApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiFlashcardFlashcardGameResultUserIdGet: async (userId: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        apiFlashcardFlashcardGameResultUserUserIdGet: async (userId: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'userId' is not null or undefined
             if (userId === null || userId === undefined) {
-                throw new RequiredError('userId','Required parameter userId was null or undefined when calling apiFlashcardFlashcardGameResultUserIdGet.');
+                throw new RequiredError('userId','Required parameter userId was null or undefined when calling apiFlashcardFlashcardGameResultUserUserIdGet.');
             }
-            const localVarPath = `/api/Flashcard/flashcard/game/result/{userId}`
+            const localVarPath = `/api/Flashcard/flashcard/game-result/user/{userId}`
                 .replace(`{${"userId"}}`, encodeURIComponent(String(userId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, 'https://example.com');
@@ -997,8 +998,8 @@ export const FlashcardApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async apiFlashcardFlashcardGameResultSetIdGet(setId: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => Promise<AxiosResponse<FlashcardGameResultByUserResponse>>> {
-            const localVarAxiosArgs = await FlashcardApiAxiosParamCreator(configuration).apiFlashcardFlashcardGameResultSetIdGet(setId, options);
+        async apiFlashcardFlashcardGameResultSetSetIdGet(setId: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => Promise<AxiosResponse<FlashcardGameResultBySetResponse>>> {
+            const localVarAxiosArgs = await FlashcardApiAxiosParamCreator(configuration).apiFlashcardFlashcardGameResultSetSetIdGet(setId, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs :AxiosRequestConfig = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -1010,8 +1011,8 @@ export const FlashcardApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async apiFlashcardFlashcardGameResultUserIdGet(userId: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => Promise<AxiosResponse<FlashcardGameResultByUserResponse>>> {
-            const localVarAxiosArgs = await FlashcardApiAxiosParamCreator(configuration).apiFlashcardFlashcardGameResultUserIdGet(userId, options);
+        async apiFlashcardFlashcardGameResultUserUserIdGet(userId: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => Promise<AxiosResponse<FlashcardGameResultByUserResponse>>> {
+            const localVarAxiosArgs = await FlashcardApiAxiosParamCreator(configuration).apiFlashcardFlashcardGameResultUserUserIdGet(userId, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs :AxiosRequestConfig = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -1215,8 +1216,8 @@ export const FlashcardApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async apiFlashcardFlashcardGameResultSetIdGet(setId: number, options?: AxiosRequestConfig): Promise<AxiosResponse<FlashcardGameResultByUserResponse>> {
-            return FlashcardApiFp(configuration).apiFlashcardFlashcardGameResultSetIdGet(setId, options).then((request) => request(axios, basePath));
+        async apiFlashcardFlashcardGameResultSetSetIdGet(setId: number, options?: AxiosRequestConfig): Promise<AxiosResponse<FlashcardGameResultBySetResponse>> {
+            return FlashcardApiFp(configuration).apiFlashcardFlashcardGameResultSetSetIdGet(setId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -1224,8 +1225,8 @@ export const FlashcardApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async apiFlashcardFlashcardGameResultUserIdGet(userId: number, options?: AxiosRequestConfig): Promise<AxiosResponse<FlashcardGameResultByUserResponse>> {
-            return FlashcardApiFp(configuration).apiFlashcardFlashcardGameResultUserIdGet(userId, options).then((request) => request(axios, basePath));
+        async apiFlashcardFlashcardGameResultUserUserIdGet(userId: number, options?: AxiosRequestConfig): Promise<AxiosResponse<FlashcardGameResultByUserResponse>> {
+            return FlashcardApiFp(configuration).apiFlashcardFlashcardGameResultUserUserIdGet(userId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -1398,8 +1399,8 @@ export class FlashcardApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof FlashcardApi
      */
-    public async apiFlashcardFlashcardGameResultSetIdGet(setId: number, options?: AxiosRequestConfig) : Promise<AxiosResponse<FlashcardGameResultByUserResponse>> {
-        return FlashcardApiFp(this.configuration).apiFlashcardFlashcardGameResultSetIdGet(setId, options).then((request) => request(this.axios, this.basePath));
+    public async apiFlashcardFlashcardGameResultSetSetIdGet(setId: number, options?: AxiosRequestConfig) : Promise<AxiosResponse<FlashcardGameResultBySetResponse>> {
+        return FlashcardApiFp(this.configuration).apiFlashcardFlashcardGameResultSetSetIdGet(setId, options).then((request) => request(this.axios, this.basePath));
     }
     /**
      * 
@@ -1408,8 +1409,8 @@ export class FlashcardApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof FlashcardApi
      */
-    public async apiFlashcardFlashcardGameResultUserIdGet(userId: number, options?: AxiosRequestConfig) : Promise<AxiosResponse<FlashcardGameResultByUserResponse>> {
-        return FlashcardApiFp(this.configuration).apiFlashcardFlashcardGameResultUserIdGet(userId, options).then((request) => request(this.axios, this.basePath));
+    public async apiFlashcardFlashcardGameResultUserUserIdGet(userId: number, options?: AxiosRequestConfig) : Promise<AxiosResponse<FlashcardGameResultByUserResponse>> {
+        return FlashcardApiFp(this.configuration).apiFlashcardFlashcardGameResultUserUserIdGet(userId, options).then((request) => request(this.axios, this.basePath));
     }
     /**
      * 

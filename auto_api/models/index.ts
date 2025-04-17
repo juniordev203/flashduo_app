@@ -15,6 +15,7 @@ export * from './flashcard-favorites-response';
 export * from './flashcard-folder';
 export * from './flashcard-folder-request';
 export * from './flashcard-folder-response';
+export * from './flashcard-game-result-by-set-response';
 export * from './flashcard-game-result-by-user-response';
 export * from './flashcard-game-result-request';
 export * from './flashcard-request';
