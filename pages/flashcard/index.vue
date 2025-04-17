@@ -153,18 +153,6 @@ const userId = computed(() => userInfo.value?.id);
 const showCreateFolderModal = ref(false);
 const showCreateSetModal = ref(false);
 
-onMounted(async () => {
-  if (userId.value) {
-    try {
-      await store.fetchFoldersByUser(userId.value);
-      await store.fetchSetsInUser(userId.value);
-    } catch (err) {
-      console.error("Lỗi khi lấy danh sách bộ thẻ:", err);
-      showCustomMessage('error', "Không thể tải danh sách bộ thẻ");
-    }
-  }
-})
-
 const filteredSets = computed(() => {
   if (!searchQuery.value.trim()) {
     return setsInUser.value;
@@ -201,6 +189,18 @@ const createNewSet = () => {
 const navigateToFolder = (folderId: number) => {
   router.push(`/flashcard/folder/${folderId}`);
 };
+
+onMounted(async () => {
+  if (userId.value) {
+    try {
+      await store.fetchFoldersByUser(userId.value);
+      await store.fetchSetsInUser(userId.value);
+    } catch (err) {
+      console.error("Lỗi khi lấy danh sách bộ thẻ:", err);
+      showCustomMessage('error', "Không thể tải danh sách bộ thẻ");
+    }
+  }
+})
 </script>
 
 <style scoped></style>

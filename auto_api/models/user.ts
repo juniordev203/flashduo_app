@@ -17,6 +17,7 @@ import { Flashcard } from './flashcard';
 import { FlashcardFolder } from './flashcard-folder';
 import { FlashcardTest } from './flashcard-test';
 import { UserExam } from './user-exam';
+import { UserFlashcardGame } from './user-flashcard-game';
 import { UserFlashcardSet } from './user-flashcard-set';
  /**
  * 
@@ -91,4 +92,10 @@ export interface User {
      * @memberof User
      */
     flashcards?: Array<Flashcard> | null;
+
+    /**
+     * @type {Array<UserFlashcardGame>}
+     * @memberof User
+     */
+    userFlashcardGames?: Array<UserFlashcardGame> | null;
 }

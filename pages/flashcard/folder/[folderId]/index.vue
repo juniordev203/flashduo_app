@@ -51,14 +51,15 @@
                 </div>
                 <div class="flex flex-col gap-4">
                     <NuxtLink :to="`/flashcard/folder/${folderId}/set/${set.id}`" v-for="set in filteredSets" :key="set.id"
-                        class="p-4 bg-white rounded-lg shadow-sm border border-gray-100">
-                        <div class="flex justify-between items-center">
+                        class="p-4 flex justify-between items-center gap-2 bg-white rounded-lg shadow-sm border border-gray-100">
+                        <div class="flex justify-between items-center gap-2">
+                            <Layers class="text-green-500"/>
                             <div class="flex-1">
                                 <h4 class="font-medium">{{ set.setName }}</h4>
                                 <p class="text-sm text-gray-500">{{ set.totalCards || 0 }} từ vựng</p>
                             </div>
-                            <ChevronRight class="text-gray-400" />
                         </div>
+                        <ChevronRight class="text-gray-400" />
                     </NuxtLink>
                 </div>
                 <!-- Empty State -->
@@ -122,32 +123,26 @@ import { storeToRefs } from 'pinia';
 import {
     ChevronLeft, Search, Plus, Folder,
     ChevronRight, MoreVertical, Files,
-    Edit2, Trash2
+    Edit2, Trash2, Layers
 } from 'lucide-vue-next';
-import { ElMessage, ElMessageBox } from 'element-plus';
+import { ElMessageBox } from 'element-plus';
 import { FlashcardStore } from '~/stores/flashcard';
 import CreateSetModal from '~/components/flashcard/CreateSetModal.vue';
+
 const route = useRoute();
 const router = useRouter();
+
 const store = FlashcardStore();
-const { folders, setsInFolder, setsInUser, loading, vocabularies } = storeToRefs(store);
+const { folders, setsInFolder, vocabularies } = storeToRefs(store);
+
 const folderId = Number(route.params.folderId);
+
 const searchQuery = ref('');
 const showActions = ref(false);
 const showCreateSetModal = ref(false);
 const showRenameModal = ref(false);
 const newFolderName = ref('');
 
-onMounted(async () => {
-    if (folderId) {
-        try {
-            await store.fetchSetsInFolder(folderId);
-        } catch (err) {
-            console.error("Lỗi khi lấy danh sách bộ thẻ:", err);
-            showCustomMessage('error', "Không thể tải danh sách bộ thẻ");
-        }
-    }
-});
 const currentFolder = computed(() =>
     folders.value.find(f => f.id === folderId)
 );
@@ -211,6 +206,19 @@ const handleDelete = async () => {
         }
     }
 };
+const flashcardStore = FlashcardStore();
+const cards = computed(() => vocabularies.value || []);
+onMounted(async () => {
+    if (folderId) {
+        try {
+            await store.fetchSetsInFolder(folderId);
+            console.log("vocab khi vao trang bo the: ", cards);
+        } catch (err) {
+            console.error("Lỗi khi lấy danh sách bộ thẻ:", err);
+            showCustomMessage('error', "Không thể tải danh sách bộ thẻ");
+        }
+    }
+});
 </script>
 
 <style scoped>

@@ -16,7 +16,7 @@ export const useMyBaseStore = defineStore({
   actions: {
     setAuthUser(user: AuthLoginResponse) {
       this.authUser = user;
-      localStorage.setItem("authUser", JSON.stringify(user));
+      localStorage.setItem("authUser", JSON.stringify(user)); //Lưu thông tin tài khoản vào Store
       this.loadUserInfo();
     },
     async loadUserInfo() {
@@ -25,7 +25,7 @@ export const useMyBaseStore = defineStore({
           const userInfo = await fetchUserInfo(this.authUser.id);
           if (userInfo) {
             this.userInfo = userInfo;
-            localStorage.setItem("userInfo", JSON.stringify(userInfo));
+            localStorage.setItem("userInfo", JSON.stringify(userInfo)); //Lưu thông tin người dùng vào Store
           }
         } catch (error) {
           console.error("Lỗi khi tải thông tin người dùng!", error);

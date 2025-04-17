@@ -145,20 +145,6 @@ const loading = ref(false)
 const isFavorite = ref(false)
 
 const { vocabularies} = storeToRefs(store);
-onMounted(async () => {
-  if (setId) {
-    try {
-      //lay tat ca set theo folderId
-      await store.fetchSetsInFolder(folderId);
-      //lay tat ca flashcard theo setId
-      await store.fetchFlashcardsInSet(setId);
-
-      await fetchVocabularies(setId)
-    } catch (err) {
-      showCustomMessage('error', "Không thể tải danh sách từ vựng");
-    }
-  }
-});
 
 const currentSet = computed(() => {
   if (!store.setsInFolder || !Array.isArray(store.setsInFolder)) {
@@ -262,6 +248,22 @@ const handleDelete = async () => {
     }
   }
 };
+const cards = computed(() => vocabularies.value || []);
+console.log("vocab khi vao trang tu vung: ", cards);
+onMounted(async () => {
+  if (setId) {
+    try {
+      //lay tat ca set theo folderId
+      await store.fetchSetsInFolder(folderId);
+      //lay tat ca flashcard theo setId
+      // await store.fetchFlashcardsInSet(setId);
+
+      await fetchVocabularies(setId)
+    } catch (err) {
+      showCustomMessage('error', "Không thể tải danh sách từ vựng");
+    }
+  }
+});
 </script>
 
 <style scoped></style>

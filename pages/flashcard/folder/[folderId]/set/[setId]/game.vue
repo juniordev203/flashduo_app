@@ -24,10 +24,13 @@
         <div class="p-4 space-y-4">
             <div class="flex justify-between">
                 <div class="bg-white rounded-lg px-4 py-2 shadow-sm">
-                    <span class="text-sm text-gray-600">Đã ghép: <span class="text-blue-700 font-medium">{{ matchedPairs }}/{{ totalPairs }}</span></span>
+                    <span class="text-sm text-gray-600">Đã ghép: <span class="text-blue-700 font-medium">{{ matchedPairs
+                            }}/{{
+                            totalPairs }}</span></span>
                 </div>
                 <div class="bg-white rounded-lg px-4 py-2 shadow-sm">
-                    <span class="text-sm text-gray-600">Số lần thử: <span class="text-blue-700 font-medium">{{ moves }}</span></span>
+                    <span class="text-sm text-gray-600">Số lần thử: <span class="text-blue-700 font-medium">{{ moves
+                            }}</span></span>
                 </div>
             </div>
 
@@ -35,14 +38,17 @@
             <div class="grid grid-cols-3 gap-2">
                 <div v-for="(card, index) in gameCards" :key="index" @click="handleCardClick(index)"
                     class="aspect-square">
-                    <div class="w-full h-full rounded-xl shadow-sm transition-transform duration-150 active:scale-95 touch-manipulation" :class="{
-                        'ring-2 ring-blue-500': selectedIndexes.includes(index),
-                        'opacity-50': matchedIndexes.includes(index),
-                        'hover:shadow-md cursor-pointer': !matchedIndexes.includes(index),
-                        'bg-white': true
-                    }">
-                        <Term v-if="card.type === 'term'" :card="getOriginalCard(card)" text-size="text-lg" class="h-full w-full" />
-                        <DefinitionGame v-else :card="getOriginalCard(card)" text-size="text-lg" class="h-full w-full" />
+                    <div class="w-full h-full rounded-xl shadow-sm transition-transform duration-150 active:scale-95 touch-manipulation"
+                        :class="{
+                            'ring-2 ring-blue-500': selectedIndexes.includes(index),
+                            'opacity-50': matchedIndexes.includes(index),
+                            'hover:shadow-md cursor-pointer': !matchedIndexes.includes(index),
+                            'bg-white': true
+                        }">
+                        <Term v-if="card.type === 'term'" :card="getOriginalCard(card)" text-size="text-lg"
+                            class="h-full w-full" />
+                        <DefinitionGame v-else :card="getOriginalCard(card)" text-size="text-lg"
+                            class="h-full w-full" />
                     </div>
                 </div>
             </div>
@@ -104,7 +110,7 @@ import { FlashcardStore } from '~/stores/flashcard'
 import Term from '~/components/flashcard/Term.vue'
 import DefinitionGame from '~/components/flashcard/DefinitionGame.vue'
 import type { IVocabFlashcard } from '~/types/vocab-flashcard.types'
-
+import { useMyBaseStore } from '~/stores/base.store'
 
 export interface GameCard {
     id: number;
@@ -121,6 +127,8 @@ const FLIP_DURATION = 100
 
 // Store
 const store = FlashcardStore()
+const myBaseStore = useMyBaseStore();
+const userId = computed(() => myBaseStore.userInfo?.id)
 const { vocabularies } = storeToRefs(store)
 
 // Route params
@@ -128,11 +136,11 @@ const folderId = Number(route.params.folderId)
 const setId = Number(route.params.setId)
 
 // Game state
-const timer = ref(0)
+const timer = ref<number>(0)
 const moves = ref(0)
 const gameCards = ref<GameCard[]>([])
 const originalCards = ref<IVocabFlashcard[]>([])
-    const selectedIndexes = ref<number[]>([])
+const selectedIndexes = ref<number[]>([])
 const matchedIndexes = ref<number[]>([])
 const isLocked = ref(false)
 const message = ref<{ type: 'success' | 'error'; text: string } | null>(null)
@@ -177,72 +185,64 @@ function showMessage(type: 'success' | 'error', text: string) {
 }
 
 const handleCardClick = async (index: number) => {
-  // Bỏ qua nếu thẻ đã được ghép hoặc đang khóa
-  if (isLocked.value || matchedIndexes.value.includes(index)) {
-    return
-  }
-
-  // Bỏ qua nếu thẻ đã được chọn
-  if (selectedIndexes.value.includes(index)) {
-    return
-  }
-
-  // Thêm thẻ vào danh sách đã chọn
-  selectedIndexes.value.push(index)
-
-  // Nếu đã chọn 2 thẻ
-  if (selectedIndexes.value.length === 2) {
-    isLocked.value = true
-    moves.value++
-
-    const [firstIndex, secondIndex] = selectedIndexes.value
-    const firstCard = gameCards.value[firstIndex]
-    const secondCard = gameCards.value[secondIndex]
-
-    // Kiểm tra ghép đúng
-    if (firstCard.id === secondCard.id && firstCard.type !== secondCard.type) {
-      showMessage('success', 'Chính xác! 👍')
-      await new Promise(resolve => setTimeout(resolve, 100))
-      matchedIndexes.value.push(...selectedIndexes.value)
-
-      if (matchedIndexes.value.length === gameCards.value.length) {
-        isGameComplete.value = true
-        stopTimer()
-        saveGameResult()
-      }
-    } else {
-      showMessage('error', 'Sai rồi! 😢')
-      await new Promise(resolve => setTimeout(resolve, 800))
+    // Bỏ qua nếu thẻ đã được ghép hoặc đang khóa
+    if (isLocked.value || matchedIndexes.value.includes(index)) {
+        return
     }
 
-    selectedIndexes.value = []
-    isLocked.value = false
-  }
+    // Bỏ qua nếu thẻ đã được chọn
+    if (selectedIndexes.value.includes(index)) {
+        return
+    }
+
+    // Thêm thẻ vào danh sách đã chọn
+    selectedIndexes.value.push(index)
+
+    // Nếu đã chọn 2 thẻ
+    if (selectedIndexes.value.length === 2) {
+        isLocked.value = true
+        moves.value++
+
+        const [firstIndex, secondIndex] = selectedIndexes.value
+        const firstCard = gameCards.value[firstIndex]
+        const secondCard = gameCards.value[secondIndex]
+
+        // Kiểm tra ghép đúng
+        if (firstCard.id === secondCard.id && firstCard.type !== secondCard.type) {
+            showMessage('success', 'Chính xác! 👍')
+            await new Promise(resolve => setTimeout(resolve, 100))
+            matchedIndexes.value.push(...selectedIndexes.value)
+
+            if (matchedIndexes.value.length === gameCards.value.length) {
+                isGameComplete.value = true
+                stopTimer()
+                saveGameResult()
+            }
+        } else {
+            showMessage('error', 'Sai rồi! 😢')
+            await new Promise(resolve => setTimeout(resolve, 800))
+        }
+
+        selectedIndexes.value = []
+        isLocked.value = false
+    }
 }
 
-function saveGameResult() {
-    const result = {
-        setId,
-        time: timer.value,
-        moves: moves.value,
-        date: new Date().toISOString()
-    }
-
+const saveGameResult = async () => {
     try {
-        const key = `flashcard_game_results_${setId}`
-        const savedResults = JSON.parse(localStorage.getItem(key) || '[]')
-        const newResults = [...savedResults, result]
-            .sort((a, b) => a.time - b.time)
-            .slice(0, 10)
-        localStorage.setItem(key, JSON.stringify(newResults))
-    } catch (error) {
-        console.error('Error saving game result:', error)
+        if (userId.value) {
+            await store.upGameResult(userId.value, setId, totalPairs.value, elapsedMilliseconds.value);
+        }
+    } catch (err: any) {
+        console.error('Error saving game result:', err);
+        throw(err);
     }
 }
 
 function initializeGame() {
     // Reset state
     timer.value = 0
+    elapsedMilliseconds.value = 0;
     moves.value = 0
     matchedIndexes.value = []
     isGameComplete.value = false
@@ -280,7 +280,6 @@ function getOriginalCard(gameCard: GameCard): IVocabFlashcard {
 function resetGame() {
     initializeGame()
 }
-
 // Lifecycle hooks
 onMounted(async () => {
     try {

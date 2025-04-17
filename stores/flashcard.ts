@@ -8,6 +8,7 @@ import type {
   FlashcardRequest,
   FlashcardResponse,
   FlashcardFavoritesResponse,
+  FlashcardGameResultRequest,
 } from "@/auto_api/models";
 import { flashcardApiUtil } from "~/utils/api.utils";
 
@@ -280,6 +281,29 @@ export const FlashcardStore = defineStore("flashcard", () => {
     currentFlashcard.value = flashcard;
   };
 
+  //game methods
+  const upGameResult = async (userId: number, setId: number, totalWord: number, durationTime: number) => {
+    try {
+      loading.value = true;
+      if (!userId || !setId) {
+        console.warn("Thiếu userId hoặc examId, không thể tạo phần chơi!");
+        return;
+      }
+      const request: FlashcardGameResultRequest = {
+        userId,
+        setId,
+        totalWord,
+        durationTime,
+      };
+      const respone = await flashcardApiUtil.apiFlashcardFlashcardGameResultPost(request);
+      if (respone) { console.log('game thanh cong')}
+    } catch (err: any) {
+      throw(err);
+    } finally {
+      loading.value = false;
+    }
+  }
+
   const reset = () => {
     folders.value = [];
     setsInFolder.value = [];
@@ -336,6 +360,7 @@ export const FlashcardStore = defineStore("flashcard", () => {
     toggleFavorite,
     fetchVocabFavoritesByUserId,
     setCurrentFlashcard,
+    upGameResult,
 
     reset,
   };

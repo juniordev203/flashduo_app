@@ -67,8 +67,6 @@ import FlashcardItem from '~/components/flashcard/FlashcardItem.vue';
 
 import 'swiper/css';
 
-
-
 definePageMeta({
   layout: 'app-none',
 })
@@ -79,11 +77,12 @@ const setId = Number(route.params.setId);
 
 const flashcardStore = FlashcardStore();
 const { vocabularies, loading } = storeToRefs(flashcardStore);
+const cards = computed(() => vocabularies.value || []);
+
 const currentIndex = ref(0);
 const flippedCards = reactive<Record<number, boolean>>({});
 const isLoadingCards = ref(false);
 
-const cards = computed(() => vocabularies.value || []);
 const currentCard = computed(() => cards.value[currentIndex.value] || null);
 
 function flipCard(index: number) {
@@ -98,17 +97,10 @@ async function toggleFavorite(card: any) {
   }
 }
 
-
 //lifecycle
 onMounted(async () => {
-  try {
-    isLoadingCards.value = true;
-    await flashcardStore.fetchFlashcardsInSet(setId);
-  } catch (error) {
-    showCustomMessage('error', "Không tải được từ vựng!");
-  } finally {
-    isLoadingCards.value = false;
-  }
+  console.log("vocab khi vao trang hoc: ", cards);
+
 });
 
 </script>
