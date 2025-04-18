@@ -10,7 +10,7 @@
         <span class="text-base font-medium text-black"> Flashcard </span>
       </template>
       <template v-slot:right>
-        <Bell :size="20" class="text-black" fill="bg-black" />
+        <MoreVertical class="text-black cursor-pointer" :size="20" />
       </template>
     </AtomHeaderSafe>
     <div class="h-full w-full overflow-auto p-4 flex flex-col gap-6">
@@ -135,7 +135,8 @@ import {
   Plus,
   Folder,
   ChevronRight,
-  Layers
+  Layers,
+  MoreVertical
 } from "lucide-vue-next";
 import { ElMessage } from "element-plus";
 import { FlashcardStore } from "~/stores/flashcard";

@@ -126,6 +126,7 @@ const fetchRankings = async () => {
         loading.value = false
     }
 }
+//sắp xếp tăng dần theo thời gian
 const sortedGameResultBySets = computed(() => {
     return [...gameResultBySets.value].sort((a, b) => {
         const timeA = a.durationTime ? new Date(a.durationTime).getTime() : 0;
