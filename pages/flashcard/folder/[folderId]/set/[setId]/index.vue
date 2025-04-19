@@ -11,7 +11,7 @@
       </template>
       <template v-slot:default>
         <span class="text-base font-medium text-black">
-          {{ currentSet?.setName }}
+          Set.{{ currentSet?.setName }}
         </span>
       </template>
       <template v-slot:right>

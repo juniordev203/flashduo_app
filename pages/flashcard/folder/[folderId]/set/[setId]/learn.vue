@@ -62,9 +62,8 @@
           <CheckCheck class="w-5 h-5" />
         </div>
       </div>
-      <el-dialog v-model="showCompletionDialog">
-        <div class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-          <div class="bg-white rounded-xl shadow-xl w-full max-w-md transform transition-all">
+      <el-dialog v-model="showCompletionDialog" class="" width="90%">
+          <div class="bg-white rounded-2xl shadow w-full h-full transform transition-all">
             <div class="p-6 border-b border-gray-100">
               <div class="flex items-center gap-4">
                 <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
@@ -93,7 +92,6 @@
               </div>
             </div>
           </div>
-        </div>
       </el-dialog>
     </div>
   </div>

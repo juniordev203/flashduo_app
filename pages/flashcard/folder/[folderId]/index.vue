@@ -11,7 +11,7 @@
             </template>
             <template v-slot:default>
                 <span class="text-base font-medium text-black">
-                    {{ currentFolder?.folderName }}
+                    Folder. {{ currentFolder?.folderName }}
                 </span>
             </template>
             <template v-slot:right>
