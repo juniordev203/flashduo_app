@@ -47,7 +47,7 @@
     </div>
     <div v-else class="flex-1 px-4 py-2 flex items-center justify-center">
       <Swiper class="!w-full !h-full" :slide-prev-view="1" :space-between="30" @slideChange="onSlideChange"
-        :pagination="{ clickable: true }" :navigation="true" :modules="[SwiperPagination, SwiperNavigation]">
+        :pagination="{ clickable: true }" :modules="[SwiperNavigation]">
         <SwiperSlide v-for="(card, index) in cards" :key="card.id || index" class="flex items-center justify-center">
           <FlashcardItem :card="card" :is-flipped="flippedCards[index]" @flip="flipCard(index)"
           />

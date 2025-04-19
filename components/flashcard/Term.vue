@@ -2,7 +2,7 @@
 <template>
   <div class="term-card w-full h-full bg-white rounded-2xl shadow-lg overflow-hidden">
     <div class="flex-1 flex flex-col items-center justify-center px-8 py-10 h-full">
-      <h2 :class="['font-light text-center text-gray-800', textSize]">
+      <h2 :class="['font-bold text-center text-blue-800', textSize]">
         {{ termText }}
       </h2>
     </div>
