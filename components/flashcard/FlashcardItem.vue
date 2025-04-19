@@ -1,5 +1,5 @@
 <template>
-    <div class="w-full h-5/6">
+    <div class="w-full h-full">
         <CardFlip class="!w-full !h-full" :state="isFlipped ? 'back' : 'front'" :duration="0.6"
             @mousedown="handleMouseDown" @mouseup="handleMouseUp" @touchstart="handleTouchStart"
             @touchend="handleTouchEnd" @touchmove="handleTouchMove" @mousemove="handleMouseMove">
@@ -7,7 +7,6 @@
             <template v-slot:front>
                 <Term :card="card" text-size="text-3xl"/>
             </template>
-
             <!-- Back (Definition) -->
             <template v-slot:back>
                 <Definition :card="card" text-size="text-3xl"/>
