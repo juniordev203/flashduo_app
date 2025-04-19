@@ -18,6 +18,7 @@ import { Configuration } from '../configuration';
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from '../base';
 import { UserResponse } from '../models';
+import { UserUpdateRequest } from '../models';
 /**
  * UserApi - axios parameter creator
  * @export
@@ -70,6 +71,58 @@ export const UserApiAxiosParamCreator = function (configuration?: Configuration)
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @param {number} userId 
+         * @param {UserUpdateRequest} [body] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiUserUserUpdateUserIdPut: async (userId: number, body?: UserUpdateRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'userId' is not null or undefined
+            if (userId === null || userId === undefined) {
+                throw new RequiredError('userId','Required parameter userId was null or undefined when calling apiUserUserUpdateUserIdPut.');
+            }
+            const localVarPath = `/api/User/user/update/{userId}`
+                .replace(`{${"userId"}}`, encodeURIComponent(String(userId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, 'https://example.com');
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions :AxiosRequestConfig = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            if (configuration && configuration.apiKey) {
+                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+                    ? await configuration.apiKey("Authorization")
+                    : await configuration.apiKey;
+                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
+            }
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            const query = new URLSearchParams(localVarUrlObj.search);
+            for (const key in localVarQueryParameter) {
+                query.set(key, localVarQueryParameter[key]);
+            }
+            for (const key in options.params) {
+                query.set(key, options.params[key]);
+            }
+            localVarUrlObj.search = (new URLSearchParams(query)).toString();
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            const needsSerialization = (typeof body !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(body !== undefined ? body : {}) : (body || "");
+
+            return {
+                url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -87,6 +140,20 @@ export const UserApiFp = function(configuration?: Configuration) {
          */
         async apiUserInfoUserGet(accountId?: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => Promise<AxiosResponse<UserResponse>>> {
             const localVarAxiosArgs = await UserApiAxiosParamCreator(configuration).apiUserInfoUserGet(accountId, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs :AxiosRequestConfig = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
+         * @param {number} userId 
+         * @param {UserUpdateRequest} [body] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiUserUserUpdateUserIdPut(userId: number, body?: UserUpdateRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => Promise<AxiosResponse<void>>> {
+            const localVarAxiosArgs = await UserApiAxiosParamCreator(configuration).apiUserUserUpdateUserIdPut(userId, body, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs :AxiosRequestConfig = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -110,6 +177,16 @@ export const UserApiFactory = function (configuration?: Configuration, basePath?
         async apiUserInfoUserGet(accountId?: number, options?: AxiosRequestConfig): Promise<AxiosResponse<UserResponse>> {
             return UserApiFp(configuration).apiUserInfoUserGet(accountId, options).then((request) => request(axios, basePath));
         },
+        /**
+         * 
+         * @param {number} userId 
+         * @param {UserUpdateRequest} [body] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiUserUserUpdateUserIdPut(userId: number, body?: UserUpdateRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void>> {
+            return UserApiFp(configuration).apiUserUserUpdateUserIdPut(userId, body, options).then((request) => request(axios, basePath));
+        },
     };
 };
 
@@ -129,5 +206,16 @@ export class UserApi extends BaseAPI {
      */
     public async apiUserInfoUserGet(accountId?: number, options?: AxiosRequestConfig) : Promise<AxiosResponse<UserResponse>> {
         return UserApiFp(this.configuration).apiUserInfoUserGet(accountId, options).then((request) => request(this.axios, this.basePath));
+    }
+    /**
+     * 
+     * @param {number} userId 
+     * @param {UserUpdateRequest} [body] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UserApi
+     */
+    public async apiUserUserUpdateUserIdPut(userId: number, body?: UserUpdateRequest, options?: AxiosRequestConfig) : Promise<AxiosResponse<void>> {
+        return UserApiFp(this.configuration).apiUserUserUpdateUserIdPut(userId, body, options).then((request) => request(this.axios, this.basePath));
     }
 }

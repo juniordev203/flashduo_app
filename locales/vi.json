@@ -10,7 +10,8 @@
     "lang_core_navigation_forum": "Diễn đàn",
     "lang_core_navigation_favorites": "Yêu thích",
     "lang_core_navigation_account": "Tài khoản",
-    
+    "lang_core_save": "Lưu thay đổi",
+    "lang_core_saving": "Đang lưu...",
 
     "lang_core_chat_hoi_dap": "Hỏi đáp cùng FlashDuo AI",
     "lang_core_chat_lich_su": "Lịch sử",
@@ -113,6 +114,12 @@
     "lang_core_profile_user_guide": "Hướng dẫn sử dụng",
     "lang_core_profile_logout": "Đăng xuất",
     "lang_core_profile_login" : "Đăng nhập",
+    "lang_core_profile_edit": "Chỉnh sửa thông tin cá nhân",
+    "lang_core_profile_avatar_hint": "Nhấp để thay đổi ảnh đại diện",
+    "lang_core_profile_name": "Tên người dùng",
+    "lang_core_profile_name_placeholder": "Nhập họ và tên của bạn",
+    "lang_core_profile_email": "Email",
+
     "lang_core_flashcard_add_newvocab": "Thêm từ mới",
     "lang_core_flashcard_vocab": "Từ vựng",
     "lang_core_flashcard_definition": "Định nghĩa"

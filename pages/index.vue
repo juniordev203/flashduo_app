@@ -3,8 +3,10 @@
     <AtomHeaderSafe class="shadow-md">
       <template v-slot:left>
         <NuxtLink to="/profile">
-          <div v-if="userInfo" class="flex gap-1">
-            <img :src="userInfo.avatarUrl" class="w-10 h-10 rounded-full mr-2" alt="Profile avatar" />
+          <div v-if="userInfo" class="flex gap-1 items-center">
+            <div class="w-[40px] h-[40px] rounded-full border border-primary flex justify-center items-center">
+              <img class="w-[32px] h-[32px] rounded-full" :src="userInfo.avatarUrl" alt="">
+            </div>
             <div class="text-black">
               <p class="text-sm font-light">{{ $t('lang_core_home_hi_guy') }}</p>
               <p class="text-xl font-bold">{{ userInfo.fullName }}</p>
@@ -114,11 +116,7 @@
       <NuxtLink to="/chat">
         <div class="fixed left-4 right-4 bottom-24 bg-white rounded-full p-4 flex items-center gap-4 shadow-lg">
           <div class="w-12 h-12 rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 p-0.5">
-            <img 
-              src="~/assets/images/avatar.jpg" 
-              class="w-full h-full rounded-full"
-              alt="AI Assistant" 
-            />
+            <img src="~/assets/images/avatar.jpg" class="w-full h-full rounded-full" alt="AI Assistant" />
           </div>
           <div class="flex-1">
             <h3 class="font-medium text-gray-800">{{ $t('lang_core_home_hoi_voi_ai') }}</h3>
@@ -149,7 +147,7 @@ const banners = [
   {
     image: '~/assets/images/banner-signin.png',
     title: 'Lộ trình học TOEIC cá nhân hóa'
-  },  
+  },
   {
     image: '~/assets/images/banner-signin.png',
     title: 'Lộ trình học TOEIC cá nhân hóa'

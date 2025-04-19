@@ -49,3 +49,4 @@ export * from './user-exam-score-response';
 export * from './user-flashcard-game';
 export * from './user-flashcard-set';
 export * from './user-response';
+export * from './user-update-request';
