@@ -207,8 +207,7 @@ const handleDelete = async () => {
         }
     }
 };
-const flashcardStore = FlashcardStore();
-const cards = computed(() => vocabularies.value || []);
+
 onMounted(async () => {
     if (folderId) {
         try {

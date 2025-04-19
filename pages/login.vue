@@ -33,11 +33,11 @@
                 <div class="flex gap-2 justify-center text-sm">
                     <p class="text-gray-600">{{ $t('lang_core_login_no_account') }}</p>
                     <NuxtLink to="/register" class="text-center">
-                        <p class="text-indigo-500 font-medium">{{ $t('lang_core_login_register') }}</p>
+                        <p class="text-indigo-500 font-medium underline">{{ $t('lang_core_login_register') }}</p>
                     </NuxtLink>
                 </div>
                 
-                <div class="flex items-center justify-center">
+                <!-- <div class="flex items-center justify-center">
                     <div class="h-px bg-gray-200 flex-grow"></div>
                     <span class="px-4 text-sm text-gray-500">hoặc</span>
                     <div class="h-px bg-gray-200 flex-grow"></div>
@@ -50,7 +50,7 @@
                         <EyeIcon class="w-5 h-5 text-gray-500" />
                         <span class="font-medium">Trải nghiệm với tư cách khách</span>
                     </button>
-                </NuxtLink>
+                </NuxtLink> -->
             </div>
         </div>
     </div>

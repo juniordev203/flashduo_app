@@ -13,6 +13,7 @@ import {
   type FlashcardGameResultBySetResponse,
 } from "@/auto_api/models";
 import { flashcardApiUtil } from "~/utils/api.utils";
+import { set } from "date-fns";
 
 export const FlashcardStore = defineStore("flashcard", () => {
   // State
@@ -205,7 +206,22 @@ export const FlashcardStore = defineStore("flashcard", () => {
       loading.value = false;
     }
   };
-
+  const updateSetName = async (setId: number, name: string) => {
+    try {
+      loading.value = true;
+      const response = await flashcardApiUtil.apiFlashcardFlashcardSetNameIdPut(setId, name);
+      if (response.status === 200) {
+        const index = setsInFolder.value.findIndex((s) => s.id === setId);
+        if (index !== -1) setsInFolder.value[index].setName = name;
+        return response.data;
+      }
+    } catch (err) {
+      handleApiError(err);
+      throw err;
+    } finally {
+      loading.value = false;
+    }
+  }
   const deleteVocabSet = async (setId: number) => {
     try {
       loading.value = true;
@@ -474,7 +490,7 @@ export const FlashcardStore = defineStore("flashcard", () => {
     upGameResult,
     fetchGameRankingsBySetId,
     fetchGameRankingsByUserId,
-
+    updateSetName,
     reset,
   };
 });

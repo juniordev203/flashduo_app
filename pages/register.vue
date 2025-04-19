@@ -69,7 +69,7 @@
             <div class="flex gap-2 justify-center text-sm text-center">
                 <p class="">{{ $t('lang_core_register_have_account') }}</p>
                 <NuxtLink to="/login" class="text-center">
-                    <p class="text-indigo-500">{{ $t('lang_core_register_login_link') }}</p>
+                    <p class="text-indigo-500 font-medium underline">{{ $t('lang_core_register_login_link') }}</p>
                 </NuxtLink>
             </div>
         </div>
