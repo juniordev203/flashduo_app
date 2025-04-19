@@ -4,25 +4,26 @@
     paddingLeft: safeArea.left + 'px',
     paddingRight: safeArea.right + 'px',
   }">
-    <div class="grid grid-cols-5 px-1 py-2">
+    <div class="grid grid-cols-4 px-1 py-2">
       <router-link to="/" class="flex flex-col justify-center gap-1 items-center"
         :class="{ 'menu-active': route.name?.toString().startsWith('index') }">
         <Home class="nav_icon text-[#d9d9d9]" />
         <span class="text-xs text-[#d9d9d9]">{{ $t('lang_core_navigation_home') }}</span>
       </router-link>
-      <router-link to="/exam" class="flex flex-col justify-center gap-1 items-center"
+      <!-- <router-link to="/exam" class="flex flex-col justify-center gap-1 items-center"
         :class="{ 'menu-active': route.name?.toString().startsWith('exam') }">
         <SquarePen class="nav_icon text-[#d9d9d9]" />
         <span class="text-xs text-[#d9d9d9]">{{ $t('lang_core_navigation_exam') }}</span>
-      </router-link>
-      <div class="flex flex-col justify-center gap-1 items-center cursor-not-allowed opacity-70"
-        :class="{ 'menu-active': route.name?.toString().startsWith('forum') }">
-        <MessagesSquare class="nav_icon text-[#d9d9d9]" />
-        <div class="flex gap-1 items-center">
-          <span class="text-xs text-[#d9d9d9]">{{ $t('lang_core_navigation_forum') }}</span>
-          <LockKeyhole class="w-3 h-3 text-[#d9d9d9]" />
+      </router-link> -->
+      <router-link to="/forum" class="flex flex-col justify-center gap-1 items-center">
+        <div class="flex flex-col justify-center gap-1 items-center cursor-not-allowed opacity-70"
+          :class="{ 'menu-active': route.name?.toString().startsWith('forum') }">
+          <MessagesSquare class="nav_icon text-[#d9d9d9]" />
+          <div class="flex gap-1 items-center">
+            <span class="text-xs text-[#d9d9d9]">{{ $t('lang_core_navigation_forum') }}</span>
+          </div>
         </div>
-      </div>
+      </router-link>
       <router-link to="/favorites" class="flex flex-col justify-center gap-1 items-center"
         :class="{ 'menu-active': route.name?.toString().startsWith('favorites') }">
         <Heart class="nav_icon text-[#d9d9d9]" />

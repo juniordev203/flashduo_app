@@ -12,7 +12,7 @@
       </template>
     </AtomHeaderSafe>
     <div class="p-4 h-full w-full overflow-auto flex flex-col gap-6">
-      <div class="flex justify-between items-center">
+      <div class="flex justify-between items-center border-2 p-4 rounded-xl">
         <div v-if="userInfo" class="flex gap-4 items-center">
           <div class="w-[40px] h-[40px] rounded-full border border-primary flex justify-center items-center">
             <img class="w-[32px] h-[32px] rounded-full" :src="userInfo.avatarUrl" alt="">
@@ -21,10 +21,10 @@
             <p class="text-lg">{{ userInfo.fullName }}</p>
             <p class="text-xs">{{ $t('lang_core_profile_created_date') }}{{ formatedCreatedAt }}</p>
           </div>
-          <button @click="showActions = true">
-            <UserPen class="inline-block mr-2" :size="20" />
-          </button>
         </div>
+        <button @click="showActions = true">
+          <UserPen class="inline-block mr-2" :size="20" />
+        </button>
       </div>
       <!-- box 1 -->
       <div class="bg-white rounded-xl shadow flex flex-col px-4">

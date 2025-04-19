@@ -2,6 +2,11 @@
   <div class="h-full w-full flex flex-col bg-slate-50">
     <!-- Header -->
     <AtomHeaderSafe class="shadow-md">
+      <template v-slot:left>
+        <NuxtLink to="/">
+          <ChevronLeft class="w-6 h-6 text-black" />
+        </NuxtLink>
+      </template>
       <template v-slot:default>
         <span class="text-xl text-black font-medium">
           {{ $t("lang_core_exam_title") }}
@@ -9,6 +14,11 @@
             $t("lang_core_exam_title_highlight")
           }}</span>
         </span>
+      </template>
+      <template v-slot:right>
+        <NuxtLink to="/">
+          <MoreVertical class="w-6 h-6 text-black" />
+        </NuxtLink>
       </template>
     </AtomHeaderSafe>
 
@@ -166,7 +176,7 @@
 </template>
 
 <script setup lang="ts">
-import { Search, Clock, UserPen, History, ChevronRight, SquarePen, ExternalLink } from "lucide-vue-next";
+import { MoreVertical, ChevronLeft, Search, Clock, UserPen, History, ChevronRight, SquarePen, ExternalLink } from "lucide-vue-next";
 import { ArrowDown } from "@element-plus/icons-vue";
 import type { ExamResponse, UserExamResultResponse } from "~/auto_api/models";
 import { ElMessage, type TabsInstance } from "element-plus";

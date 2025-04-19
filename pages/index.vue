@@ -33,7 +33,7 @@
           <Swiper :slides-per-view="1" space-between="20" :autoplay="true" :pagination="{ clickable: true }"
             :modules="[Pagination, Autoplay]" :loop="true" class="rounded-lg">
             <SwiperSlide>
-              <div class="w-full h-[250px] flex flex-col">
+              <div class="w-full h-[200px] flex flex-col">
                 <div
                   class="bg-white w-full h-full rounded-lg flex flex-col justify-center items-center text-center py-4 px-8 gap-2 shadow">
                   <img src="~/assets/images/banner-signin.png" class="w-32 h-32">
@@ -70,9 +70,9 @@
             {{ $t('lang_core_home_hoc_cung') }} <span class="text-indigo-500 font-extrabold">{{
               $t('lang_core_home_flashduo') }}</span>
           </p>
-          <div class="flex flex-wrap gap-5 justify-center w-full overflow-visible">
+          <div class="p-2 grid grid-cols-2 gap-6 justify-center w-full overflow-visible">
             <NuxtLink to="/flashcard"
-              class="block transition-transform duration-150 active:scale-95 touch-manipulation">
+              class=" transition-transform duration-150 active:scale-95 touch-manipulation">
               <div class="bg-blue-200 px-2 pt-2 pb-5 rounded-lg w-40 h-40 shadow">
                 <div class="p-3 relative w-full h-full flex flex-col gap-1 bg-blue-100 rounded-lg">
                   <p class="text-2xl font-bold">{{ $t('lang_core_home_flashcard') }}</p>
@@ -81,7 +81,7 @@
                 </div>
               </div>
             </NuxtLink>
-            <NuxtLink to="" class="block transition-transform duration-150 active:scale-95 touch-manipulation">
+            <NuxtLink to="" class=" transition-transform duration-150 active:scale-95 touch-manipulation">
               <div class="bg-red-200 px-2 pt-2 pb-5 rounded-lg w-40 h-40 shadow">
                 <div class="p-3 relative w-full h-full flex flex-col gap-1 bg-red-100 rounded-lg">
                   <p class="text-2xl font-bold">{{ $t('lang_core_home_ngu_phap') }}</p>
@@ -91,16 +91,17 @@
                 </div>
               </div>
             </NuxtLink>
-            <NuxtLink to="" class="block transition-transform duration-150 active:scale-95 touch-manipulation">
+            <NuxtLink to="/exam"
+              class="transition-transform duration-150 active:scale-95 touch-manipulation">
               <div class="bg-violet-200 px-2 pt-2 pb-5 rounded-lg w-40 h-40 shadow">
                 <div class="p-3 relative w-full h-full flex flex-col gap-1 bg-violet-100 rounded-lg">
-                  <p class="text-2xl font-bold">{{ $t('lang_core_home_reading') }}</p>
+                  <p class="text-2xl font-bold">{{ $t('lang_core_navigation_exam') }}</p>
                   <p class="text-sm text-gray-500">{{ $t('lang_core_home_lessons') }}</p>
                   <Book class="absolute bottom-3 left-3" :size="20" />
                 </div>
               </div>
             </NuxtLink>
-            <NuxtLink to="" class="block transition-transform duration-150 active:scale-95 touch-manipulation">
+            <!-- <NuxtLink to="" class="block transition-transform duration-150 active:scale-95 touch-manipulation">
               <div class="bg-indigo-200 px-2 pt-2 pb-5 rounded-lg w-40 h-40 shadow">
                 <div class="p-3 relative w-full h-full flex flex-col gap-1 bg-indigo-100 rounded-lg">
                   <p class="text-2xl font-bold">{{ $t('lang_core_home_listening') }}</p>
@@ -108,23 +109,20 @@
                   <Headphones class="absolute bottom-3 left-3" :size="20" />
                 </div>
               </div>
-            </NuxtLink>
+            </NuxtLink> -->
           </div>
         </div>
       </div>
       <!-- Chat Support -->
       <NuxtLink to="/chat">
-        <div class="fixed left-4 right-4 bottom-24 bg-white rounded-full p-4 flex items-center gap-4 shadow-lg">
-          <div class="w-12 h-12 rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 p-0.5">
-            <img src="~/assets/images/avatar.jpg" class="w-full h-full rounded-full" alt="AI Assistant" />
-          </div>
-          <div class="flex-1">
-            <h3 class="font-medium text-gray-800">{{ $t('lang_core_home_hoi_voi_ai') }}</h3>
-            <p class="text-sm text-gray-500">{{ $t('lang_core_home_bat_dau_cuoc_tro_chuyen') }}</p>
-          </div>
-          <ChevronRight class="w-5 h-5 text-gray-400" />
-        </div>
-      </NuxtLink>
+  <div class="chatbot-border-animation fixed right-4 bottom-28 w-13 h-13 rounded-full flex items-center justify-center">
+    <div class="bg-white w-12 h-12 rounded-full flex items-center justify-center">
+      <img src="~/assets/images/flashduo_ai.png" class="w-11 h-11 rounded-full" alt="AI Assistant" />
+    </div>
+  </div>
+</NuxtLink>
+
+
     </div>
   </div>
 </template>
@@ -179,4 +177,25 @@ const handleSearch = () => {
   background-image: linear-gradient(45deg, currentColor 25%, transparent 25%);
   background-size: 20px 20px;
 }
+
+@keyframes gradient-rotate {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.chatbot-border-animation {
+  background: linear-gradient(270deg, #6366f1, #8b5cf6, #ec4899, #f59e0b);
+  background-size: 800% 800%;
+  animation: gradient-rotate 6s ease infinite;
+  padding: 5px; /* khoảng hở giữa viền và avatar */
+}
+
+
 </style>

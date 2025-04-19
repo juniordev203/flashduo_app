@@ -10,7 +10,7 @@
         <span class="text-base font-medium text-black"> Flashcard </span>
       </template>
       <template v-slot:right>
-        <MoreVertical class="text-black cursor-pointer" :size="20" />
+        <MoreVertical class="text-black" :size="20" />
       </template>
     </AtomHeaderSafe>
     <div class="h-full w-full overflow-auto p-4 flex flex-col gap-6">
