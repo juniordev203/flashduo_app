@@ -24,12 +24,12 @@
         <div class="p-4 space-y-4">
             <div class="flex justify-between">
                 <div class="bg-white rounded-lg px-4 py-2 shadow-sm">
-                    <span class="text-sm text-gray-600">Đã ghép: <span class="text-blue-700 font-medium">{{ matchedPairs
+                    <span class="text-sm text-gray-600">{{ $t('lang_core_flashcard_game_matched') }} <span class="text-blue-700 font-medium">{{ matchedPairs
                             }}/{{
                             totalPairs }}</span></span>
                 </div>
                 <div class="bg-white rounded-lg px-4 py-2 shadow-sm">
-                    <span class="text-sm text-gray-600">Số lần thử: <span class="text-blue-700 font-medium">{{ moves
+                    <span class="text-sm text-gray-600">{{ $t('lang_core_flashcard_game_moves') }} <span class="text-blue-700 font-medium">{{ moves
                             }}</span></span>
                 </div>
             </div>
@@ -77,22 +77,22 @@
                         </div>
                         <div class="bg-gray-50 rounded-lg p-4">
                             <div class="flex justify-between mb-2">
-                                <span class="text-gray-600">Thời gian:</span>
+                                <span class="text-gray-600">{{ $t('lang_core_flashcard_game_time') }}</span>
                                 <span class="text-black font-bold">{{ formatTime(elapsedMilliseconds) }}</span>
                             </div>
                             <div class="flex justify-between">
-                                <span class="text-gray-600">Số lần thử:</span>
+                                <span class="text-gray-600">{{ $t('lang_core_flashcard_game_moves') }}</span>
                                 <span class="font-bold">{{ moves }}</span>
                             </div>
                         </div>
                         <div class="flex gap-3">
                             <button @click="resetGame"
                                 class="flex-1 bg-indigo-600 text-white py-3 rounded-lg font-medium hover:bg-indigo-700">
-                                Chơi lại
+                                {{ $t('lang_core_flashcard_game_play_again') }}
                             </button>
                             <button @click="router.back()"
                                 class="flex-1 bg-gray-100 text-gray-800 py-3 rounded-lg font-medium hover:bg-gray-200">
-                                Quay lại
+                                {{ $t('lang_core_flashcard_game_back') }}
                             </button>
                         </div>
                     </div>

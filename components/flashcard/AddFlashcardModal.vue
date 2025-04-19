@@ -2,7 +2,7 @@
   <el-dialog
     :model-value="visible"
     @update:model-value="$emit('update:visible', $event)"
-    title="Thêm từ mới"
+    :title="$t('lang_core_flashcard_add_newvocab')"
     width="90%"
     :before-close="handleClose"
     class="rounded-lg"
@@ -13,7 +13,7 @@
         <label class="text-sm font-medium text-gray-700">{{ $t('lang_core_flashcard_vocab') }}</label>
         <el-input
           v-model="formData.termLanguage"
-          placeholder="Nhập từ vựng..."
+          :placeholder="$t('lang_core_form.vocab_term')"
           :maxlength="100"
           show-word-limit
         >
@@ -28,7 +28,7 @@
         <label class="text-sm font-medium text-gray-700">{{ $t('lang_core_flashcard_definition') }}</label>
         <el-input
           v-model="formData.definitionLanguage"
-          placeholder="Nhập định nghĩa..."
+          :placeholder="$t('lang_core_form.vocab_definition')"
           :maxlength="200"
           show-word-limit
         >
@@ -49,7 +49,7 @@
         </div>
         <div v-else @click="openLibrary" class="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center">
           <ImagePlus class="mx-auto text-gray-400 mb-2" />
-          <p class="text-sm text-gray-500">Chọn ảnh thư viện</p>
+          <p class="text-sm text-gray-500">{{ $t('lang_core_messages.error_select_image') }}</p>
         </div>
        </div>
       <!-- audio -->
@@ -78,7 +78,9 @@ import { ElMessage } from "element-plus";
 import type { FlashcardRequest } from "~/auto_api";
 import { useMyBaseStore } from "~/stores/base.store";
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
+import { useI18n } from "vue-i18n";
 
+const { t } = useI18n();
 const myBaseStore = useMyBaseStore();
 const userId = computed(() => myBaseStore.userInfo?.id);
 const loading = ref(false);
@@ -126,7 +128,7 @@ const handleSubmit = async () => {
     handleClose();
   } catch (err) {
     console.error("Lỗi khi thêm từ mới:", err);
-    showCustomMessage('error', "Thêm từ mới thất bại");
+    showCustomMessage('error', t('lang_core_messages.error_add_vocab'));
   } finally {
     loading.value = false;
   }
@@ -162,7 +164,7 @@ const openLibrary = async () => {
     imagePreview.value = photo.dataUrl || null;
     formData.imageUrl = photo.dataUrl || null;
   } catch (err) {
-    showCustomMessage('error', 'Không thể chọn ảnh. Vui lòng thử lại.');
+    showCustomMessage('error', t('lang_core_messages.error_select_image'));
   }
 };
 const removeImage = () => {

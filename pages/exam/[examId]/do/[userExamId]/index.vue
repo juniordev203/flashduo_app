@@ -5,7 +5,7 @@
           <NuxtLink to="/exam">
             <div class="flex gap-2 items-center text-gray-600 active:text-gray-800 transition-colors">
               <X class="w-5 h-5" />
-              <span class="text-sm font-medium">Thoát</span>
+              <span class="text-sm font-medium">{{ $t('lang_core_exam_exit') }}</span>
             </div>
           </NuxtLink>
         </template>
@@ -15,7 +15,7 @@
             @click="confirmSubmit"
             class="px-4 py-2 text-center text-sm font-medium text-white bg-red-500 active:bg-red-600 rounded-lg transition-colors duration-150 active:scale-95"
           >
-            Nộp bài
+            {{ $t('lang_core_exam_submit') }}
           </button>
         </template>
       </AtomHeaderSafe>
@@ -63,7 +63,7 @@
                 class="flex items-center gap-2 px-4 py-2 border border-gray-200 text-sm font-medium rounded-lg text-gray-700 bg-white active:bg-gray-200 transition-all duration-150 active:scale-95 disabled:opacity-50 disabled:active:scale-100 disabled:active:bg-white shadow-sm touch-manipulation"
                 :disabled="examStore.currentQuestionIndex === 0"
               >
-                <ChevronLeft class="w-4 h-4" /> Câu trước
+                <ChevronLeft class="w-4 h-4" /> {{ $t('lang_core_exam_prev') }}
               </button>
   
               <button
@@ -71,7 +71,7 @@
                 class="flex items-center gap-2 px-4 py-2 border border-gray-200 text-sm font-medium rounded-lg text-gray-700 bg-white active:bg-gray-200 transition-all duration-150 active:scale-95 disabled:opacity-50 disabled:active:scale-100 disabled:active:bg-white shadow-sm touch-manipulation"
                 :disabled="examStore.currentQuestionIndex === (examStore.currentExam?.totalQuestions || 0) - 1"
               >
-                Câu tiếp theo <ChevronRight class="w-4 h-4" />
+                {{ $t('lang_core_exam_next') }}<ChevronRight class="w-4 h-4" />
               </button>
             </div>
           </div>
@@ -79,7 +79,7 @@
           <!-- Question list -->
           <div class="bg-white shadow-sm rounded-xl">
             <div class="p-4 flex flex-col gap-3">
-              <h3 class="text-base font-semibold text-gray-800">Danh sách câu hỏi</h3>
+              <h3 class="text-base font-semibold text-gray-800">{{ $t('lang_core_exam_questions_list') }}</h3>
               <div class="flex flex-wrap gap-2">
                 <button
                   v-for="index in totalQuestionListening"
@@ -118,11 +118,12 @@
   import ReadingSection from "~/components/exam/ReadingSection.vue";
   import { QuestionSectionEnum } from "~/constants/enum";
   import { Storage } from '@capacitor/storage';
+import { useI18n } from "vue-i18n";
   
   definePageMeta({
     layout: "app-none",
   });
-  
+  const { t } = useI18n();
   const examStore = useExamStore();
   const userInfo = useMyBaseStore();
   const route = useRoute();
@@ -273,7 +274,7 @@
     console.log("userExamId trong component: ", userExamId.value)
     if (confirm("Bạn có chắc chắn muốn nộp bài không?")) {
       if (!userExamId.value) {
-        showCustomMessage('error', "Bạn cần đăng nhập để xem đáp án!");
+        showCustomMessage('error', t('lang_core_messages.error_login_required'));
         return
       }
       await examStore.submitExam(userExamId.value, userId.value);

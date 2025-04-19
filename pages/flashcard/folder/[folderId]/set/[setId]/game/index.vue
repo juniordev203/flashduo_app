@@ -8,7 +8,7 @@
                 </NuxtLink>
             </template>
             <template #default>
-                <span class="font-medium text-gray-700">Trò chơi ghép từ</span>
+                <span class="font-medium text-gray-700">{{ $t('lang_core_flashcard_game_title') }}</span>
             </template>
         </AtomHeaderSafe>
 
@@ -20,48 +20,48 @@
                         <GamepadIcon class="w-6 h-6 text-indigo-600" />
                     </div>
                     <div>
-                        <h1 class="text-xl font-bold text-gray-800">Trò chơi ghép từ</h1>
-                        <p class="text-sm text-gray-500">Luyện tập từ vựng thông qua trò chơi</p>
+                        <h1 class="text-xl font-bold text-gray-800">{{ $t('lang_core_flashcard_game_title') }}</h1>
+                        <p class="text-sm text-gray-500">{{ $t('lang_core_flashcard_game_desc') }}</p>
                     </div>
                 </div>
 
                 <div class="space-y-3">
                     <div class="flex items-start gap-3">
                         <CheckCircle2 class="w-5 h-5 text-green-500 mt-0.5" />
-                        <p class="text-gray-600">Ghép cặp từ vựng và định nghĩa tương ứng</p>
+                        <p class="text-gray-600">{{ $t('lang_core_flashcard_game_instruction1') }}</p>
                     </div>
                     <div class="flex items-start gap-3">
                         <Clock class="w-5 h-5 text-green-500 mt-0.5" />
-                        <p class="text-gray-600">Hoàn thành trong thời gian ngắn nhất</p>
+                        <p class="text-gray-600">{{ $t('lang_core_flashcard_game_instruction2') }}</p>
                     </div>
                     <div class="flex items-start gap-3">
                         <Trophy class="w-5 h-5 text-green-500 mt-0.5" />
-                        <p class="text-gray-600">Vượt qua giới hạn của bản thân</p>
+                        <p class="text-gray-600">{{ $t('lang_core_flashcard_game_instruction3') }}</p>
                     </div>
                 </div>
 
                 <button @click="startGame"
                     class="w-full bg-indigo-600 text-white py-3 rounded-lg font-medium hover:bg-indigo-700 transition-colors">
-                    Bắt đầu chơi
+                    {{ $t('lang_core_flashcard_game_start') }}
                 </button>
             </div>
 
             <!-- Rankings -->
             <div class="bg-white rounded-xl shadow-sm flex flex-col">
                 <div class="p-4 border-b border-gray-100">
-                    <h2 class="font-semibold text-gray-800">Bảng xếp hạng</h2>
+                    <h2 class="font-semibold text-gray-800">{{ $t('lang_core_flashcard_game_ranking') }}</h2>
                 </div>
                 <div class="flex-1">
                     <div v-if="loading" class="p-8 text-center">
                         <div
                             class="animate-spin w-6 h-6 border-2 border-indigo-600 border-t-transparent rounded-full mx-auto">
                         </div>
-                        <p class="mt-2 text-sm text-gray-500">Đang tải bảng xếp hạng...</p>
+                        <p class="mt-2 text-sm text-gray-500">{{ $t('lang_core_flashcard_game_loading') }}</p>
                     </div>
 
                     <div v-else-if="!gameResultBySets.length" class="p-8 text-center">
                         <TrophyOff class="w-8 h-8 text-gray-400 mx-auto mb-2" />
-                        <p class="text-gray-500">Chưa có người chơi nào</p>
+                        <p class="text-gray-500">{{$t('lang_core_flashcard_game_no_players')}}</p>
                     </div>
 
                     <div v-else class="divide-y divide-gray-100">
@@ -102,7 +102,9 @@ import {
     Clock,
     Trophy,
 } from 'lucide-vue-next'
+import { useI18n } from 'vue-i18n'
 
+const { t } = useI18n();
 const route = useRoute()
 const router = useRouter()
 const flashcardStore = FlashcardStore();
@@ -121,7 +123,7 @@ const fetchRankings = async () => {
         await flashcardStore.fetchGameRankingsBySetId(setId)
     } catch (error) {
         console.error('Error fetching rankings:', error)
-        ElMessage.error('Không thể tải bảng xếp hạng')
+        showCustomMessage('error', t('lang_core_messages.error_load_ranking'))
     } finally {
         loading.value = false
     }

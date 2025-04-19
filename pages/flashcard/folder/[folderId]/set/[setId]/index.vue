@@ -31,8 +31,8 @@
           <Book class="text-blue-500" :size="24" />
         </div>
         <div class="flex gap-4 text-sm text-gray-500">
-          <span>{{ vocabularies.length }} từ vựng</span>
-          <span>Tạo ngày: {{ formatCustomDateTime(currentSet?.createdAt) }}</span>
+          <span>{{ vocabularies.length }} {{ $t('lang_core_flashcard_vocab_count') }}</span>
+          <span>{{ $t('lang_core_flashcard_folder_date') }} {{ formatCustomDateTime(currentSet?.createdAt) }}</span>
         </div>
       </div>
 
@@ -41,26 +41,26 @@
         <button @click="startFlashcards"
           class="p-4 bg-blue-100 rounded-xl flex flex-col items-center justify-center gap-2">
           <Copy class="text-blue-600" :size="24" />
-          <span class="text-sm font-medium">Học thẻ</span>
+          <span class="text-sm font-medium">{{ $t('lang_core_flashcard_set_learn') }}</span>
         </button>
         <button @click="startQuiz" class="p-4 bg-green-100 rounded-xl flex flex-col items-center justify-center gap-2">
           <BookOpen class="text-green-600" :size="24" />
-          <span class="text-sm font-medium">Game vui</span>
+          <span class="text-sm font-medium">{{ $t('lang_core_flashcard_set_game') }}</span>
         </button>
       </div>
       <!-- Vocabulary List -->
       <div class="space-y-4">
         <div class="flex justify-between items-center">
-          <h3 class="text-lg font-semibold">Danh sách từ vựng</h3>
+          <h3 class="text-lg font-semibold">{{ $t('lang_core_flashcard_set_vocab_list') }}</h3>
           <button @click="showAddWord = true" class="flex items-center gap-2 text-blue-600">
             <Plus :size="20" />
-            <span class="text-sm font-medium">Thêm từ</span>
+            <span class="text-sm font-medium">{{ $t('lang_core_flashcard_add_newvocab') }}</span>
           </button>
         </div>
 
         <!-- Search Bar -->
         <div class="relative">
-          <input v-model="searchQuery" type="text" placeholder="Tìm kiếm từ vựng..."
+          <input v-model="searchQuery" type="text" :placeholder="$t('lang_core_flashcard_search')"
             class="w-full p-3 pl-10 rounded-xl border border-gray-200 focus:outline-none focus:border-blue-500" />
           <Search class="absolute left-3 top-3 text-gray-400" />
         </div>
@@ -87,21 +87,21 @@
         <!-- Empty State -->
         <div v-if="vocabularies.length === 0" class="text-center py-8 text-gray-500">
           <BookOpen :size="48" class="mx-auto mb-4 opacity-50" />
-          <p>Chưa có từ vựng nào. Hãy thêm từ đầu tiên!</p>
+          <p>{{ $t('lang_core_flashcard_set_empty_vocab') }}</p>
         </div>
       </div>
     </div>
 
     <!-- Action Sheet -->
-    <el-dialog v-model="showActions" title="Tùy chọn" width="90%">
+    <el-dialog v-model="showActions" :title="$t('lang_core_modal.options')" width="90%">
       <div class="flex flex-col gap-4">
         <button class="text-left p-3 hover:bg-gray-50 rounded-xl" @click="handleEdit">
           <Edit2 class="inline-block mr-2" :size="20" />
-          Chỉnh sửa thông tin
+          {{ $t('lang_core_flashcard_set_edit') }}
         </button>
         <button class="text-left p-3 hover:bg-gray-50 rounded-xl text-red-500" @click="handleDelete">
           <Trash2 class="inline-block mr-2" :size="20" />
-          Xóa bộ thẻ
+          {{ $t('lang_core_flashcard_set_delete') }}
         </button>
       </div>
     </el-dialog>
@@ -131,7 +131,9 @@ import { ElMessage, ElMessageBox } from "element-plus";
 import { FlashcardStore } from "~/stores/flashcard";
 import AddFlashcardModal from "~/components/flashcard/AddFlashcardModal.vue";
 import { type FlashcardResponse, type FlashcardRequest, type FlashcardSet, type FlashcardSetDetailResponse, type FlashcardFavoritesResponse } from "~/auto_api";
+import { useI18n } from "vue-i18n";
 
+const { t } = useI18n();
 const route = useRoute();
 const router = useRouter();
 const store = FlashcardStore();
@@ -144,7 +146,7 @@ const showAddWord = ref(false);
 const loading = ref(false)
 const isFavorite = ref(false)
 
-const { vocabularies} = storeToRefs(store);
+const { vocabularies } = storeToRefs(store);
 
 const currentSet = computed(() => {
   if (!store.setsInFolder || !Array.isArray(store.setsInFolder)) {
@@ -176,7 +178,7 @@ const fetchVocabularies = async (setId: number) => {
     vocabularies.value = Array.isArray(response) ? response : [];
   } catch (error) {
     console.error('Error fetching vocabularies:', error);
-    showCustomMessage('error', "Không thể tải danh sách từ vựng");
+    showCustomMessage('error', t('lang_core_messages.error_load_vocab'));
   } finally {
     loading.value = false;
   }
@@ -194,10 +196,10 @@ const toggleFavorite = async (wordId: number) => {
   try {
     isFavorite.value = !isFavorite.value;
     await store.toggleFavorite(wordId);
-    
+
   } catch (err) {
     console.error("Lỗi khi đánh dấu yêu thích:", err);
-    showCustomMessage('error', "Không thể đánh dấu yêu thích");
+    showCustomMessage('error', t('lang_core_messages.error_toggle_favorite'));
   }
 };
 // Replace the existing handleWordCreated function
@@ -212,10 +214,10 @@ const handleWordCreated = async (flashcard: FlashcardRequest) => {
       flashcard.userId
     );
     await store.fetchFlashcardsInSet(setId);
-    showCustomMessage('success', "Thêm từ mới thành công");
+    showCustomMessage('success', t('lang_core_messages.success_add_vocab'));
   } catch (err) {
     console.error("Lỗi khi thêm từ mới:", err);
-    showCustomMessage('error', "Thêm từ mới thất bại");
+    showCustomMessage('error', t('lang_core_messages.error_add_vocab'));
   } finally {
     showAddWord.value = false;
   }
@@ -229,22 +231,22 @@ const handleEdit = () => {
 const handleDelete = async () => {
   try {
     await ElMessageBox.confirm(
-      "Bạn có chắc chắn muốn xóa bộ thẻ này? Tất cả từ vựng trong bộ thẻ sẽ bị xóa.",
-      "Xác nhận xóa",
+      t('lang_core_flashcard_delete_confirm'),
+      t('lang_core_flashcard_delete_confirm_yes'),
       {
-        confirmButtonText: "Xóa",
-        cancelButtonText: "Hủy",
+        confirmButtonText: t('lang_core_modal.delete'),
+        cancelButtonText: t('lang_core_modal.cancel'),
         type: "warning",
       }
     );
 
     await store.deleteVocabSet(setId);
-    showCustomMessage('success', "Đã xóa bộ thẻ");
+    showCustomMessage('success', t('lang_core_flashcard_set_delete_success'));
     router.back();
   } catch (err) {
     if (err !== "cancel") {
       console.error("Lỗi khi xóa bộ thẻ:", err);
-      showCustomMessage('error', "Xóa bộ thẻ thất bại");
+      showCustomMessage('error', t('lang_core_messages.error_delete_set'));
     }
   }
 };
@@ -260,7 +262,7 @@ onMounted(async () => {
 
       await fetchVocabularies(setId)
     } catch (err) {
-      showCustomMessage('error', "Không thể tải danh sách từ vựng");
+      showCustomMessage('error', t('lang_core_messages.error_load_vocab'));
     }
   }
 });

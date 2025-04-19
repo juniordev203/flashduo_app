@@ -26,12 +26,12 @@
                         <div class="flex flex-col gap-4">
                             <div class="flex justify-between items-center">
                                 <p class="text-sm text-indigo-600">
-                                    Từ vựng đã lưu: {{ vocabFavories.length }}
+                                    {{ $t('lang_core_favorites_vocab_count') }} {{ vocabFavories.length }}
                                 </p>
                                 <NuxtLink to="/flashcard"
                                     class="inline-flex items-center gap-2 px-3 py-1.5 bg-indigo-50 text-indigo-600 rounded-lg hover:bg-indigo-100 transition-colors text-sm">
                                     <BookOpen class="w-4 h-4" />
-                                    <span>Học ngay</span>
+                                    <span>{{ $t('lang_core_favorites_learn_now') }}</span>
                                 </NuxtLink>
                             </div>
                             <div class="bg-white rounded-xl shadow-sm overflow-hidden">
@@ -42,7 +42,7 @@
                                         <Star class="w-8 h-8 text-yellow-400" />
                                     </div>
                                     <p class="text-gray-500 text-center mb-4">
-                                        Chưa có từ vựng yêu thích nào
+                                        {{ $t('lang_core_favorites_empty') }}
                                     </p>
                                 </div>
                                 <!-- Favorites list -->
@@ -89,7 +89,7 @@
                             <!-- Header -->
                             <div class="flex justify-between items-center">
                                 <p class="text-sm text-indigo-600">
-                                    Bài thi đã làm: {{ examCompleteds.length }}
+                                    {{ $t('lang_core_favorites_exam_count') }} {{ examCompleteds.length }}
                                 </p>
                                 <NuxtLink to="/exam"
                                     class="inline-flex items-center gap-2 px-3 py-1.5 bg-indigo-50 text-indigo-600 rounded-lg hover:bg-indigo-100 transition-colors text-sm">

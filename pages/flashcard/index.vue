@@ -7,7 +7,7 @@
         </NuxtLink>
       </template>
       <template v-slot:default>
-        <span class="text-base font-medium text-black"> Flashcard </span>
+        <span class="text-base font-medium text-black">{{ $t('lang_core_flashcard_vocab') }}</span>
       </template>
       <template v-slot:right>
         <MoreVertical class="text-black" :size="20" />
@@ -19,7 +19,7 @@
         <input
           v-model="searchQuery"
           type="text"
-          placeholder="Tìm kiếm bộ thẻ..."
+          :placeholder="$t('lang_core_flashcard_search')"
           class="w-full p-3 pl-10 rounded-lg border border-gray-200 focus:outline-none focus:border-blue-500"
         />
         <Search class="absolute left-3 top-3 text-gray-400" />
@@ -31,24 +31,24 @@
           class="p-4 bg-blue-100 rounded-lg flex flex-col items-center justify-center gap-2"
         >
           <FolderPlus class="text-blue-600" />
-          <span class="text-sm font-medium">Tạo thư mục mới</span>
+          <span class="text-sm font-medium">{{ $t('lang_core_flashcard_create_folder') }}</span>
         </button>
         <button
           @click="createNewSet"
           class="p-4 bg-green-100 rounded-lg flex flex-col items-center justify-center gap-2"
         >
           <Plus class="text-green-600" />
-          <span class="text-sm font-medium">Tạo bộ thẻ mới</span>
+          <span class="text-sm font-medium">{{ $t('lang_core_flashcard_create_set') }}</span>
         </button>
       </div>
       <!-- Folders -->
       <div class="space-y-4">
-        <h2 class="text-lg font-semibold">Thư mục của tôi</h2>
+        <h2 class="text-lg font-semibold">{{ $t('lang_core_flashcard_folder') }}</h2>
         <div v-if="loading && folders.length === 0" class="flex justify-center py-4">
           <div class="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-blue-500"></div>
         </div>
         <div v-else-if="folders.length === 0" class="p-4 bg-white rounded-lg shadow-sm border border-gray-100 text-center">
-          <p class="text-gray-500">Bạn chưa có thư mục nào</p>
+          <p class="text-gray-500">{{ $t('lang_core_flashcard_empty_folder') }}</p>
         </div>
         <div v-else class="flex flex-col gap-4">
           <NuxtLink
@@ -63,7 +63,7 @@
                 <div>
                   <h3 class="font-medium">{{ folder.folderName }}</h3>
                   <p class="text-sm text-gray-500">
-                    {{ formatCustomDateTime(folder.createdAt) }}
+                    {{ $t('lang_core_flashcard_folder_date') }} {{ formatCustomDateTime(folder.createdAt) }}
                   </p>
                 </div>
               </div>
@@ -74,12 +74,12 @@
       </div>
       <!-- Set -->
       <div class="space-y-4">
-        <h2 class="text-lg font-semibold">Bộ thẻ của tôi</h2>
+        <h2 class="text-lg font-semibold">{{ $t('lang_core_flashcard_sets') }}</h2>
         <div v-if="loading" class="flex justify-center py-4">
           <div class="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-blue-500"></div>
         </div>
         <div v-else-if="setsInUser.length === 0" class="p-4 bg-white rounded-lg shadow-sm border border-gray-100 text-center">
-          <p class="text-gray-500">Bạn chưa có bộ thẻ nào</p>
+          <p class="text-gray-500">{{ $t('lang_core_flashcard_empty_set') }}</p>
         </div>
         <div v-else class="flex flex-col gap-4">
           <NuxtLink
@@ -95,7 +95,7 @@
                   <h3 class="font-medium">{{ set.setName }}</h3>
                   <div class="flex items-center gap-2">
                     <p class="text-sm text-gray-500">
-                      {{ set.totalCards || 0 }} thẻ
+                      {{ set.totalCards || 0 }} {{ $t('lang_core_flashcard_vocab_count') }}
                     </p>
                     <span class="text-gray-300">•</span>
                     <p class="text-sm text-gray-500">
@@ -144,7 +144,9 @@ import { useMyBaseStore } from "~/stores/base.store";
 import CreateFolderModal from "~/components/flashcard/CreateFolderModal.vue";
 import CreateSetModal from "~/components/flashcard/CreateSetModal.vue";
 import { useRouter } from "vue-router";
+import { useI18n } from "vue-i18n";
 
+const { t } = useI18n();
 const router = useRouter();
 const store = FlashcardStore();
 const { folders, loading, error, setsInUser } = storeToRefs(store);
@@ -168,25 +170,29 @@ const handleFolderCreate = async (name: string) => {
   if (userId.value) {
     try {
       await store.createFolder(name, userId.value);
-      showCustomMessage('success', "Tạo thư mục thành công");
+      showCustomMessage('success', t('lang_core_messages.success_create_folder'));
       showCreateFolderModal.value = false;
     } catch (err) {
       console.error("Lỗi khi tạo folder:", err);
-      showCustomMessage('error', "Tạo thư mục thất bại");
+      showCustomMessage('error', t('lang_core_messages.error_create_folder'));
     }
   }
 };
+
 const handleSetCreated = async () => {
   if (userId.value) {
     await store.fetchFoldersByUser(userId.value);
   }
 };
+
 const createNewFolder = () => {
   showCreateFolderModal.value = true;
 };
+
 const createNewSet = () => {
   showCreateSetModal.value = true;
 };
+
 const navigateToFolder = (folderId: number) => {
   router.push(`/flashcard/folder/${folderId}`);
 };
@@ -198,7 +204,7 @@ onMounted(async () => {
       await store.fetchSetsInUser(userId.value);
     } catch (err) {
       console.error("Lỗi khi lấy danh sách bộ thẻ:", err);
-      showCustomMessage('error', "Không thể tải danh sách bộ thẻ");
+      showCustomMessage('error', t('lang_core_messages.error_load_sets'));
     }
   }
 })

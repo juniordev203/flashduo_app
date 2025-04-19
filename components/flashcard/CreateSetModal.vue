@@ -2,7 +2,7 @@
     <el-dialog
       :model-value="visible"
       @update:model-value="$emit('update:visible', $event)"
-      title="Tạo bộ thẻ mới"
+      :title="$t('lang_core_flashcard_create_set')"
       width="90%"
       :before-close="handleClose"
       class="rounded-lg"
@@ -88,6 +88,7 @@
   import { storeToRefs } from 'pinia';
   import { FlashcardStore } from '~/stores/flashcard';
   import { useMyBaseStore } from '~/stores/base.store';
+import { useI18n } from 'vue-i18n';
   
   const props = defineProps<{
     visible: boolean
@@ -98,7 +99,7 @@
     (e: 'update:visible', value: boolean): void
     (e: 'created'): void
   }>();
-  
+  const { t } = useI18n();
   const store = FlashcardStore();
   const { folders } = storeToRefs(store);
   const userInfo = computed(() => useMyBaseStore().userInfo);
@@ -140,12 +141,12 @@
       Number(formData.folderId),
       userInfo.value.id
     );
-    showCustomMessage('success', 'Tạo bộ thẻ thành công');
+    showCustomMessage('success', t('lang_core_messages.success_create_set'));
     emit('created');
     handleClose();
   } catch (err) {
     console.error('Lỗi khi tạo bộ thẻ:', err);
-    showCustomMessage('error', 'Tạo bộ thẻ thất bại');
+    showCustomMessage('error', t('lang_core_messages.error_create_set'));
   }
 };
   </script>

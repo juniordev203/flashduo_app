@@ -3,7 +3,7 @@
     <div class="w-full">
       <div class="flex justify-between items-center">
         <div class="flex flex-col justify-between">
-          <h1 class="text-xl font-bold text-black">{{ examStore.currentExam?.examName || 'Đang tải ...'}}</h1>
+          <h1 class="text-xl font-bold text-black">{{ examStore.currentExam?.examName || $t('lang_core_exam_loading')}}</h1>
           <p class="text-sm text-gray-500">{{ currentSectionLabel }}</p>
         </div>
         <div class="flex flex-col items-center">

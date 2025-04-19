@@ -10,7 +10,7 @@
             </template>
             <template v-slot:default>
                 <h2 class="text-lg font-bold text-gray-800 text-center z-10 relative">
-                    Điểm TOEIC của bạn
+                    {{ $t('lang_core_exam_result_title') }}
                 </h2>
             </template>
             <template v-slot:right>
@@ -87,7 +87,7 @@
                     <!-- Additional Score Analysis -->
                     <div class="px-6 pb-6">
                         <div class="p-4 bg-gray-50 rounded-xl border border-gray-100">
-                            <h4 class="text-sm font-medium text-gray-500 mb-3">Phân tích kết quả</h4>
+                            <h4 class="text-sm font-medium text-gray-500 mb-3">{{ $t('lang_core_exam_result_analysis') }}</h4>
                             <div class="flex justify-between items-center">
                                 <div class="text-center">
                                     <div
@@ -116,7 +116,7 @@
                                             Math.round((((dataScore.scoreListening
                                             || 0) + (dataScore.scoreReading || 0)) / 990) * 100) }}%</span>
                                     </div>
-                                    <p class="text-xs mt-2 text-gray-500">Tổng</p>
+                                    <p class="text-xs mt-2 text-gray-500">{{ $t('lang_core_exam_result_total') }}</p>
                                 </div>
                             </div>
                         </div>
@@ -127,7 +127,7 @@
                 <div v-else class="w-full p-12 flex flex-col items-center">
                     <div class="w-16 h-16 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin mb-4">
                     </div>
-                    <p class="text-gray-500">Đang tải kết quả bài thi...</p>
+                    <p class="text-gray-500">{{ $t('lang_core_exam_result_loading') }}</p>
                 </div>
 
                 <!-- Action Buttons -->
@@ -135,13 +135,13 @@
                     <button @click="confirmReturn"
                         class="flex items-center justify-center gap-2 py-3.5 px-5 font-semibold text-white bg-gradient-to-r from-blue-500 to-indigo-600 rounded-xl shadow-md active:scale-97 transition-all duration-200">
                         <CornerUpLeft class="w-5 h-5" />
-                        Làm bài thi khác
+                        {{ $t('lang_core_exam_result_another') }}
                     </button>
 
                     <button @click="shareResult"
                         class="flex items-center justify-center gap-2 py-3.5 px-5 font-semibold text-blue-600 bg-white border border-blue-100 rounded-xl shadow-sm active:bg-blue-50 transition-all duration-200">
                         <Share2 class="w-5 h-5" />
-                        Chia sẻ kết quả
+                        {{ $t('lang_core_exam_result_share') }}
                     </button>
                 </div>
             </div>
@@ -152,9 +152,12 @@
 <script setup lang="ts">
 import { X, CornerUpLeft, Headphones, BookText, Share2 } from 'lucide-vue-next'
 import { computed, onMounted, ref } from 'vue';
+import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 import type { UserExamScoreResponse } from '~/auto_api';
 import { useExamStore } from '~/stores/exam'
+
+const { t } = useI18n();
 const router = useRouter();
 const route = useRoute();
 const examStore = useExamStore()
@@ -166,7 +169,7 @@ definePageMeta({
 });
 
 const confirmReturn = () => {
-    if (confirm("Bạn có muốn làm bài thi khác không?")) {
+    if (confirm(t('lang_core_exam_result_confirm'))) {
         router.push("/exam");
     }
 };

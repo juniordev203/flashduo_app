@@ -2,7 +2,7 @@
   <el-dialog
     :model-value="visible"
     @update:model-value="$emit('update:visible', $event)"
-    title="Tạo thư mục mới"
+    :title="$t('lang_core_flashcard_create_folder')"
     width="90%"
     :before-close="handleClose"
     class="rounded-lg"

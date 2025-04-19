@@ -9,7 +9,7 @@
         </NuxtLink>
       </template>
       <template v-slot:default>
-        <span class="text-base font-medium text-black">Học ngữ pháp</span>
+        <span class="text-base font-medium text-black">{{ $t('lang_core_grammar_title') }}</span>
       </template>
       <template v-slot:right>
         <MoreVertical
@@ -25,43 +25,43 @@
         <input
           v-model="searchQuery"
           type="text"
-          placeholder="Tìm kiếm chủ đề ngữ pháp..."
-          class="w-full p-3 pl-10 rounded-lg border border-gray-200 focus:outline-none"
+          :placeholder="$t('lang_core_grammar_search')"
+          class="w-full py-3 px-4 pl-10 bg-white border border-gray-200 rounded-xl shadow-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
         />
-        <Search class="absolute left-3 top-3 text-gray-400" />
+        <Search
+          class="absolute left-3 top-3.5 text-gray-400"
+          :size="18"
+        />
       </div>
 
-      <!-- Grammar Levels -->
+      <!-- Content -->
       <div class="space-y-6">
         <!-- Basic Level -->
         <div class="space-y-4">
           <h2 class="text-lg font-semibold flex items-center gap-2">
             <GraduationCap class="text-blue-500" />
-            Ngữ pháp cơ bản
+            {{ $t('lang_core_grammar_basic') }}
           </h2>
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <NuxtLink
               v-for="topic in basicTopics"
               :key="topic.id"
-              to="/" 
-              class="p-4 bg-white rounded-lg shadow-sm border border-gray-100"
+              :to="`/grammar/${topic.id}`"
+              class="bg-white rounded-xl shadow-sm overflow-hidden hover:shadow-md transition-shadow duration-200"
             >
-              <div class="flex justify-between items-start">
-                <div>
-                  <h3 class="font-medium">{{ topic.title }}</h3>
-                  <p class="text-sm text-gray-500 mt-1">
-                    {{ topic.description }}
-                  </p>
+              <div class="p-4 flex items-center justify-between">
+                <div class="space-y-1">
+                  <h3 class="font-medium text-gray-800">{{ topic.title }}</h3>
                   <div class="flex items-center gap-2 mt-2">
                     <span
                       class="text-xs px-2 py-1 bg-blue-50 text-blue-600 rounded"
                     >
-                      {{ topic.lessonCount }} bài học
+                      {{ topic.lessonCount }} {{ $t('lang_core_grammar_lessons') }}
                     </span>
                     <span
                       class="text-xs px-2 py-1 bg-green-50 text-green-600 rounded"
                     >
-                      {{ topic.exerciseCount }} bài tập
+                      {{ topic.exerciseCount }} {{ $t('lang_core_grammar_exercises') }}
                     </span>
                   </div>
                 </div>
@@ -75,31 +75,28 @@
         <div class="space-y-4">
           <h2 class="text-lg font-semibold flex items-center gap-2">
             <BookOpen class="text-green-500" />
-            Ngữ pháp trung cấp
+            {{ $t('lang_core_grammar_intermediate') }}
           </h2>
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <NuxtLink
               v-for="topic in intermediateTopics"
               :key="topic.id"
-              :to="`/`"
-              class="p-4 bg-white rounded-lg shadow-sm border border-gray-100"
+              :to="`/grammar/${topic.id}`"
+              class="bg-white rounded-xl shadow-sm overflow-hidden hover:shadow-md transition-shadow duration-200"
             >
-              <div class="flex justify-between items-start">
-                <div>
-                  <h3 class="font-medium">{{ topic.title }}</h3>
-                  <p class="text-sm text-gray-500 mt-1">
-                    {{ topic.description }}
-                  </p>
+              <div class="p-4 flex items-center justify-between">
+                <div class="space-y-1">
+                  <h3 class="font-medium text-gray-800">{{ topic.title }}</h3>
                   <div class="flex items-center gap-2 mt-2">
                     <span
                       class="text-xs px-2 py-1 bg-blue-50 text-blue-600 rounded"
                     >
-                      {{ topic.lessonCount }} bài học
+                      {{ topic.lessonCount }} {{ $t('lang_core_grammar_lessons') }}
                     </span>
                     <span
                       class="text-xs px-2 py-1 bg-green-50 text-green-600 rounded"
                     >
-                      {{ topic.exerciseCount }} bài tập
+                      {{ topic.exerciseCount }} {{ $t('lang_core_grammar_exercises') }}
                     </span>
                   </div>
                 </div>

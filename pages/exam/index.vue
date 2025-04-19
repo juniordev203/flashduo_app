@@ -120,7 +120,7 @@
               <!-- Header -->
               <div class="flex justify-between items-center">
                 <p class="text-sm text-indigo-600">
-                  Bài thi đã làm: {{ examCompleteds.length }}
+                  {{ $t('lang_core_favorites_exam_count') }} {{ examCompleteds.length }}
                 </p>
               </div>
 
@@ -183,7 +183,9 @@ import { ElMessage, type TabsInstance } from "element-plus";
 import { computed, onMounted, ref } from "vue";
 import { useExamStore } from '~/stores/exam'
 import { useMyBaseStore } from "~/stores/base.store";
+import { useI18n } from "vue-i18n";
 
+const { t } = useI18n();
 const examStore = useExamStore();
 const userInfo = computed(() => useMyBaseStore().userInfo)
 const examCompleteds = ref<UserExamResultResponse[]>([]);
@@ -201,7 +203,7 @@ const makeExams = async () => {
     examInfo.value = response.data;
   } catch (error) {
     console.error("Lỗi khi lấy danh sách đề thi:", error);
-    showCustomMessage('error', "Không thể tải danh sách đề thi");
+    showCustomMessage('error', t('lang_core_messages.error_load_exams'));
   } finally {
     loading.value = false;
   }

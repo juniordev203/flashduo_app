@@ -39,24 +39,24 @@
         <div class="bg-white rounded-xl shadow-md p-6 mb-4">
           <h2 class="text-lg font-semibold mb-4 flex items-center gap-2">
             <LayoutList class="text-blue-500" />
-            Cấu trúc bài thi
+            {{ $t('lang_core_exam_structure') }}
           </h2>
           <div class="space-y-4">
             <div class="border-l-4 border-blue-500 pl-4">
-              <h3 class="font-medium">Phần 1: Listening (75 phút)</h3>
+              <h3 class="font-medium">{{ $t('lang_core_exam_part1') }}</h3>
               <ul class="mt-2 space-y-2 text-gray-600">
-                <li>• Part 1: Mô tả tranh (6 câu)</li>
-                <li>• Part 2: Hỏi – đáp (25 câu)</li>
-                <li>• Part 3: Đoạn hội thoại (39 câu)</li>
-                <li>• Part 4: Bài nói ngắn (30 câu)</li>
+                <li>{{ $t('lang_core_exam_part1_details.0') }}</li>
+                <li>{{ $t('lang_core_exam_part1_details.1') }}</li>
+                <li>{{ $t('lang_core_exam_part1_details.2') }}</li>
+                <li>{{ $t('lang_core_exam_part1_details.3') }}</li>
               </ul>
             </div>
             <div class="border-l-4 border-green-500 pl-4">
-              <h3 class="font-medium">Phần 2: Reading (75 phút)</h3>
+              <h3 class="font-medium">{{ $t('lang_core_exam_part2') }}</h3>
               <ul class="mt-2 space-y-2 text-gray-600">
-                <li>• Part 5: Câu chưa hoàn chỉnh (30 câu)</li>
-                <li>• Part 6: Hoàn chỉnh đoạn văn (16 câu)</li>
-                <li>• Part 7: Đọc hiểu đoạn văn (54 câu)</li>
+                <li>{{ $t('lang_core_exam_part2_details.0') }}</li>
+                <li>{{ $t('lang_core_exam_part2_details.1') }}</li>
+                <li>{{ $t('lang_core_exam_part2_details.2') }}</li>
               </ul>
             </div>
           </div>
@@ -65,28 +65,27 @@
         <div class="bg-white rounded-xl shadow-md p-6 mb-4">
           <h2 class="text-lg font-semibold mb-4 flex items-center gap-2">
             <Info class="text-blue-500" />
-            Hướng dẫn làm bài
+            {{$t('lang_core_exam_instructions')}}
           </h2>
           <div class="space-y-3 text-gray-600">
             <div class="flex items-start gap-2">
               <Circle class="mt-1 text-blue-500" :size="8" />
               <p>
-                Bài thi gồm 2 phần: Listening và Reading, thực hiện trong 150
-                phút.
+                {{ $t('lang_core_exam_instruction_details.0') }}
               </p>
             </div>
             <div class="flex items-start gap-2">
               <Circle class="mt-1 text-blue-500" :size="8" />
-              <p>Bạn nên phân bổ thời gian hợp lý cho từng phần.</p>
+              <p>{{ $t('lang_core_exam_instruction_details.1') }}</p>
             </div>
             <div class="flex items-start gap-2">
               <Circle class="mt-1 text-blue-500" :size="8" />
-              <p>Đối với phần Listening, bạn chỉ được nghe một lần duy nhất.</p>
+              <p>{{ $t('lang_core_exam_instruction_details.2') }}</p>
             </div>
             <div class="flex items-start gap-2">
               <Circle class="mt-1 text-blue-500" :size="8" />
               <p>
-                Bạn có thể chuyển qua lại giữa các câu hỏi trong cùng một phần.
+                {{ $t('lang_core_exam_instruction_details.3') }}
               </p>
             </div>
           </div>
@@ -96,7 +95,7 @@
           <button @click="handleCreatedUserExam"
             class="w-full py-3 text-lg font-semibold text-white bg-blue-600 rounded-xl transition-all duration-200 active:scale-95 touch-manipulation flex items-center justify-center gap-2">
             <Play :size="20" />
-            Bắt đầu làm bài
+            {{$t('lang_core_exam_start')}}
           </button>
         </div>
       </div>
