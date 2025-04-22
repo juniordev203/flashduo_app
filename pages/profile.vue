@@ -382,7 +382,6 @@ const shareApp = async () => {
 };
 const handleLogout = async () => {
   await logoutUser();
-  useMyBaseStore().$reset();
   flashcardStore.reset();
   router.push('/login')
 }

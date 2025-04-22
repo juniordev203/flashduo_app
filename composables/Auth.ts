@@ -12,8 +12,9 @@ export const registerUser = async (payload: AuthRegisterRequest) => {
 export const loginUser = async (payload: AuthLoginRequest) => {
   const response = await authApiUtil.apiAuthLoginPost(payload);
   const store = useMyBaseStore();
-  store.setAuthUser(response.data); // Lưu user vào Pinia
+  store.setAuthUser(response.data);
   return response.data;
+
 };
 
 // Đăng xuất
