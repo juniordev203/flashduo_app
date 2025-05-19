@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { ExamQuestion } from './exam-question';
+import { Question } from './question';
 import { QuestionSection } from './question-section';
 import { UserExam } from './user-exam';
  /**
@@ -60,8 +60,8 @@ export interface UserAnswer {
     userExam?: UserExam;
 
     /**
-     * @type {ExamQuestion}
+     * @type {Question}
      * @memberof UserAnswer
      */
-    examQuestion?: ExamQuestion;
+    question?: Question;
 }

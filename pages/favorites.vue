@@ -165,6 +165,7 @@ import {
     ExternalLink,
     ChevronLeft
 } from 'lucide-vue-next';
+import { computed, ref, onMounted } from 'vue';
 import type { UserExamResultResponse, FlashcardFavoritesResponse } from '~/auto_api';
 // store
 const flashcardStore = FlashcardStore();

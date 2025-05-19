@@ -15,8 +15,8 @@
 import { Account } from './account';
 import { Flashcard } from './flashcard';
 import { FlashcardFolder } from './flashcard-folder';
-import { FlashcardTest } from './flashcard-test';
 import { UserExam } from './user-exam';
+import { UserExamFavorite } from './user-exam-favorite';
 import { UserFlashcardGame } from './user-flashcard-game';
 import { UserFlashcardSet } from './user-flashcard-set';
  /**
@@ -82,12 +82,6 @@ export interface User {
     userFlashcardSets?: Array<UserFlashcardSet> | null;
 
     /**
-     * @type {Array<FlashcardTest>}
-     * @memberof User
-     */
-    flashcardTests?: Array<FlashcardTest> | null;
-
-    /**
      * @type {Array<Flashcard>}
      * @memberof User
      */
@@ -98,4 +92,10 @@ export interface User {
      * @memberof User
      */
     userFlashcardGames?: Array<UserFlashcardGame> | null;
+
+    /**
+     * @type {Array<UserExamFavorite>}
+     * @memberof User
+     */
+    userExamFavorites?: Array<UserExamFavorite> | null;
 }

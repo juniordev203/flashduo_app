@@ -111,6 +111,7 @@ import { X } from "lucide-vue-next";
 import { ArrowDown, More } from "@element-plus/icons-vue";
 import { useChatStore } from "~/stores/chat";
 import { useI18n } from "vue-i18n";
+import { onMounted } from "vue";
 
 const { t } = useI18n();
 definePageMeta({
@@ -171,4 +172,9 @@ onMounted(() => {
     );
   }
 });
+
+
+function definePageMeta(arg0: { layout: string; }) {
+  throw new Error("Function not implemented.");
+}
 </script>
