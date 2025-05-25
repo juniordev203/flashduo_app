@@ -1,19 +1,19 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  compatibilityDate: '2024-04-03',
+  compatibilityDate: "2024-04-03",
   app: {
     head: {
       charset: "utf-8",
       viewport: "width=device-width, initial-scale=1, maximum-scale=1",
       link: [
         {
-          rel: 'preconnect',
-          href: 'https://fonts.googleapis.com'
+          rel: "preconnect",
+          href: "https://fonts.googleapis.com",
         },
         {
-          rel: 'preconnect',
-          href: 'https://fonts.gstatic.com',
-          crossorigin: 'anonymous'
+          rel: "preconnect",
+          href: "https://fonts.gstatic.com",
+          crossorigin: "anonymous",
         },
         {
           rel: "stylesheet",
@@ -23,11 +23,16 @@ export default defineNuxtConfig({
     },
   },
   plugins: [
-    { src: '~/plugins/i18n.all.ts', mode: 'all' },
-    { src: '~/plugins/safe-area.client.ts', mode: 'client' }
+    { src: "~/plugins/i18n.all.ts", mode: "all" },
+    { src: "~/plugins/safe-area.client.ts", mode: "client" },
   ],
-  css: ['~/assets/css/main.css'],
-  modules: ['@nuxtjs/tailwindcss', '@pinia/nuxt', "@element-plus/nuxt"],
+  css: ["~/assets/css/main.css"],
+  modules: [
+    "@nuxtjs/tailwindcss",
+    "@pinia/nuxt",
+    "@element-plus/nuxt",
+    "nuxt-toast",
+  ],
   postcss: {
     plugins: {
       tailwindcss: {},
@@ -51,12 +56,12 @@ export default defineNuxtConfig({
   router: {
     options: {
       strict: true,
-    }
+    },
   },
   imports: {
-    dirs: ['composables/**']
+    dirs: ["composables/**"],
   },
   runtimeConfig: {
-    geminiApiKey: process.env.GEMINI_API_KEY
+    geminiApiKey: process.env.GEMINI_API_KEY,
   },
-})
+});

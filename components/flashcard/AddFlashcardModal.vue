@@ -1,22 +1,12 @@
 <template>
-  <el-dialog
-    :model-value="visible"
-    @update:model-value="$emit('update:visible', $event)"
-    :title="$t('lang_core_flashcard_add_newvocab')"
-    width="90%"
-    :before-close="handleClose"
-    class="rounded-lg"
-  >
+  <el-dialog :model-value="visible" @update:model-value="$emit('update:visible', $event)"
+    :title="$t('lang_core_flashcard_add_newvocab')" width="90%" :before-close="handleClose" class="rounded-lg">
     <div class="flex flex-col gap-4">
       <!-- Term -->
       <div class="space-y-2">
         <label class="text-sm font-medium text-gray-700">{{ $t('lang_core_flashcard_vocab') }}</label>
-        <el-input
-          v-model="formData.termLanguage"
-          :placeholder="$t('lang_core_form.vocab_term')"
-          :maxlength="100"
-          show-word-limit
-        >
+        <el-input v-model="formData.termLanguage" :placeholder="$t('lang_core_form.vocab_term')" :maxlength="100"
+          show-word-limit>
           <template #prefix>
             <Type class="text-gray-400" :size="20" />
           </template>
@@ -26,12 +16,8 @@
       <!-- Definition -->
       <div class="space-y-2">
         <label class="text-sm font-medium text-gray-700">{{ $t('lang_core_flashcard_definition') }}</label>
-        <el-input
-          v-model="formData.definitionLanguage"
-          :placeholder="$t('lang_core_form.vocab_definition')"
-          :maxlength="200"
-          show-word-limit
-        >
+        <el-input v-model="formData.definitionLanguage" :placeholder="$t('lang_core_form.vocab_definition')"
+          :maxlength="200" show-word-limit>
           <template #prefix>
             <BookOpen class="text-gray-400" :size="20" />
           </template>
@@ -39,32 +25,27 @@
       </div>
 
       <!-- image -->
-       <div class="space-y-2">
+      <div class="space-y-2">
         <label for="" class="text-sm font-medium text-gray-700">{{ $t('lang_core_internal_image') }}</label>
         <div v-if="imagePreview" class="relative w-full h-48 mb-2">
           <img :src="imagePreview" alt="Preview" class="w-full h-full object-cover rounded-lg">
           <button @click="removeImage" class="absolute top-2 right-2 p-1 bg-red-500 text-white rounded-full">
-            <X class="w-5 h-5"/>
+            <X class="w-5 h-5" />
           </button>
         </div>
         <div v-else @click="openLibrary" class="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center">
           <ImagePlus class="mx-auto text-gray-400 mb-2" />
           <p class="text-sm text-gray-500">{{ $t('lang_core_messages.error_select_image') }}</p>
         </div>
-       </div>
+      </div>
       <!-- audio -->
     </div>
 
     <template #footer>
       <div class="flex justify-end gap-2">
         <el-button @click="handleClose">{{ $t('lang_core_internal_cancel') }}</el-button>
-        <el-button
-          type="primary"
-          @click="handleSubmit"
-          :loading="loading"
-          :disabled="!isValid"
-        >
-        {{ $t('lang_core_internal_add') }}
+        <el-button type="primary" @click="handleSubmit" :loading="loading" :disabled="!isValid">
+          {{ $t('lang_core_internal_add') }}
         </el-button>
       </div>
     </template>
@@ -79,6 +60,7 @@ import type { FlashcardRequest } from "~/auto_api";
 import { useMyBaseStore } from "~/stores/base.store";
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { useI18n } from "vue-i18n";
+import { showToast } from '@/utils/message.utils'
 
 const { t } = useI18n();
 const myBaseStore = useMyBaseStore();
@@ -128,7 +110,7 @@ const handleSubmit = async () => {
     handleClose();
   } catch (err) {
     console.error("Lỗi khi thêm từ mới:", err);
-    showCustomMessage('error', t('lang_core_messages.error_add_vocab'));
+    showToast('error', t('lang_core_messages.error_add_vocab'));
   } finally {
     loading.value = false;
   }
@@ -164,7 +146,7 @@ const openLibrary = async () => {
     imagePreview.value = photo.dataUrl || null;
     formData.imageUrl = photo.dataUrl || null;
   } catch (err) {
-    showCustomMessage('error', t('lang_core_messages.error_select_image'));
+    showToast('error', t('lang_core_messages.error_select_image'));
   }
 };
 const removeImage = () => {

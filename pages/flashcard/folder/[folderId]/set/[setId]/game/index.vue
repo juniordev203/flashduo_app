@@ -61,7 +61,7 @@
 
                     <div v-else-if="!gameResultBySets.length" class="p-8 text-center">
                         <TrophyOff class="w-8 h-8 text-gray-400 mx-auto mb-2" />
-                        <p class="text-gray-500">{{$t('lang_core_flashcard_game_no_players')}}</p>
+                        <p class="text-gray-500">{{ $t('lang_core_flashcard_game_no_players') }}</p>
                     </div>
 
                     <div v-else class="divide-y divide-gray-100">
@@ -103,6 +103,7 @@ import {
     Trophy,
 } from 'lucide-vue-next'
 import { useI18n } from 'vue-i18n'
+import { showToast } from '@/utils/message.utils'
 
 const { t } = useI18n();
 const route = useRoute()
@@ -123,7 +124,7 @@ const fetchRankings = async () => {
         await flashcardStore.fetchGameRankingsBySetId(setId)
     } catch (error) {
         console.error('Error fetching rankings:', error)
-        showCustomMessage('error', t('lang_core_messages.error_load_ranking'))
+        showToast('error', t('lang_core_messages.error_load_ranking'))
     } finally {
         loading.value = false
     }

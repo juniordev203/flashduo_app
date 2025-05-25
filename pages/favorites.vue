@@ -167,6 +167,7 @@ import {
 } from 'lucide-vue-next';
 import { computed, ref, onMounted } from 'vue';
 import type { UserExamResultResponse, FlashcardFavoritesResponse } from '~/auto_api';
+import { showToast } from '@/utils/message.utils'
 // store
 const flashcardStore = FlashcardStore();
 const examStore = useExamStore();
@@ -211,7 +212,7 @@ const toggleFavorite = async (flashcardId?: number) => {
         }
     } catch (error) {
         console.error('Error toggling favorite:', error);
-        showCustomMessage('error', 'Không thể cập nhật trạng thái yêu thích');
+        showToast('error', 'Không thể cập nhật trạng thái yêu thích');
     }
 }
 

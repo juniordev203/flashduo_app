@@ -147,6 +147,7 @@ import { FlashcardStore } from "~/stores/flashcard";
 import AddFlashcardModal from "~/components/flashcard/AddFlashcardModal.vue";
 import { type FlashcardResponse, type FlashcardRequest, type FlashcardSet, type FlashcardSetDetailResponse, type FlashcardFavoritesResponse } from "~/auto_api";
 import { useI18n } from "vue-i18n";
+import { showToast } from '@/utils/message.utils'
 
 const { t } = useI18n();
 const route = useRoute();
@@ -195,7 +196,7 @@ const fetchVocabularies = async (setId: number) => {
     vocabularies.value = Array.isArray(response) ? response : [];
   } catch (error) {
     console.error('Error fetching vocabularies:', error);
-    showCustomMessage('error', t('lang_core_messages.error_load_vocab'));
+    showToast('error', t('lang_core_messages.error_load_vocab'));
   } finally {
     loading.value = false;
   }
@@ -216,7 +217,7 @@ const toggleFavorite = async (wordId: number) => {
 
   } catch (err) {
     console.error("Lỗi khi đánh dấu yêu thích:", err);
-    showCustomMessage('error', t('lang_core_messages.error_toggle_favorite'));
+    showToast('error', t('lang_core_messages.error_toggle_favorite'));
   }
 };
 // Replace the existing handleWordCreated function
@@ -231,12 +232,10 @@ const handleWordCreated = async (flashcard: FlashcardRequest) => {
       flashcard.userId
     );
     await store.fetchFlashcardsInSet(setId);
-    showCustomMessage('success', t('lang_core_messages.success_add_vocab'));
+    showToast('success', t('lang_core_messages.success_add_vocab'));
   } catch (err) {
     console.error("Lỗi khi thêm từ mới:", err);
-    showCustomMessage('error', t('lang_core_messages.error_add_vocab'));
-  } finally {
-    showAddWord.value = false;
+    showToast('error', t('lang_core_messages.error_add_vocab'));
   }
 };
 
@@ -254,12 +253,12 @@ const handleDelete = async () => {
     );
 
     await store.deleteVocabSet(setId);
-    showCustomMessage('success', t('lang_core_flashcard_set_delete_success'));
+    showToast('success', t('lang_core_flashcard_set_delete_success'));
     router.back();
   } catch (err) {
     if (err !== "cancel") {
       console.error("Lỗi khi xóa bộ thẻ:", err);
-      showCustomMessage('error', t('lang_core_messages.error_delete_set'));
+      showToast('error', t('lang_core_messages.error_delete_set'));
     }
   }
 };
@@ -270,7 +269,7 @@ onMounted(async () => {
       await store.fetchSetsInFolder(folderId);
       await fetchVocabularies(setId)
     } catch (err) {
-      showCustomMessage('error', t('lang_core_messages.error_load_vocab'));
+      showToast('error', t('lang_core_messages.error_load_vocab'));
     }
   }
 });
@@ -283,7 +282,7 @@ const handleRename = () => {
 const submitRename = async () => {
   try {
     if (!newSetName.value.trim()) {
-      showCustomMessage('error', t('lang_core_flashcard_rename_set_error'));
+      showToast('error', t('lang_core_flashcard_rename_set_error'));
       return;
     }
     if (newSetName.value === currentSet.value?.setName) {
@@ -291,13 +290,13 @@ const submitRename = async () => {
       return;
     }
     await store.updateSetName(setId, newSetName.value.trim());
-    showCustomMessage('success', t('lang_core_flashcard_rename_success'));
+    showToast('success', t('lang_core_flashcard_rename_success'));
     showRenameModal.value = false;
     await store.fetchSetsInFolder(folderId);
     showActions.value = false;
   } catch (err) {
     console.error("Lỗi khi đổi tên bộ từ vựng:", err);
-    showCustomMessage('error', t('lang_core_messages.error_rename_set'));
+    showToast('error', t('lang_core_messages.error_rename_set'));
     showRenameModal.value = false;
   }
 }

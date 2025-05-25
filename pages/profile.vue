@@ -242,6 +242,7 @@ import { FlashcardStore } from '@/stores/flashcard';
 import { updateUserInfo, fetchUserInfo } from '~/composables/User'
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { useI18n } from 'vue-i18n';
+import { showToast } from '@/utils/message.utils'
 
 const { t } = useI18n();
 const flashcardStore = FlashcardStore();
@@ -260,7 +261,7 @@ const formatedCreatedAt = formatCustomDateTime(createdAt);
 const tempName = ref('')
 const tempAvatar = ref('')
 const loading = ref(false)
-
+showToast('success', 'Your action was completed successfully.')
 // add computed
 const hasChanges = computed(() => {
   return tempName.value !== userInfo.value?.fullName || tempAvatar.value !== userInfo.value?.avatarUrl
@@ -307,15 +308,15 @@ const openLibrary = async () => {
   } catch (err: any) {
     const msg = typeof err === 'string' ? err : err?.message ?? '';
     if (msg.toLowerCase().includes('cancel')) {
-      showCustomMessage('error', t('lang_core_messages.error_no_image'));
+      showToast('error', t('lang_core_messages.error_no_image'));
     } else {
-      showCustomMessage('error', 'Không thể chọn ảnh. Vui lòng thử lại.');
+      showToast('error', 'Không thể chọn ảnh. Vui lòng thử lại.');
     }
   }
 };
 const handleSaveChanges = async () => {
   if (!tempName.value?.trim()) {
-    showCustomMessage('error', t('lang_core_messages.error_empty_name'));
+    showToast('error', t('lang_core_messages.error_empty_name'));
     return;
   }
   try {
@@ -333,10 +334,10 @@ const handleSaveChanges = async () => {
     if (authInfo.value?.id) {
       await myBaseStore.loadUserInfo();
     }
-    showCustomMessage('success', t('lang_core_messages.success_update_profile'))
+    showToast('success', t('lang_core_messages.success_update_profile'))
     showActions.value = false
   } catch (error) {
-    showCustomMessage('error', t('lang_core_messages.error_update_profile'))
+    showToast('error', t('lang_core_messages.error_update_profile'))
   } finally {
     loading.value = false
   }
@@ -365,17 +366,17 @@ const shareApp = async () => {
   };
 
   try {
-    showCustomMessage('error', t('lang_core_messages.error_share_app'));
+    showToast('error', t('lang_core_messages.error_share_app'));
     if (navigator.share) {
       // Sử dụng native share trên mobile
       await navigator.share(shareData);
     } else {
       // Fallback: Copy link trên desktop
       await navigator.clipboard.writeText(shareData.url);
-      showCustomMessage('success', 'Đã sao chép liên kết ứng dụng');
+      showToast('success', 'Đã sao chép liên kết ứng dụng');
     }
   } catch (error) {
-    showCustomMessage('error', t('lang_core_messages.error_share_app'));
+    showToast('error', t('lang_core_messages.error_share_app'));
   }
 };
 const handleLogout = async () => {

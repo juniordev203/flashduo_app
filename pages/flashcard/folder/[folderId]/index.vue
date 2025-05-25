@@ -31,7 +31,8 @@
                     <Folder class="text-blue-500" :size="24" />
                     <div>
                         <h2 class="text-lg font-semibold">{{ currentFolder?.folderName }}</h2>
-                        <p class="text-sm text-gray-500">{{ $t('lang_core_flashcard_folder_date') }} {{ formatCustomDateTime(currentFolder?.createdAt) }}
+                        <p class="text-sm text-gray-500">{{ $t('lang_core_flashcard_folder_date') }} {{
+                            formatCustomDateTime(currentFolder?.createdAt) }}
                         </p>
                     </div>
                 </div>
@@ -50,13 +51,15 @@
                     </button>
                 </div>
                 <div class="flex flex-col gap-4">
-                    <NuxtLink :to="`/flashcard/folder/${folderId}/set/${set.id}`" v-for="set in filteredSets" :key="set.id"
+                    <NuxtLink :to="`/flashcard/folder/${folderId}/set/${set.id}`" v-for="set in filteredSets"
+                        :key="set.id"
                         class="p-4 flex justify-between items-center gap-2 bg-white rounded-lg shadow-sm border border-gray-100">
                         <div class="flex justify-between items-center gap-2">
-                            <Layers class="text-green-500"/>
+                            <Layers class="text-green-500" />
                             <div class="flex-1">
                                 <h4 class="font-medium">{{ set.setName }}</h4>
-                                <p class="text-sm text-gray-500">{{ set.totalCards || 0 }} {{ $t('lang_core_flashcard_vocab_count') }}</p>
+                                <p class="text-sm text-gray-500">{{ set.totalCards || 0 }} {{
+                                    $t('lang_core_flashcard_vocab_count') }}</p>
                             </div>
                         </div>
                         <ChevronRight class="text-gray-400" />
@@ -84,30 +87,18 @@
         </el-dialog>
         <!-- Create Set Modal -->
         <CreateSetModal v-model:visible="showCreateSetModal" :folder-id="folderId" @created="handleSetCreated" />
-        <el-dialog
-            v-model="showRenameModal"
-            :title="$t('lang_core_flashcard_rename_folder_title')"
-            width="90%"
-            :show-close="false"
-            :close-on-click-modal="false"
-        >
+        <el-dialog v-model="showRenameModal" :title="$t('lang_core_flashcard_rename_folder_title')" width="90%"
+            :show-close="false" :close-on-click-modal="false">
             <div class="p-4">
-                <input
-                    v-model="newFolderName"
-                    type="text"
+                <input v-model="newFolderName" type="text"
                     class="w-full p-3 rounded-lg border border-gray-200 focus:outline-none"
-                    :placeholder="$t('lang_core_form.folder_name')"
-                    @keyup.enter="submitRename"
-                />
+                    :placeholder="$t('lang_core_form.folder_name')" @keyup.enter="submitRename" />
             </div>
             <template #footer>
                 <div class="flex justify-end gap-2">
                     <el-button @click="showRenameModal = false">{{ $t('lang_core_modal.cancel') }}</el-button>
-                    <el-button
-                        type="primary"
-                        @click="submitRename"
-                        :disabled="!newFolderName.trim() || newFolderName === currentFolder?.folderName"
-                    >
+                    <el-button type="primary" @click="submitRename"
+                        :disabled="!newFolderName.trim() || newFolderName === currentFolder?.folderName">
                         {{ $t('lang_core_modal.save') }}
                     </el-button>
                 </div>
@@ -129,6 +120,7 @@ import { ElMessageBox } from 'element-plus';
 import { FlashcardStore } from '~/stores/flashcard';
 import CreateSetModal from '~/components/flashcard/CreateSetModal.vue';
 import { useI18n } from 'vue-i18n';
+import { showToast } from '@/utils/message.utils'
 
 const route = useRoute();
 const router = useRouter();
@@ -161,13 +153,13 @@ const handleSetCreated = async () => {
 };
 const handleRename = () => {
     showActions.value = false;
-    newFolderName.value = currentFolder.value?.folderName || ''; 
+    newFolderName.value = currentFolder.value?.folderName || '';
     showRenameModal.value = true;
 };
 const submitRename = async () => {
     try {
         if (!newFolderName.value.trim()) {
-            showCustomMessage('error', t('lang_core_flashcard_rename_folder_error'));
+            showToast('error', t('lang_core_flashcard_rename_folder_error'));
             return;
         }
         if (newFolderName.value === currentFolder.value?.folderName) {
@@ -175,13 +167,13 @@ const submitRename = async () => {
             return;
         }
         await store.updateFolderName(folderId, newFolderName.value.trim());
-        showCustomMessage('success', t('lang_core_flashcard_rename_success'));
+        showToast('success', t('lang_core_flashcard_rename_success'));
         showRenameModal.value = false;
         await store.fetchSetsInFolder(folderId);
         showActions.value = false;
     } catch (err) {
         console.error("Lỗi khi đổi tên thư mục:", err);
-        showCustomMessage('error', t('lang_core_messages.error_rename_folder'));
+        showToast('error', t('lang_core_messages.error_rename_folder'));
         showRenameModal.value = false;
     }
 }
@@ -198,12 +190,12 @@ const handleDelete = async () => {
         );
 
         await store.deleteFolder(folderId);
-        showCustomMessage('success', t('lang_core_flashcard_delete_success'));
+        showToast('success', t('lang_core_flashcard_delete_success'));
         router.push('/flashcard');
     } catch (err) {
         if (err !== 'cancel') {
             console.error("Lỗi khi xóa thư mục:", err);
-            showCustomMessage('error', t('lang_core_messages.error_delete_folder'));
+            showToast('error', t('lang_core_messages.error_delete_folder'));
         }
     }
 };
@@ -214,7 +206,7 @@ onMounted(async () => {
             await store.fetchSetsInFolder(folderId);
         } catch (err) {
             console.error("Lỗi khi lấy danh sách bộ thẻ:", err);
-            showCustomMessage('error', t('lang_core_messages.error_load_sets'));
+            showToast('error', t('lang_core_messages.error_load_sets'));
         }
     }
 });

@@ -184,6 +184,7 @@ import { computed, onMounted, ref } from "vue";
 import { useExamStore } from '~/stores/exam'
 import { useMyBaseStore } from "~/stores/base.store";
 import { useI18n } from "vue-i18n";
+import { showToast } from '@/utils/message.utils'
 
 const { t } = useI18n();
 const examStore = useExamStore();
@@ -203,7 +204,7 @@ const makeExams = async () => {
     examInfo.value = response.data;
   } catch (error) {
     console.error("Lỗi khi lấy danh sách đề thi:", error);
-    showCustomMessage('error', t('lang_core_messages.error_load_exams'));
+    showToast('error', t('lang_core_messages.error_load_exams'));
   } finally {
     loading.value = false;
   }

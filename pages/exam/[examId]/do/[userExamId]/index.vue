@@ -91,6 +91,7 @@ import ReadingSection from "~/components/exam/ReadingSection.vue";
 import { QuestionSectionEnum } from "~/constants/enum";
 import { Storage } from '@capacitor/storage';
 import { useI18n } from "vue-i18n";
+import { showToast } from '@/utils/message.utils'
 
 definePageMeta({
   layout: "app-none",
@@ -239,7 +240,7 @@ const saveAnswer = async ({
 const confirmSubmit = async () => {
   if (confirm("Bạn có chắc chắn muốn nộp bài không?")) {
     if (!userExamId.value) {
-      showCustomMessage('error', t('lang_core_messages.error_login_required'));
+      showToast('error', t('lang_core_messages.error_login_required'));
       return
     }
     await examStore.submitExam(userExamId.value, userId.value);

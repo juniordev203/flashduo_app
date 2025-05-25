@@ -63,35 +63,35 @@
         </div>
       </div>
       <el-dialog v-model="showCompletionDialog" class="" width="90%">
-          <div class="bg-white rounded-2xl shadow w-full h-full transform transition-all">
-            <div class="p-6 border-b border-gray-100">
-              <div class="flex items-center gap-4">
-                <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
-                  <Trophy class="w-6 h-6 text-green-600" />
-                </div>
-                <div>
-                  <h2 class="text-xl font-bold text-gray-800">{{ $t('lang_core_flashcard_learn_complete') }}</h2>
-                  <p class="text-sm text-gray-500">{{ $t('lang_core_flashcard_learn_complete_desc') }}</p>
-                </div>
+        <div class="bg-white rounded-2xl shadow w-full h-full transform transition-all">
+          <div class="p-6 border-b border-gray-100">
+            <div class="flex items-center gap-4">
+              <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
+                <Trophy class="w-6 h-6 text-green-600" />
               </div>
-            </div>
-            <div class="p-4 flex flex-col gap-3 border-t border-gray-100">
-              <button @click="continueSet"
-                class="w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-lg transition-colors">
-                {{ $t('lang_core_flashcard_continue_learning') }}
-              </button>
-              <div class="flex gap-3">
-                <button @click="retrySet"
-                  class="flex-1 py-2.5 bg-white border border-gray-200 hover:bg-gray-50 text-gray-700 font-medium rounded-lg transition-colors">
-                  {{ $t('lang_core_flashcard_restart') }}
-                </button>
-                <button @click="returnToSet"
-                  class="flex-1 py-2.5 bg-white border border-gray-200 hover:bg-gray-50 text-gray-700 font-medium rounded-lg transition-colors">
-                  {{ $t('lang_core_flashcard_back_to_set') }}
-                </button>
+              <div>
+                <h2 class="text-xl font-bold text-gray-800">{{ $t('lang_core_flashcard_learn_complete') }}</h2>
+                <p class="text-sm text-gray-500">{{ $t('lang_core_flashcard_learn_complete_desc') }}</p>
               </div>
             </div>
           </div>
+          <div class="p-4 flex flex-col gap-3 border-t border-gray-100">
+            <button @click="continueSet"
+              class="w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-lg transition-colors">
+              {{ $t('lang_core_flashcard_continue_learning') }}
+            </button>
+            <div class="flex gap-3">
+              <button @click="retrySet"
+                class="flex-1 py-2.5 bg-white border border-gray-200 hover:bg-gray-50 text-gray-700 font-medium rounded-lg transition-colors">
+                {{ $t('lang_core_flashcard_restart') }}
+              </button>
+              <button @click="returnToSet"
+                class="flex-1 py-2.5 bg-white border border-gray-200 hover:bg-gray-50 text-gray-700 font-medium rounded-lg transition-colors">
+                {{ $t('lang_core_flashcard_back_to_set') }}
+              </button>
+            </div>
+          </div>
+        </div>
       </el-dialog>
     </div>
   </div>
@@ -104,9 +104,9 @@ import { Swiper, SwiperSlide } from 'swiper/vue';
 import { Navigation as SwiperNavigation, Pagination as SwiperPagination } from 'swiper/modules';
 import { CheckCheck, ChevronLeft, Star, Trophy } from 'lucide-vue-next'
 import FlashcardItem from '~/components/flashcard/FlashcardItem.vue';
-
 import 'swiper/css';
 import { useI18n } from 'vue-i18n';
+import { showToast } from '@/utils/message.utils'
 
 definePageMeta({
   layout: 'app-none',
@@ -174,7 +174,7 @@ onMounted(async () => {
       });
     } catch (error) {
       console.error('Error fetching vocab cards:', error);
-      showCustomMessage('error', t('lang_core_messages.error_load_vocab'));
+      showToast('error', t('lang_core_messages.error_load_vocab'));
     } finally {
       isLoadingCards.value = false;
     }

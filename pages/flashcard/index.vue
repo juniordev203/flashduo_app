@@ -16,27 +16,19 @@
     <div class="h-full w-full overflow-auto p-4 flex flex-col gap-6">
       <!-- Search Bar -->
       <div class="relative">
-        <input
-          v-model="searchQuery"
-          type="text"
-          :placeholder="$t('lang_core_flashcard_search')"
-          class="w-full p-3 pl-10 rounded-lg border border-gray-200 focus:outline-none focus:border-blue-500"
-        />
+        <input v-model="searchQuery" type="text" :placeholder="$t('lang_core_flashcard_search')"
+          class="w-full p-3 pl-10 rounded-lg border border-gray-200 focus:outline-none focus:border-blue-500" />
         <Search class="absolute left-3 top-3 text-gray-400" />
       </div>
       <!-- Quick Actions -->
       <div class="grid grid-cols-2 gap-4">
-        <button
-          @click="createNewFolder"
-          class="p-4 bg-blue-100 rounded-lg flex flex-col items-center justify-center gap-2"
-        >
+        <button @click="createNewFolder"
+          class="p-4 bg-blue-100 rounded-lg flex flex-col items-center justify-center gap-2">
           <FolderPlus class="text-blue-600" />
           <span class="text-sm font-medium">{{ $t('lang_core_flashcard_create_folder') }}</span>
         </button>
-        <button
-          @click="createNewSet"
-          class="p-4 bg-green-100 rounded-lg flex flex-col items-center justify-center gap-2"
-        >
+        <button @click="createNewSet"
+          class="p-4 bg-green-100 rounded-lg flex flex-col items-center justify-center gap-2">
           <Plus class="text-green-600" />
           <span class="text-sm font-medium">{{ $t('lang_core_flashcard_create_set') }}</span>
         </button>
@@ -47,16 +39,13 @@
         <div v-if="loading && folders.length === 0" class="flex justify-center py-4">
           <div class="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-blue-500"></div>
         </div>
-        <div v-else-if="folders.length === 0" class="p-4 bg-white rounded-lg shadow-sm border border-gray-100 text-center">
+        <div v-else-if="folders.length === 0"
+          class="p-4 bg-white rounded-lg shadow-sm border border-gray-100 text-center">
           <p class="text-gray-500">{{ $t('lang_core_flashcard_empty_folder') }}</p>
         </div>
         <div v-else class="flex flex-col gap-4">
-          <NuxtLink
-            v-for="folder in folders"
-            :key="folder.id"
-            :to="`/flashcard/folder/${folder.id}`"
-            class="p-4 bg-white rounded-lg shadow-sm border border-gray-100 block"
-          >
+          <NuxtLink v-for="folder in folders" :key="folder.id" :to="`/flashcard/folder/${folder.id}`"
+            class="p-4 bg-white rounded-lg shadow-sm border border-gray-100 block">
             <div class="flex justify-between items-center">
               <div class="flex items-center gap-3">
                 <Folder class="text-blue-500" />
@@ -78,16 +67,14 @@
         <div v-if="loading" class="flex justify-center py-4">
           <div class="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-blue-500"></div>
         </div>
-        <div v-else-if="setsInUser.length === 0" class="p-4 bg-white rounded-lg shadow-sm border border-gray-100 text-center">
+        <div v-else-if="setsInUser.length === 0"
+          class="p-4 bg-white rounded-lg shadow-sm border border-gray-100 text-center">
           <p class="text-gray-500">{{ $t('lang_core_flashcard_empty_set') }}</p>
         </div>
         <div v-else class="flex flex-col gap-4">
-          <NuxtLink
-            v-for="set in filteredSets"
-            :key="set.id"
+          <NuxtLink v-for="set in filteredSets" :key="set.id"
             :to="`/flashcard/folder/${set.flashcardFolderId}/set/${set.id}`"
-            class="p-4 bg-white rounded-lg shadow-sm border border-gray-100 block"
-          >
+            class="p-4 bg-white rounded-lg shadow-sm border border-gray-100 block">
             <div class="flex justify-between items-center">
               <div class="flex items-center gap-3">
                 <Layers class="text-green-500" />
@@ -113,15 +100,8 @@
   </div>
 
   <!-- Modals -->
-  <CreateFolderModal
-    v-model:visible="showCreateFolderModal"
-    :loading="loading"
-    @create="handleFolderCreate"
-  />
-  <CreateSetModal
-    v-model:visible="showCreateSetModal"
-    @created="handleSetCreated"
-  />
+  <CreateFolderModal v-model:visible="showCreateFolderModal" :loading="loading" @create="handleFolderCreate" />
+  <CreateSetModal v-model:visible="showCreateSetModal" @created="handleSetCreated" />
 </template>
 
 <script setup lang="ts">
@@ -145,6 +125,7 @@ import CreateFolderModal from "~/components/flashcard/CreateFolderModal.vue";
 import CreateSetModal from "~/components/flashcard/CreateSetModal.vue";
 import { useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
+import { showToast } from '@/utils/message.utils'
 
 const { t } = useI18n();
 const router = useRouter();
@@ -161,7 +142,7 @@ const filteredSets = computed(() => {
     return setsInUser.value;
   }
   const query = searchQuery.value.toLowerCase().trim();
-  return setsInUser.value.filter(set => 
+  return setsInUser.value.filter(set =>
     set.setName.toLowerCase().includes(query)
   );
 });
@@ -170,11 +151,11 @@ const handleFolderCreate = async (name: string) => {
   if (userId.value) {
     try {
       await store.createFolder(name, userId.value);
-      showCustomMessage('success', t('lang_core_messages.success_create_folder'));
+      showToast('success', t('lang_core_messages.success_create_folder'));
       showCreateFolderModal.value = false;
     } catch (err) {
       console.error("Lỗi khi tạo folder:", err);
-      showCustomMessage('error', t('lang_core_messages.error_create_folder'));
+      showToast('error', t('lang_core_messages.error_create_folder'));
     }
   }
 };
@@ -204,7 +185,7 @@ onMounted(async () => {
       await store.fetchSetsInUser(userId.value);
     } catch (err) {
       console.error("Lỗi khi lấy danh sách bộ thẻ:", err);
-      showCustomMessage('error', t('lang_core_messages.error_load_sets'));
+      showToast('error', t('lang_core_messages.error_load_sets'));
     }
   }
 })

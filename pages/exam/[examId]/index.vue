@@ -124,6 +124,8 @@ import {
 } from "~/auto_api/models";
 import { useExamStore } from "~/stores/exam";
 import { useMyBaseStore } from "~/stores/base.store";
+import { showToast } from '@/utils/message.utils'
+
 definePageMeta({
   layout: "app-none",
 });
@@ -145,7 +147,7 @@ const fetchExamDetail = async () => {
   } catch (error) {
     console.error("Không lấy được chi tiết đề thi:", error);
     throw new Error("Không lấy được chi tiết đề thi");
-    showCustomMessage('error', 'Lỗi khi lấy đề thi!');
+    showToast('error', 'Lỗi khi lấy đề thi!');
   }
 };
 

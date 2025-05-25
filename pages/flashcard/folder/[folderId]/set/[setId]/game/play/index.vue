@@ -24,12 +24,14 @@
         <div class="p-4 space-y-4">
             <div class="flex justify-between">
                 <div class="bg-white rounded-lg px-4 py-2 shadow-sm">
-                    <span class="text-sm text-gray-600">{{ $t('lang_core_flashcard_game_matched') }} <span class="text-blue-700 font-medium">{{ matchedPairs
+                    <span class="text-sm text-gray-600">{{ $t('lang_core_flashcard_game_matched') }} <span
+                            class="text-blue-700 font-medium">{{ matchedPairs
                             }}/{{
-                            totalPairs }}</span></span>
+                                totalPairs }}</span></span>
                 </div>
                 <div class="bg-white rounded-lg px-4 py-2 shadow-sm">
-                    <span class="text-sm text-gray-600">{{ $t('lang_core_flashcard_game_moves') }} <span class="text-blue-700 font-medium">{{ moves
+                    <span class="text-sm text-gray-600">{{ $t('lang_core_flashcard_game_moves') }} <span
+                            class="text-blue-700 font-medium">{{ moves
                             }}</span></span>
                 </div>
             </div>
@@ -111,6 +113,7 @@ import Term from '~/components/flashcard/Term.vue'
 import DefinitionGame from '~/components/flashcard/DefinitionGame.vue'
 import type { IVocabFlashcard } from '~/types/vocab-flashcard.types'
 import { useMyBaseStore } from '~/stores/base.store'
+import { showToast } from '@/utils/message.utils'
 
 export interface GameCard {
     id: number;
@@ -235,7 +238,7 @@ const saveGameResult = async () => {
         }
     } catch (err: any) {
         console.error('Error saving game result:', err);
-        throw(err);
+        throw (err);
     }
 }
 
@@ -296,7 +299,7 @@ onMounted(async () => {
         initializeGame()
     } catch (error) {
         console.error('Error initializing game:', error)
-        showCustomMessage('error', 'Không thể tải dữ liệu từ vựng')
+        showToast('error', 'Không thể tải dữ liệu từ vựng')
         router.back()
     }
 })
