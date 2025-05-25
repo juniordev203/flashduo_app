@@ -209,23 +209,21 @@ const makeExams = async () => {
   }
 };
 const fetchExamCompleted = async (userId: number) => {
-    console.log('fet exam dc go')
-    try {
-        const data = await examStore.fetchExamCompletedByUserId(userId);
-        examCompleteds.value = Array.isArray(data) ? data : [];
-        console.log("exam completed: ", examCompleteds.value)
-    } catch (err: any) {
-        throw (err);
-    }
+  try {
+    const data = await examStore.fetchExamCompletedByUserId(userId);
+    examCompleteds.value = Array.isArray(data) ? data : [];
+  } catch (err: any) {
+    throw (err);
+  }
 }
 //sap xep ds theo thoi gian 
 const sortedExamCompleteds = computed(() => {
-    return [...examCompleteds.value].sort((a, b) => {
-        const timeA = a.startTime ? new Date(a.startTime).getTime() : 0;
-        const timeB = b.startTime ? new Date(b.startTime).getTime() : 0;
-        // Sort in descending order (newest first)
-        return timeB - timeA;
-    });
+  return [...examCompleteds.value].sort((a, b) => {
+    const timeA = a.startTime ? new Date(a.startTime).getTime() : 0;
+    const timeB = b.startTime ? new Date(b.startTime).getTime() : 0;
+    // Sort in descending order (newest first)
+    return timeB - timeA;
+  });
 });
 onMounted(async () => {
   makeExams();

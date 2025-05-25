@@ -105,38 +105,24 @@
         </button>
       </div>
     </el-dialog>
-
     <!-- Add Word Modal -->
     <AddFlashcardModal v-model:visible="showAddWord" :set-id="setId" @created="handleWordCreated" />
-    <el-dialog
-            v-model="showRenameModal"
-            :title="$t('lang_core_flashcard_rename_set_title')"
-            width="90%"
-            :show-close="false"
-            :close-on-click-modal="false"
-        >
-            <div class="p-4">
-                <input
-                    v-model="newSetName"
-                    type="text"
-                    class="w-full p-3 rounded-lg border border-gray-200 focus:outline-none"
-                    :placeholder="$t('lang_core_form.set_name')"
-                    @keyup.enter="submitRename"
-                />
-            </div>
-            <template #footer>
-                <div class="flex justify-end gap-2">
-                    <el-button @click="showRenameModal = false">{{ $t('lang_core_modal.cancel') }}</el-button>
-                    <el-button
-                        type="primary"
-                        @click="submitRename"
-                        :disabled="!newSetName.trim() || newSetName === currentSet?.setName"
-                    >
-                        {{ $t('lang_core_modal.save') }}
-                    </el-button>
-                </div>
-            </template>
-        </el-dialog>
+    <el-dialog v-model="showRenameModal" :title="$t('lang_core_flashcard_rename_set_title')" width="90%"
+      :show-close="false" :close-on-click-modal="false">
+      <div class="p-4">
+        <input v-model="newSetName" type="text" class="w-full p-3 rounded-lg border border-gray-200 focus:outline-none"
+          :placeholder="$t('lang_core_form.set_name')" @keyup.enter="submitRename" />
+      </div>
+      <template #footer>
+        <div class="flex justify-end gap-2">
+          <el-button @click="showRenameModal = false">{{ $t('lang_core_modal.cancel') }}</el-button>
+          <el-button type="primary" @click="submitRename"
+            :disabled="!newSetName.trim() || newSetName === currentSet?.setName">
+            {{ $t('lang_core_modal.save') }}
+          </el-button>
+        </div>
+      </template>
+    </el-dialog>
   </div>
 </template>
 
@@ -166,7 +152,6 @@ const { t } = useI18n();
 const route = useRoute();
 const router = useRouter();
 const store = FlashcardStore();
-// const vocabularies = ref<FlashcardFavoritesResponse[]>([]);
 const setId = Number(route.params.setId);
 const folderId = Number(route.params.folderId);
 const searchQuery = ref("");
@@ -291,30 +276,30 @@ onMounted(async () => {
 });
 
 const handleRename = () => {
-    showActions.value = false;
-    newSetName.value = currentSet.value?.setName || ''; 
-    showRenameModal.value = true;
+  showActions.value = false;
+  newSetName.value = currentSet.value?.setName || '';
+  showRenameModal.value = true;
 };
 const submitRename = async () => {
   try {
-        if (!newSetName.value.trim()) {
-            showCustomMessage('error', t('lang_core_flashcard_rename_set_error'));
-            return;
-        }
-        if (newSetName.value === currentSet.value?.setName) {
-            showRenameModal.value = false;
-            return;
-        }
-        await store.updateSetName(setId, newSetName.value.trim());
-        showCustomMessage('success', t('lang_core_flashcard_rename_success'));
-        showRenameModal.value = false;
-        await store.fetchSetsInFolder(folderId);
-        showActions.value = false;
-    } catch (err) {
-        console.error("Lỗi khi đổi tên bộ từ vựng:", err);
-        showCustomMessage('error', t('lang_core_messages.error_rename_set'));
-        showRenameModal.value = false;
+    if (!newSetName.value.trim()) {
+      showCustomMessage('error', t('lang_core_flashcard_rename_set_error'));
+      return;
     }
+    if (newSetName.value === currentSet.value?.setName) {
+      showRenameModal.value = false;
+      return;
+    }
+    await store.updateSetName(setId, newSetName.value.trim());
+    showCustomMessage('success', t('lang_core_flashcard_rename_success'));
+    showRenameModal.value = false;
+    await store.fetchSetsInFolder(folderId);
+    showActions.value = false;
+  } catch (err) {
+    console.error("Lỗi khi đổi tên bộ từ vựng:", err);
+    showCustomMessage('error', t('lang_core_messages.error_rename_set'));
+    showRenameModal.value = false;
+  }
 }
 </script>
 

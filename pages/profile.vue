@@ -194,7 +194,7 @@
             <div @click="openLibrary" class="w-24 h-24 rounded-full border-2 border-indigo-100 overflow-hidden">
               <img :src="tempAvatar || userInfo?.avatarUrl || '~/assets/images/avatar-default.jpg'"
                 class="w-full h-full object-cover" alt="User avatar" />
-                <SquarePen class="absolute right-2 bottom-3 w-5 h-5 text-white" />
+              <SquarePen class="absolute right-2 bottom-3 w-5 h-5 text-white" />
             </div>
           </div>
           <p class="text-sm text-gray-500">
@@ -324,7 +324,7 @@ const handleSaveChanges = async () => {
       fullName: tempName.value,
       avatarUrl: tempAvatar.value || userInfo.value?.avatarUrl
     }
-    if(tempAvatar.value) {
+    if (tempAvatar.value) {
       payload.avatarUrl = await resizeImage(tempAvatar.value);
     }
     if (userInfo.value?.id) {
@@ -336,7 +336,6 @@ const handleSaveChanges = async () => {
     showCustomMessage('success', t('lang_core_messages.success_update_profile'))
     showActions.value = false
   } catch (error) {
-    console.error('loi khi cap nhat:', error)
     showCustomMessage('error', t('lang_core_messages.error_update_profile'))
   } finally {
     loading.value = false
@@ -376,7 +375,6 @@ const shareApp = async () => {
       showCustomMessage('success', 'Đã sao chép liên kết ứng dụng');
     }
   } catch (error) {
-    console.error('Error sharing:', error);
     showCustomMessage('error', t('lang_core_messages.error_share_app'));
   }
 };

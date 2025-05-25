@@ -42,7 +42,6 @@ onMounted(async () => {
   try {
     const authSuccess = await makeAuth();
     await langStore.initializeLocale();
-    console.log('auth succes: ', authSuccess);
     if (!authSuccess) { navigateTo("/login"); }
     const elapsedTime = Date.now() - startTime;
     const minimumSplashTime = 1000;

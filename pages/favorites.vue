@@ -186,11 +186,9 @@ const fetchVocabFavorites = async (userId: number) => {
     }
 }
 const fetchExamCompleted = async (userId: number) => {
-    console.log('fet exam dc go')
     try {
         const data = await examStore.fetchExamCompletedByUserId(userId);
         examCompleteds.value = Array.isArray(data) ? data : [];
-        console.log("exam completed: ", examCompleteds.value)
     } catch (err: any) {
         throw (err);
     }

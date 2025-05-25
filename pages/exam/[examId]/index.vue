@@ -65,7 +65,7 @@
         <div class="bg-white rounded-xl shadow-md p-6 mb-4">
           <h2 class="text-lg font-semibold mb-4 flex items-center gap-2">
             <Info class="text-blue-500" />
-            {{$t('lang_core_exam_instructions')}}
+            {{ $t('lang_core_exam_instructions') }}
           </h2>
           <div class="space-y-3 text-gray-600">
             <div class="flex items-start gap-2">
@@ -95,7 +95,7 @@
           <button @click="handleCreatedUserExam"
             class="w-full py-3 text-lg font-semibold text-white bg-blue-600 rounded-xl transition-all duration-200 active:scale-95 touch-manipulation flex items-center justify-center gap-2">
             <Play :size="20" />
-            {{$t('lang_core_exam_start')}}
+            {{ $t('lang_core_exam_start') }}
           </button>
         </div>
       </div>
@@ -143,7 +143,9 @@ const fetchExamDetail = async () => {
     );
     examDetail.value = response.data;
   } catch (error) {
-    console.log("Khong lay duoc chi tiet de thi", error);
+    console.error("Không lấy được chi tiết đề thi:", error);
+    throw new Error("Không lấy được chi tiết đề thi");
+    showCustomMessage('error', 'Lỗi khi lấy đề thi!');
   }
 };
 
@@ -159,7 +161,7 @@ const handleCreatedUserExam = async () => {
       router.push(`/exam/${examDetail.value.id}/do/${userExamId.value}`)
     }
   } catch (err: any) {
-    throw(err);
+    throw (err);
   }
 }
 

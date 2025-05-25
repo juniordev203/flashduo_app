@@ -111,16 +111,14 @@
   </div>
 </template>
 <script setup lang="ts">
-import { SearchIcon, Bell, UserPen, Clock, Tag } from 'lucide-vue-next'
+import { Bell, UserPen, Clock, Tag } from 'lucide-vue-next'
 import { useMyBaseStore } from '~/stores/base.store';
 
 const baseStore = useMyBaseStore();
-const userdata = baseStore.userInfo;
 
 const accountId = baseStore.authUser?.id;
 const testApiUser = async () => {
-  const res = await userApiUtil.apiUserInfoUserGet(accountId)
-  console.log(res)
+  await userApiUtil.apiUserInfoUserGet(accountId);
 }
 onMounted(() => {
   testApiUser()

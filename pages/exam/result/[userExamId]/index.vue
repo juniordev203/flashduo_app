@@ -87,14 +87,15 @@
                     <!-- Additional Score Analysis -->
                     <div class="px-6 pb-6">
                         <div class="p-4 bg-gray-50 rounded-xl border border-gray-100">
-                            <h4 class="text-sm font-medium text-gray-500 mb-3">{{ $t('lang_core_exam_result_analysis') }}</h4>
+                            <h4 class="text-sm font-medium text-gray-500 mb-3">{{ $t('lang_core_exam_result_analysis')
+                                }}</h4>
                             <div class="flex justify-between items-center">
                                 <div class="text-center">
                                     <div
                                         class="flex items-center justify-center w-12 h-12 mx-auto bg-blue-100 rounded-full">
                                         <span class="text-lg font-bold text-blue-600">{{
                                             Math.round(((dataScore.scoreListening
-                                            || 0) / 495) * 100) }}%</span>
+                                                || 0) / 495) * 100) }}%</span>
                                     </div>
                                     <p class="text-xs mt-2 text-gray-500">Listening</p>
                                 </div>
@@ -104,7 +105,7 @@
                                         class="flex items-center justify-center w-12 h-12 mx-auto bg-indigo-100 rounded-full">
                                         <span class="text-lg font-bold text-indigo-600">{{
                                             Math.round(((dataScore.scoreReading
-                                            || 0) / 495) * 100) }}%</span>
+                                                || 0) / 495) * 100) }}%</span>
                                     </div>
                                     <p class="text-xs mt-2 text-gray-500">Reading</p>
                                 </div>
@@ -114,7 +115,7 @@
                                         class="flex items-center justify-center w-12 h-12 mx-auto bg-green-100 rounded-full">
                                         <span class="text-lg font-bold text-green-600">{{
                                             Math.round((((dataScore.scoreListening
-                                            || 0) + (dataScore.scoreReading || 0)) / 990) * 100) }}%</span>
+                                                || 0) + (dataScore.scoreReading || 0)) / 990) * 100) }}%</span>
                                     </div>
                                     <p class="text-xs mt-2 text-gray-500">{{ $t('lang_core_exam_result_total') }}</p>
                                 </div>
@@ -189,13 +190,10 @@ const shareResult = () => {
 };
 
 const getScore = async (userExamId: number) => {
-    console.log('user exam id: ',userExamId)
     if (userExamId != null) {
         try {
-            console.log("Đang lấy điểm thi cho userExamId:", userExamId);
             const response = await examApiUtil.apiExamUserExamUserExamIdScoreGet(userExamId);
             dataScore.value = response.data;
-            console.log("Điểm thi nhận được:", dataScore.value);
         } catch (error) {
             console.error("Lỗi khi lấy điểm thi:", error);
         }
