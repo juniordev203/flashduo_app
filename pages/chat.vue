@@ -49,9 +49,9 @@
               d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
           </svg>
         </div>
-        <h2 class="text-lg font-medium">{{$t('lang_core_chat_chao_mung')}}</h2>
+        <h2 class="text-lg font-medium">{{ $t('lang_core_chat_chao_mung') }}</h2>
         <p class="mt-2 text-sm">
-          {{$t('lang_core_chat_hay_bat_dau')}}
+          {{ $t('lang_core_chat_hay_bat_dau') }}
         </p>
       </div>
 
@@ -86,7 +86,8 @@
     <div class="border-t border-gray-300 bg-white p-4">
       <form @submit.prevent="store.sendMessage" class="flex space-x-2">
         <input v-model="store.inputMessage" type="text" placeholder="Nhập tin nhắn..."
-          class="flex-1 px-4 py-2 border border-gray-300 rounded-full !focus: outline-none" :disabled="store.isLoading" />
+          class="flex-1 px-4 py-2 border border-gray-300 rounded-full !focus: outline-none"
+          :disabled="store.isLoading" />
         <button type="submit"
           class="px-4 py-2 bg-black text-white rounded-full transition-transform duration-150 active:scale-95 touch-manipulation"
           :disabled="store.isLoading || !store.inputMessage.trim()">
@@ -173,8 +174,4 @@ onMounted(() => {
   }
 });
 
-
-function definePageMeta(arg0: { layout: string; }) {
-  throw new Error("Function not implemented.");
-}
 </script>

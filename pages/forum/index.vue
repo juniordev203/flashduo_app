@@ -14,7 +14,7 @@
       <div class="flex justify-between items-center">
         <div class="p-2 w-full flex gap-4 items-center rounded">
           <div class="w-[40px] h-[40px] rounded-full border border-primary flex justify-center items-center">
-            <img class="w-[32px] h-[32px] rounded-full" src="~/assets/images/avatar.jpg" alt="">
+            <img class="w-[32px] h-[32px] rounded-full" src="~/assets/images/avatar_default.jpg" alt="">
           </div>
           <div class="flex flex-col">
             <p class="">{{ $t('lang_core_forum_junior') }}</p>

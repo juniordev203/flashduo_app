@@ -15,7 +15,7 @@
             </template>
             <template v-slot:right>
                 <div class="text-black rounded-full border-2 border-black ">
-                    <Ellipsis class="w-4 h-4"/>
+                    <Ellipsis class="w-4 h-4" />
                 </div>
             </template>
         </AtomHeaderSafe>
@@ -50,13 +50,13 @@
                         <div class="flex items-center mt-3 space-x-4">
                             <div class="flex gap-2 items-center">
                                 <button class="thread-action">
-                                    <Heart class="w-5 h-5 text-gray-700"/>
+                                    <Heart class="w-5 h-5 text-gray-700" />
                                 </button>
                                 <span class="text-xs text-gray-500">{{ thread.likes }}</span>
                             </div>
                             <div class="flex gap-2 items-center">
                                 <button class="thread-action">
-                                    <MessageCircle class="w-5 h-5 text-gray-700"/>
+                                    <MessageCircle class="w-5 h-5 text-gray-700" />
                                 </button>
                                 <span class="text-xs text-gray-500">{{ thread.replies }}</span>
                             </div>
@@ -77,7 +77,7 @@ const threads = [
     {
         username: 'Junior',
         verified: true,
-        avatar: 'assets/images/avatar.jpg',
+        avatar: 'assets/images/avatar_default.jpg',
         time: '3h',
         content: 'Hãy chia sẻ kinh nghiệm học tiếng Anh của bạn!',
         image: '',
